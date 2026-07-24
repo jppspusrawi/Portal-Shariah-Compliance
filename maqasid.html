@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maqasid Syariah — Dharuriyyat Khamsah | Hospital PUSRAWI</title>
+<meta name="description" content="Asas Maqasid Syariah (Dharuriyyat Khamsah) sebagai kerangka pematuhan Syariah Hospital PUSRAWI selaras MS 1900:2015.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0E2A47; --navy-deep:#081C33; --navy-soft:#1B3D63;
+  --gold:#C9A227; --gold-deep:#8A6D1F; --gold-pale:#F6EFD9;
+  --cream:#FBF8F1; --paper:#FFFFFF; --ink:#1E2833; --ink-soft:#4A5866;
+  --red:#9E2B25; --line:#E4DDC9;
+  --radius:14px;
+  --shadow:0 10px 30px rgba(14,42,71,.10);
+  --shadow-sm:0 4px 14px rgba(14,42,71,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Source Sans 3',system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.7;font-size:17px}
+.arab{font-family:'Amiri','Traditional Arabic',serif;direction:rtl;unicode-bidi:isolate;line-height:2.1}
+h1,h2,h3{font-family:'Playfair Display',Georgia,serif}
+a{color:inherit;text-decoration:none}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--gold),#E8C64A);z-index:200}
+
+/* ---------- NAV ---------- */
+.topnav{position:sticky;top:0;z-index:100;background:rgba(8,28,51,.97);backdrop-filter:blur(8px);border-bottom:2px solid var(--gold)}
+.topnav-inner{max-width:1080px;margin:0 auto;display:flex;gap:8px;padding:9px 14px}
+.topnav-inner a{
+  flex:1 1 0;min-width:0;height:48px;border-radius:10px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;
+  border:1px solid rgba(201,162,39,.5);background:rgba(255,255,255,.04);
+  transition:background .2s,transform .2s,box-shadow .2s;overflow:hidden;-webkit-tap-highlight-color:transparent;
+}
+.topnav-inner a b{font-family:'Amiri',serif;font-weight:700;font-size:1.15rem;color:var(--gold);direction:rtl}
+.topnav-inner a span{font-size:.5rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#9FB4CA;margin-top:3px;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (hover:hover){
+  .topnav-inner a:hover{background:var(--gold);transform:translateY(-2px);box-shadow:0 6px 16px rgba(201,162,39,.35)}
+  .topnav-inner a:hover b,.topnav-inner a:hover span{color:var(--navy-deep)}
+}
+.topnav-inner a.active{background:var(--gold);box-shadow:0 6px 16px rgba(201,162,39,.35)}
+.topnav-inner a.active b,.topnav-inner a.active span{color:var(--navy-deep)}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;color:#fff;
+  background:
+    radial-gradient(1100px 500px at 85% -10%, rgba(201,162,39,.20), transparent 60%),
+    radial-gradient(900px 600px at -10% 110%, rgba(31,92,153,.35), transparent 60%),
+    linear-gradient(160deg,var(--navy-deep) 0%,var(--navy) 55%,#123457 100%);
+  padding:60px 22px 84px;text-align:center}
+.hero .pattern{position:absolute;inset:0}
+.hero-inner{position:relative;max-width:980px;margin:0 auto}
+.hero .kicker{font-size:.72rem;letter-spacing:3.4px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:14px;animation:floatIn 1s .1s ease both}
+.hero h1{font-size:clamp(2rem,4.6vw,3.3rem);font-weight:800;line-height:1.18;margin-bottom:10px;animation:floatIn 1s .15s ease both}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#C9A227,#F0D878,#C9A227);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 4s linear infinite}
+.hero .arab-title{font-size:2rem;color:var(--gold-pale);margin-bottom:16px;animation:floatIn 1s .2s ease both}
+.hero .tagline{font-size:1.06rem;color:#D5E2F0;max-width:700px;margin:0 auto 46px;animation:floatIn 1s .3s ease both}
+@keyframes shimmer{to{background-position:200% center}}
+@keyframes floatIn{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+
+.acronym{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:8px;perspective:900px}
+.acronym .ac{
+  position:relative;width:134px;height:172px;flex:0 0 134px;border-radius:18px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;
+  border:1px solid rgba(255,255,255,.28);overflow:hidden;
+  box-shadow:0 10px 26px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.25);
+  transition:transform .3s cubic-bezier(.2,.8,.3,1.2), box-shadow .3s;
+  animation:floatIn .7s ease both;animation-delay:calc(.4s + var(--d)*.09s);
+}
+.acronym .ac::before{content:"";position:absolute;inset:0;
+  background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56"><path d="M28 5 L34 22 L51 28 L34 34 L28 51 L22 34 L5 28 L22 22 Z" fill="none" stroke="rgba(255,255,255,.10)"/></svg>') repeat}
+.acronym .ac::after{content:"";position:absolute;top:0;left:-80%;width:55%;height:100%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.35),transparent);
+  transform:skewX(-18deg);transition:left .55s ease}
+.acronym .ac:hover::after{left:130%}
+.acronym .ac:hover{transform:translateY(-10px) rotateX(6deg) scale(1.03);box-shadow:0 20px 40px rgba(0,0,0,.45)}
+.acronym .ac .num{position:absolute;top:8px;left:10px;font-family:'Playfair Display',serif;font-weight:800;font-size:.8rem;color:rgba(255,255,255,.5)}
+.acronym .ac b.arab{font-size:1.5rem;font-weight:700;color:#fff;position:relative;text-shadow:0 2px 8px rgba(0,0,0,.3);line-height:1.3}
+.acronym .ac b.arab::after{content:"";display:block;width:26px;height:2px;background:var(--gold);margin:8px auto 0;border-radius:2px}
+.acronym .ac span{font-size:.6rem;font-weight:700;letter-spacing:.6px;color:#fff;text-transform:uppercase;position:relative;max-width:122px;line-height:1.25}
+.acronym .ac em{font-size:.56rem;font-style:italic;color:rgba(255,255,255,.78);position:relative;padding:0 6px;line-height:1.3}
+.ac-din{background:linear-gradient(160deg,#1F5C99,#0E2A47)}
+.ac-nafs{background:linear-gradient(160deg,#C4483F,#6E1D18)}
+.ac-aql{background:linear-gradient(160deg,#7E57A8,#3C2557)}
+.ac-nasl{background:linear-gradient(160deg,#159A8F,#0A4A47)}
+.ac-mal{background:linear-gradient(160deg,#C9A227,#6E5717)}
+.hero .basmalah{margin-top:40px;font-size:1.7rem;color:var(--gold-pale);opacity:.92;animation:floatIn 1s .9s ease both}
+
+/* ---------- STATS ---------- */
+.stats{background:var(--navy-deep);border-top:1px solid rgba(201,162,39,.3);border-bottom:3px solid var(--gold)}
+.stats-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.stat{padding:26px 14px;text-align:center;color:#CFE0F2}
+.stat b{display:block;font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:800;color:var(--gold);line-height:1.1}
+.stat span{font-size:.72rem;font-weight:700;letter-spacing:1.8px;text-transform:uppercase}
+
+/* ---------- LAYOUT ---------- */
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+section.block{padding:72px 0 8px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.74rem;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:var(--gold-deep);margin-bottom:12px}
+.eyebrow::before{content:"";width:34px;height:2px;background:var(--gold)}
+h2.title{font-size:clamp(1.55rem,3vw,2.2rem);font-weight:800;color:var(--navy);margin-bottom:18px;line-height:1.25}
+.lead{font-size:1.04rem;color:var(--ink-soft);max-width:780px}
+.lead + .lead{margin-top:14px}
+.divider{display:flex;align-items:center;gap:14px;max-width:1080px;margin:64px auto 0;padding:0 22px;color:var(--gold)}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.divider i{font-style:normal;font-size:1rem}
+
+/* ---------- DALIL ---------- */
+.dalil{background:var(--paper);border-left:5px solid var(--gold);border-radius:0 var(--radius) var(--radius) 0;box-shadow:var(--shadow-sm);padding:26px 28px;margin:20px 0;position:relative}
+.dalil::after{content:"\275D";position:absolute;top:10px;left:14px;font-size:1.4rem;color:var(--gold);opacity:.32}
+.dalil .arab{font-size:1.6rem;color:var(--navy);text-align:right;margin-bottom:14px;font-weight:700}
+.dalil .terjemah{font-style:italic;color:var(--ink);font-size:1rem;margin-bottom:8px}
+.dalil .sumber{font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold-deep)}
+
+/* ---------- MARTABAT ---------- */
+#martabat{background:linear-gradient(180deg,var(--paper) 0%,var(--gold-pale) 150%);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:72px 0 64px}
+.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:30px}
+.pillar{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px;box-shadow:var(--shadow-sm);border-top:4px solid var(--gold);transition:.3s}
+.pillar:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.pillar .pnum{width:38px;height:38px;border-radius:50%;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:800;margin-bottom:12px}
+.pillar h3{font-size:1.06rem;color:var(--navy);margin-bottom:4px}
+.pillar .ar{font-family:'Amiri',serif;direction:rtl;color:var(--gold-deep);font-size:1.15rem;margin-bottom:8px}
+.pillar p{font-size:.93rem;color:var(--ink-soft);margin-bottom:10px}
+.pillar .eg{background:var(--gold-pale);border-radius:9px;padding:11px 13px;font-size:.87rem;color:#5C4A12}
+.pillar .eg b{color:var(--gold-deep)}
+
+/* ---------- TABLES ---------- */
+.summary-table,.tl-table{width:100%;border-collapse:separate;border-spacing:0;background:var(--paper);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-top:28px;font-size:.93rem}
+.summary-table th,.tl-table th{background:var(--navy);color:#fff;text-align:left;padding:13px 15px;font-size:.72rem;letter-spacing:1.3px;text-transform:uppercase}
+.summary-table td,.tl-table td{padding:13px 15px;border-top:1px solid #EEE8D8;vertical-align:top}
+.summary-table tr:nth-child(even) td,.tl-table tr:nth-child(even) td{background:#FCFAF4}
+.summary-table tbody tr:hover td,.tl-table tbody tr:hover td{background:var(--gold-pale)}
+.tl-table{box-shadow:var(--shadow-sm);margin:26px 0 10px}
+.tl-table caption{caption-side:top;text-align:left;font-size:.76rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold-deep);font-weight:700;padding-bottom:12px}
+.tl-table td.elemen{font-weight:700;color:var(--navy);width:30%}
+.sum-letter{font-family:'Amiri',serif;direction:rtl;font-weight:700;font-size:1rem;color:#fff;min-width:52px;height:36px;padding:0 8px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center}
+.summary-table .nama{font-weight:700;color:var(--navy)}
+.summary-table .nama small{display:block;font-weight:500;color:var(--ink-soft);font-size:.79rem}
+
+/* ---------- VALUE SECTIONS ---------- */
+.value{padding:76px 0 30px;scroll-margin-top:74px}
+.value-head{display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding:26px 30px;border-radius:var(--radius);color:#fff;box-shadow:var(--shadow);margin-bottom:32px;position:relative;overflow:hidden}
+.value-head::before{content:"";position:absolute;inset:0;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"><path d="M35 6 L43 27 L64 35 L43 43 L35 64 L27 43 L6 35 L27 27 Z" fill="none" stroke="rgba(255,255,255,.09)"/></svg>') repeat}
+.value-head::after{content:attr(data-letter);position:absolute;right:16px;top:50%;transform:translateY(-50%);font-family:'Playfair Display',serif;font-weight:800;font-size:8rem;opacity:.10;line-height:1}
+.value-letter{width:70px;height:70px;border-radius:16px;flex-shrink:0;background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:800;font-size:2.2rem;position:relative}
+.value-name{position:relative}
+.value-name h2{font-size:clamp(1.35rem,2.8vw,1.95rem);font-weight:800;line-height:1.15}
+.value-name .my{font-size:.96rem;opacity:.92;font-weight:500}
+.value-arab{margin-left:auto;text-align:center;padding-right:52px;position:relative}
+.value-arab .arab{font-size:2rem;font-weight:700}
+.value-arab .translit{font-size:.88rem;font-style:italic;opacity:.92}
+.v-din .value-head{background:linear-gradient(135deg,#0E2A47,#1F5C99)}
+.v-nafs .value-head{background:linear-gradient(135deg,#9E2B25,#C4483F)}
+.v-aql .value-head{background:linear-gradient(135deg,#5B3A7E,#7E57A8)}
+.v-nasl .value-head{background:linear-gradient(135deg,#0F6E6B,#159A8F)}
+.v-mal .value-head{background:linear-gradient(135deg,#8A6D1F,#C9A227)}
+.v-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;margin-bottom:8px}
+.v-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px 24px 20px;box-shadow:var(--shadow-sm)}
+.v-card h3{font-size:.76rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold-deep);margin-bottom:12px;font-family:'Source Sans 3',sans-serif;font-weight:700;display:flex;align-items:center;gap:8px}
+.v-card h3::before{content:"\25C6";font-size:.58rem;color:var(--gold)}
+.v-card p{font-size:.95rem;margin-bottom:11px}
+.v-card p:last-child{margin-bottom:0}
+.v-card ul{margin:0 0 0 18px;font-size:.94rem}
+.v-card li{margin-bottom:7px}
+.konteks{background:var(--gold-pale);border-radius:10px;padding:14px 16px;font-size:.92rem;color:#5C4A12;margin-top:8px}
+.konteks b{color:var(--gold-deep)}
+.rumusan{display:flex;gap:16px;align-items:flex-start;background:var(--navy);color:#EAF1F8;border-radius:var(--radius);padding:24px 26px;margin:26px 0 8px;box-shadow:var(--shadow)}
+.rumusan .ikon{flex-shrink:0;width:42px;height:42px;border-radius:50%;background:var(--gold);color:var(--navy-deep);display:flex;align-items:center;justify-content:center;font-weight:800;font-family:'Playfair Display',serif;font-size:1.15rem}
+.rumusan h4{font-family:'Source Sans 3',sans-serif;font-size:.73rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.rumusan p{font-size:.97rem}
+
+/* ---------- KAEDAH ---------- */
+#kaedah{background:linear-gradient(180deg,var(--paper),var(--cream));border-top:1px solid var(--line);padding:74px 0 20px;scroll-margin-top:74px}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:28px}
+.kcard{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow-sm);transition:.3s}
+.kcard:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.kcard .kn{font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold-deep);font-weight:700}
+.kcard .arab{font-size:1.35rem;color:var(--navy);text-align:right;font-weight:700;margin:8px 0 10px}
+.kcard .mk{font-size:.94rem;font-style:italic;color:var(--ink);margin-bottom:8px}
+.kcard .ap{font-size:.88rem;color:var(--ink-soft)}
+.kcard .ap b{color:var(--gold-deep);font-style:normal}
+
+/* ---------- KESIMPULAN ---------- */
+#kesimpulan{margin-top:70px;background:radial-gradient(800px 400px at 90% 0%,rgba(201,162,39,.18),transparent 60%),linear-gradient(150deg,var(--navy-deep),var(--navy) 70%);color:#E7EFF8;padding:78px 22px}
+#kesimpulan .wrap{max-width:880px;text-align:center}
+#kesimpulan .eyebrow{justify-content:center;color:var(--gold)}
+#kesimpulan h2{color:#fff;font-size:clamp(1.6rem,3vw,2.3rem);margin-bottom:22px}
+#kesimpulan p{font-size:1.04rem;margin-bottom:18px}
+.chain{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;margin:32px 0 10px}
+.chain span{border:1px solid rgba(201,162,39,.55);color:var(--gold);padding:9px 18px;border-radius:999px;font-size:.9rem;font-weight:700;transition:.25s}
+.chain span:hover{background:var(--gold);color:var(--navy-deep)}
+.chain i{color:var(--gold);font-style:normal;font-size:1.2rem}
+footer{background:var(--navy-deep);color:#8FA6BC;padding:26px 22px;text-align:center;font-size:.84rem}
+footer b{color:#D8E4F0}
+.nota{background:#FFF8E5;border:1px solid var(--gold);border-radius:var(--radius);padding:18px 20px;margin-top:30px;font-size:.9rem;color:#5C4A12}
+.nota b{color:var(--gold-deep)}
+
+
+.rajah-wrap{margin:34px 0 10px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 20px 14px;overflow-x:auto}
+.rajah-wrap svg.rajah{display:block;width:100%;min-width:760px;height:auto}
+.rajah-wrap figcaption{margin-top:14px;text-align:center;font-size:.8rem;letter-spacing:1.4px;text-transform:uppercase;font-weight:700;color:var(--gold-deep)}
+@media (max-width:760px){.rajah-wrap{padding:14px 12px 10px}.rajah-wrap::after{content:"Leret ke kanan untuk melihat rajah penuh";display:block;text-align:center;font-size:.72rem;color:var(--ink-soft);margin-top:8px;font-style:italic}}
+#toTop{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border-radius:50%;background:var(--gold);color:var(--navy-deep);border:none;cursor:pointer;font-size:1.2rem;font-weight:800;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.3s;z-index:90}
+#toTop.show{opacity:1;pointer-events:auto}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal,.acronym .ac,.hero h1,.hero .tagline,.hero .basmalah,.hero .kicker,.hero .arab-title{opacity:1;transform:none;transition:none;animation:none}
+}
+@media (max-width:900px){
+  .v-grid{grid-template-columns:1fr}
+  .value-arab{margin-left:0;padding-right:0;text-align:left}
+  .value-head::after{font-size:5.5rem}
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:560px){
+  body{font-size:16px}
+  .topnav-inner{gap:5px;padding:7px 8px}
+  .topnav-inner a{height:42px;border-radius:8px}
+  .topnav-inner a b{font-size:1rem}
+  .topnav-inner a span{display:none}
+  .hero{padding:42px 16px 62px}
+      .acronym{gap:9px}
+  .acronym .ac{width:104px;height:146px;flex:0 0 104px;border-radius:14px;gap:5px}
+  .acronym .ac b.arab{font-size:1.2rem}
+  .acronym .ac span{font-size:.5rem;max-width:96px}
+  .acronym .ac em{font-size:.48rem}
+  .summary-table,.tl-table{font-size:.83rem}
+  .summary-table th,.summary-table td,.tl-table th,.tl-table td{padding:10px 9px}
+  .value-head{padding:20px}
+  .rumusan{flex-direction:column}
+  .dalil{padding:20px 18px}
+  .dalil .arab{font-size:1.35rem}
+}
+@media print{.topnav,#toTop,#progress{display:none}.hero{background:var(--navy)}section.block,.value{padding:34px 0 6px}}
+</style>
+<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+</head>
+<body>
+<div id="progress"></div>
+<svg width="0" height="0" style="position:absolute"><defs>
+<pattern id="islamicPat" width="80" height="80" patternUnits="userSpaceOnUse">
+<g fill="none" stroke="rgba(255,255,255,.07)" stroke-width="1">
+<path d="M40 8 L49 31 L72 40 L49 49 L40 72 L31 49 L8 40 L31 31 Z"/>
+<circle cx="40" cy="40" r="6"/>
+</g></pattern></defs></svg>
+
+<!-- ================= NAV ================= -->
+<nav class="topnav" aria-label="Navigasi utama">
+  <div class="topnav-inner">
+    <a href="#din" title="Hifz ad-Din — Memelihara Agama"><b class="arab">الدِّين</b><span>Agama</span></a>
+    <a href="#nafs" title="Hifz an-Nafs — Memelihara Nyawa"><b class="arab">النَّفْس</b><span>Nyawa</span></a>
+    <a href="#aql" title="Hifz al-'Aql — Memelihara Akal"><b class="arab">العَقْل</b><span>Akal</span></a>
+    <a href="#nasl" title="Hifz an-Nasl wa al-'Ird — Memelihara Keturunan &amp; Maruah"><b class="arab">النَّسْل</b><span>Keturunan &amp; Maruah</span></a>
+    <a href="#mal" title="Hifz al-Mal — Memelihara Harta"><b class="arab">المَال</b><span>Harta</span></a>
+    <a href="#kaedah" title="Kaedah Fiqhiyyah"><b class="arab">القَوَاعِد</b><span>Kaedah</span></a>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="atas">
+  <svg class="pattern" width="100%" height="100%" aria-hidden="true"><rect width="100%" height="100%" fill="url(#islamicPat)"/></svg>
+  <div class="hero-inner">
+    <div class="kicker">Dokumen Asas &middot; SCCP Hospital PUSRAWI</div>
+    <h1>Maqasid <em>Syariah</em></h1>
+    <div class="arab-title arab">مَقَاصِدُ الشَّرِيعَةِ &mdash; الضَّرُورِيَّاتُ الخَمْسُ</div>
+    <p class="tagline">Lima tonggak Dharuriyyat yang menjadi asas kepada setiap keputusan klinikal, pentadbiran dan kewangan di Hospital PUSRAWI &mdash; selaras dengan MS 1900:2015.</p>
+
+    <div class="acronym">
+      <div class="ac ac-din" style="--d:0"><span class="num">01</span><b class="arab">حِفْظُ الدِّين</b><span>Hifz ad-Din</span><em>Memelihara Agama</em></div>
+      <div class="ac ac-nafs" style="--d:1"><span class="num">02</span><b class="arab">حِفْظُ النَّفْس</b><span>Hifz an-Nafs</span><em>Memelihara Nyawa</em></div>
+      <div class="ac ac-aql" style="--d:2"><span class="num">03</span><b class="arab">حِفْظُ العَقْل</b><span>Hifz al-'Aql</span><em>Memelihara Akal</em></div>
+      <div class="ac ac-nasl" style="--d:3"><span class="num">04</span><b class="arab" style="font-size:1.15rem">حِفْظُ النَّسْلِ وَالعِرْضِ</b><span>Hifz an-Nasl wa al-'Ird</span><em>Keturunan &amp; Maruah</em></div>
+      <div class="ac ac-mal" style="--d:4"><span class="num">05</span><b class="arab">حِفْظُ المَال</b><span>Hifz al-Mal</span><em>Memelihara Harta</em></div>
+    </div>
+
+    <div class="basmalah arab">بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ</div>
+  </div>
+</header>
+
+<!-- ================= STATS ================= -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat"><b>5</b><span>Dharuriyyat</span></div>
+    <div class="stat"><b>3</b><span>Martabat Maqasid</span></div>
+    <div class="stat"><b>12</b><span>Kaedah Fiqh Perubatan</span></div>
+    <div class="stat"><b>48</b><span>Dokumen SCCP</span></div>
+  </div>
+</div>
+
+<!-- ================= MUQADDIMAH ================= -->
+<section class="block reveal">
+  <div class="wrap">
+    <div class="eyebrow">Muqaddimah</div>
+    <h2 class="title">Mengapa Maqasid Syariah Didahulukan?</h2>
+    <p class="lead">Dari sudut bahasa, <i>maqasid</i> ialah kata jamak bagi <i>maqsad</i> dan <i>maqsid</i>, berasal daripada <i>qasada</i> yang bermaksud menuju ke suatu arah. Para ulama mengemukakan pelbagai takrif: <b>Ibn 'Asyur</b> menyebutnya sebagai makna dan hikmah yang diambil kira Syarak dalam keseluruhan situasi penurunan syariat (<i>Maqasid al-Syari'ah al-Islamiyyah</i>, hlm. 55); <b>'Allal al-Fasi</b> sebagai tujuan syariat serta rahsia yang diletakkan pada setiap hukum (<i>Maqasid al-Syari'ah wa Makarimuha</i>, hlm. 7); dan <b>Dr. Ahmad al-Raisuni</b> sebagai tujuan yang ditetapkan syariat bagi merealisasikan kemaslahatan hamba (<i>Nazhariyyat al-Maqasid</i>, hlm. 7).</p>
+    <p class="lead">Jabatan Mufti Wilayah Persekutuan merumuskannya sebagai <b>tujuan, makna dan hikmah yang telah ditetapkan oleh syariat Islam dalam hukum-hakam yang disyariatkan serta rahsia di sebaliknya, dengan tujuan merealisasikan kemaslahatan manusia</b>. Rumusan inilah yang telah digunakan dalam dokumen SCCP PUSRAWI sedia ada, dan dikekalkan di sini bagi menjamin keseragaman istilah.</p>
+    <p class="lead">Istilah <i>al-dharuriyyat al-khamsah</i> pula dipelopori oleh <b>Imam al-Ghazali</b> &mdash; tujuan syariat itu lima: memelihara agama, nyawa, akal, keturunan dan harta (<i>al-Mustasfa min 'Ilm al-Usul</i>, 1/174). <b>Imam asy-Syatibi</b> menegaskan umat telah bersepakat bahawa syariat diturunkan untuk menjaganya (<i>al-Muwafaqat fi Usul al-Syari'ah</i>, 1/31).</p>
+    <p class="lead">Bagi sebuah hospital, kerangka ini bukan teori. Ia adalah <b>alat membuat keputusan</b>. Setiap kali wargakerja berdepan pertembungan antara dua kepentingan &mdash; nyawa lawan aurat, kesegeraan rawatan lawan kesempurnaan ibadah, kos lawan keselamatan &mdash; Maqasid Syariah menyediakan susunan keutamaan yang jelas dan boleh dipertahankan.</p>
+    <p class="lead">Justeru, dokumen ini diletakkan <b>sebelum</b> penerangan Nilai-Nilai Murni (AM01) dan sebelum keseluruhan 48 dokumen SCCP. Nilai murni adalah <i>akhlak</i> yang terbit daripada Maqasid; SCCP pula adalah <i>kawalan operasi</i> yang memastikan Maqasid terpelihara di lapangan.</p>
+
+    <div class="dalil">
+      <div class="arab">وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ</div>
+      <p class="terjemah">&ldquo;Dan tiadalah Kami mengutuskan engkau (wahai Muhammad) melainkan sebagai rahmat bagi sekalian alam.&rdquo;</p>
+      <div class="sumber">Surah al-Anbiya&rsquo; (21) : 107</div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">يُرِيدُ اللَّهُ بِكُمُ الْيُسْرَ وَلَا يُرِيدُ بِكُمُ الْعُسْرَ</div>
+      <p class="terjemah">&ldquo;Allah menghendaki kemudahan bagi kamu, dan Dia tidak menghendaki kesukaran bagi kamu.&rdquo;</p>
+      <div class="sumber">Surah al-Baqarah (2) : 185</div>
+    </div>
+
+    <div class="konteks"><b>Kaitan MS 1900:2015 &mdash;</b> Standard ini menuntut organisasi menetapkan <i>Shariah Critical Control Point</i> (SCCP) pada setiap proses yang berisiko melanggar hukum Syarak. Maqasid Syariah adalah <b>rujukan tertinggi</b> dalam menentukan sama ada sesuatu titik proses itu kritikal atau tidak, dan menentukan tindakan pembetulan yang bersesuaian.</div>
+  </div>
+</section>
+
+<div class="divider"><i>&#10022;</i></div>
+
+<!-- ================= MARTABAT ================= -->
+<section id="martabat" class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">Kerangka</div>
+    <h2 class="title">Tiga Martabat Maqasid</h2>
+    <p class="lead">Kepentingan yang dipelihara Syarak tidak sama darjatnya. Susunan ini penting kerana apabila dua kepentingan bertembung, yang lebih tinggi martabatnya didahulukan.</p>
+
+    <figure class="rajah-wrap">
+<svg class="rajah" viewBox="0 0 1640 830" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rajah pecahan Maqasid Syariah">
+<style>.rj-ar{font-family:Amiri,serif;font-weight:700;direction:rtl}.rj-b{font-family:"Source Sans 3",sans-serif;font-weight:700}.rj-r{font-family:"Source Sans 3",sans-serif}.rj-ln{stroke:#96A5B6;stroke-width:3;fill:none}.rj-lg{stroke:#8A6D1F;stroke-width:4;fill:none}</style>
+<rect x="560" y="34" width="520" height="138" rx="18" fill="#C9A227" stroke="#8A6D1F" stroke-width="4"/>
+<text class="rj-ar" x="820" y="92" font-size="42" fill="#fff" text-anchor="middle">مقاصد الشريعة</text>
+<text class="rj-b" x="820" y="142" font-size="34" fill="#fff" text-anchor="middle">MAQASID SYARIAH</text>
+<path class="rj-ln" d="M820 172 V214 M286.5 214 H1352.5"/>
+<path class="rj-ln" d="M286.5 214 V250"/>
+<path class="rj-ln" d="M819.5 214 V250"/>
+<path class="rj-ln" d="M1352.5 214 V250"/>
+<rect x="40" y="250" width="493" height="174" rx="16" fill="#0E2A47" stroke="#C9A227" stroke-width="5"/>
+<circle cx="77" cy="285" r="19" fill="#fff"/>
+<text class="rj-b" x="77" y="293" font-size="22" fill="#0E2A47" text-anchor="middle">1</text>
+<text class="rj-ar" x="286.5" y="308" font-size="31" fill="#F6EFD9" text-anchor="middle">الضروريات</text>
+<text class="rj-b" x="286.5" y="350" font-size="27" fill="#fff" text-anchor="middle">DHARURIYYAT</text>
+<text class="rj-r" x="286.5" y="378" font-size="20" fill="#F6EFD9" text-anchor="middle">Keperluan Asasi</text>
+<text class="rj-r" x="286.5" y="402" font-size="15" fill="#D7E2EE" text-anchor="middle">Jika hilang, kehidupan manusia</text>
+<text class="rj-r" x="286.5" y="422" font-size="15" fill="#D7E2EE" text-anchor="middle">rosak dan binasa</text>
+<rect x="573" y="250" width="493" height="174" rx="16" fill="#6E8299"/>
+<circle cx="610" cy="285" r="19" fill="#fff"/>
+<text class="rj-b" x="610" y="293" font-size="22" fill="#6E8299" text-anchor="middle">2</text>
+<text class="rj-ar" x="819.5" y="308" font-size="31" fill="#F6EFD9" text-anchor="middle">الحاجيات</text>
+<text class="rj-b" x="819.5" y="350" font-size="27" fill="#fff" text-anchor="middle">HAJIYYAT</text>
+<text class="rj-r" x="819.5" y="378" font-size="20" fill="#F6EFD9" text-anchor="middle">Keperluan Sokongan</text>
+<text class="rj-r" x="819.5" y="402" font-size="15" fill="#D7E2EE" text-anchor="middle">Jika hilang, tidak binasa tetapi</text>
+<text class="rj-r" x="819.5" y="422" font-size="15" fill="#D7E2EE" text-anchor="middle">timbul kesukaran yang berat</text>
+<rect x="1106" y="250" width="493" height="174" rx="16" fill="#6E8299"/>
+<circle cx="1143" cy="285" r="19" fill="#fff"/>
+<text class="rj-b" x="1143" y="293" font-size="22" fill="#6E8299" text-anchor="middle">3</text>
+<text class="rj-ar" x="1352.5" y="308" font-size="31" fill="#F6EFD9" text-anchor="middle">التحسينيات</text>
+<text class="rj-b" x="1352.5" y="350" font-size="27" fill="#fff" text-anchor="middle">TAHSINIYYAT</text>
+<text class="rj-r" x="1352.5" y="378" font-size="20" fill="#F6EFD9" text-anchor="middle">Kesempurnaan</text>
+<text class="rj-r" x="1352.5" y="402" font-size="15" fill="#D7E2EE" text-anchor="middle">Melengkapkan kemuliaan adab</text>
+<text class="rj-r" x="1352.5" y="422" font-size="15" fill="#D7E2EE" text-anchor="middle">dan akhlak</text>
+<path class="rj-lg" d="M286.5 424 V496 M180.0 496 H1460.0"/>
+<path class="rj-lg" d="M180.0 496 V566"/>
+<path class="rj-lg" d="M500.0 496 V566"/>
+<path class="rj-lg" d="M820.0 496 V566"/>
+<path class="rj-lg" d="M1140.0 496 V566"/>
+<path class="rj-lg" d="M1460.0 496 V566"/>
+<rect x="490" y="479" width="660" height="34" fill="#FBF8F1"/>
+<text class="rj-b" x="820" y="503" font-size="19" fill="#8A6D1F" text-anchor="middle">AL-DHARURIYYAT AL-KHAMSAH &#183; LIMA KEPERLUAN ASASI</text>
+<rect x="40" y="566" width="280" height="220" rx="16" fill="#1F5C99"/>
+<text class="rj-ar" x="180.0" y="628" font-size="34" fill="#fff" text-anchor="middle">حفظ الدين</text>
+<path d="M146.0 658 H214.0" stroke="#F6EFD9" stroke-width="3"/>
+<text class="rj-b" x="180.0" y="695" font-size="21" fill="#fff" text-anchor="middle">MEMELIHARA</text>
+<text class="rj-b" x="180.0" y="723" font-size="21" fill="#fff" text-anchor="middle">AGAMA</text>
+<text class="rj-r" x="180.0" y="761" font-size="18" fill="#F6EFD9" text-anchor="middle">Hifz ad-Din</text>
+
+
+
+
+
+<rect x="360" y="566" width="280" height="220" rx="16" fill="#C4483F"/>
+<text class="rj-ar" x="500.0" y="628" font-size="34" fill="#fff" text-anchor="middle">حفظ النفس</text>
+<path d="M466.0 658 H534.0" stroke="#F6EFD9" stroke-width="3"/>
+<text class="rj-b" x="500.0" y="695" font-size="21" fill="#fff" text-anchor="middle">MEMELIHARA</text>
+<text class="rj-b" x="500.0" y="723" font-size="21" fill="#fff" text-anchor="middle">NYAWA</text>
+<text class="rj-r" x="500.0" y="761" font-size="18" fill="#F6EFD9" text-anchor="middle">Hifz an-Nafs</text>
+
+
+
+
+
+<rect x="680" y="566" width="280" height="220" rx="16" fill="#7E57A8"/>
+<text class="rj-ar" x="820.0" y="628" font-size="34" fill="#fff" text-anchor="middle">حفظ العقل</text>
+<path d="M786.0 658 H854.0" stroke="#F6EFD9" stroke-width="3"/>
+<text class="rj-b" x="820.0" y="695" font-size="21" fill="#fff" text-anchor="middle">MEMELIHARA</text>
+<text class="rj-b" x="820.0" y="723" font-size="21" fill="#fff" text-anchor="middle">AKAL</text>
+<text class="rj-r" x="820.0" y="761" font-size="18" fill="#F6EFD9" text-anchor="middle">Hifz al-'Aql</text>
+
+
+
+
+
+<rect x="1000" y="566" width="280" height="220" rx="16" fill="#159A8F"/>
+<text class="rj-ar" x="1140.0" y="624" font-size="24" fill="#fff" text-anchor="middle">حفظ النسل والعرض</text>
+<path d="M1106.0 658 H1174.0" stroke="#F6EFD9" stroke-width="3"/>
+<text class="rj-b" x="1140.0" y="695" font-size="17" fill="#fff" text-anchor="middle">MEMELIHARA KETURUNAN</text>
+<text class="rj-b" x="1140.0" y="723" font-size="17" fill="#fff" text-anchor="middle">&amp; MARUAH</text>
+<text class="rj-r" x="1140.0" y="761" font-size="15" fill="#F6EFD9" text-anchor="middle">Hifz an-Nasl wa al-'Ird</text>
+
+
+
+
+
+<rect x="1320" y="566" width="280" height="220" rx="16" fill="#C9A227"/>
+<text class="rj-ar" x="1460.0" y="628" font-size="34" fill="#fff" text-anchor="middle">حفظ المال</text>
+<path d="M1426.0 658 H1494.0" stroke="#F6EFD9" stroke-width="3"/>
+<text class="rj-b" x="1460.0" y="695" font-size="21" fill="#fff" text-anchor="middle">MEMELIHARA</text>
+<text class="rj-b" x="1460.0" y="723" font-size="21" fill="#fff" text-anchor="middle">HARTA</text>
+<text class="rj-r" x="1460.0" y="761" font-size="18" fill="#F6EFD9" text-anchor="middle">Hifz al-Mal</text>
+
+
+
+
+
+
+
+</svg>
+      <figcaption>Rajah 1 &mdash; Pecahan Maqasid Syariah dan aplikasinya di Hospital PUSRAWI</figcaption>
+    </figure>
+
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pnum">1</div>
+        <div class="ar">الضَّرُورِيَّات</div>
+        <h3>Dharuriyyat &mdash; Keperluan Asasi</h3>
+        <p>Perkara yang jika hilang, kehidupan manusia rosak dan binasa. Inilah lima tonggak yang menjadi fokus dokumen ini.</p>
+        <div class="eg"><b>Contoh hospital:</b> rawatan menyelamatkan nyawa, kawalan infeksi, keselamatan ubat, ketulenan status halal ubat kritikal.</div>
+      </div>
+      <div class="pillar">
+        <div class="pnum">2</div>
+        <div class="ar">الحَاجِيَّات</div>
+        <h3>Hajiyyat &mdash; Keperluan Sokongan</h3>
+        <p>Perkara yang jika hilang tidak membinasakan, tetapi menimbulkan kesempitan dan kesukaran yang berat.</p>
+        <div class="eg"><b>Contoh hospital:</b> penyediaan pengamal perubatan sejantina, ruang solat berdekatan wad, sistem temujanji, menu diet halal berpilihan.</div>
+      </div>
+      <div class="pillar">
+        <div class="pnum">3</div>
+        <div class="ar">التَّحْسِينِيَّات</div>
+        <h3>Tahsiniyyat &mdash; Kesempurnaan</h3>
+        <p>Perkara yang melengkapkan kemuliaan akhlak dan adab, walaupun ketiadaannya tidak menyusahkan.</p>
+        <div class="eg"><b>Contoh hospital:</b> adab memberi salam, kekemasan wargakerja, keindahan ruang menunggu, bahasa yang lembut dan menenangkan.</div>
+      </div>
+    </div>
+
+    <div class="konteks" style="margin-top:26px"><b>Prinsip operasi &mdash;</b> Tahsiniyyat tidak boleh dikorbankan sewenang-wenangnya, tetapi tidak boleh pula menghalang Dharuriyyat. Contoh: pesakit kecemasan yang memerlukan tindakan segera tidak ditangguh semata-mata menunggu pengamal sejantina; keperluan itu (Hajiyyat) diusahakan sedaya mungkin tanpa menggadaikan nyawa (Dharuriyyat).</div>
+
+    <table class="summary-table">
+      <thead><tr><th>Maqsad</th><th>Nama &amp; Maksud</th><th>Fokus Operasi Hospital</th></tr></thead>
+      <tbody>
+        <tr><td><span class="sum-letter arab" style="background:#1F5C99">الدِّين</span></td><td class="nama">Hifz ad-Din<small>Memelihara Agama</small></td><td>Ibadah pesakit &amp; wargakerja, status halal, pengurusan jenazah, bimbingan rohani</td></tr>
+        <tr><td><span class="sum-letter arab" style="background:#C4483F">النَّفْس</span></td><td class="nama">Hifz an-Nafs<small>Memelihara Nyawa</small></td><td>Keselamatan pesakit, kecemasan, kawalan infeksi, keselamatan ubat &amp; peralatan</td></tr>
+        <tr><td><span class="sum-letter arab" style="background:#7E57A8">العَقْل</span></td><td class="nama">Hifz al-'Aql<small>Memelihara Akal</small></td><td>Kawalan bahan memabukkan, sedasi bertanggungjawab, kompetensi &amp; latihan, maklumat sahih</td></tr>
+        <tr><td><span class="sum-letter arab" style="background:#159A8F">النَّسْل</span></td><td class="nama">Hifz an-Nasl wa al-'Ird<small>Memelihara Keturunan &amp; Maruah</small></td><td>Batasan aurat (termasuk sesama jantina), ikhtilat &amp; khalwat, privasi &amp; rahsia perubatan, ketulenan nasab</td></tr>
+        <tr><td><span class="sum-letter arab" style="background:#C9A227">المَال</span></td><td class="nama">Hifz al-Mal<small>Memelihara Harta</small></td><td>Ketelusan caj, elak riba &amp; gharar, perolehan beretika, pengurusan aset &amp; amanah</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"><i>&#10022;</i></div>
+
+<!-- ================= 1. AD-DIN ================= -->
+<section id="din" class="value v-din reveal">
+  <div class="wrap">
+    <div class="value-head" data-letter="1">
+      <div class="value-letter">1</div>
+      <div class="value-name">
+        <h2>Memelihara Agama</h2>
+        <div class="my">Keupayaan beribadah tidak terputus walau dalam keadaan sakit</div>
+      </div>
+      <div class="value-arab">
+        <div class="arab">حِفْظُ الدِّينِ</div>
+        <div class="translit">Hifz ad-Din</div>
+      </div>
+    </div>
+
+    <div class="v-grid">
+      <div class="v-card">
+        <h3>Takrif</h3>
+        <p>Memelihara agama bermaksud menjaga keupayaan seseorang menunaikan kewajipan agamanya, serta memelihara persekitaran daripada perkara yang merosakkan akidah dan ibadah. Dalam konteks hospital, ia bermakna <b>penyakit tidak boleh menjadi sebab terputusnya hubungan seorang hamba dengan Tuhannya</b>.</p>
+        <p>Ia merangkumi dua arah: <b>ke dalam</b> (wargakerja diberi ruang menunaikan ibadah) dan <b>ke luar</b> (pesakit dibantu beribadah dalam keadaan uzur).</p>
+      </div>
+      <div class="v-card">
+        <h3>Isu Kritikal Yang Timbul</h3>
+        <ul>
+          <li>Pesakit tidak solat kerana tidak tahu rukhsah orang sakit</li>
+          <li>Kesukaran bersuci &mdash; wuduk, tayammum, najis pada pakaian &amp; katil</li>
+          <li>Ubat atau vaksin yang diragui status halalnya</li>
+          <li>Pesakit kritikal tanpa bimbingan talkin dan sakaratul maut</li>
+          <li>Pengurusan jenazah yang tidak menepati hukum</li>
+          <li>Waktu solat wargakerja bertindih syif tanpa pelan gantian</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ</div>
+      <p class="terjemah">&ldquo;Dan tidaklah Aku menciptakan jin dan manusia melainkan supaya mereka beribadah kepada-Ku.&rdquo;</p>
+      <div class="sumber">Surah adz-Dzariyat (51) : 56</div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">فَاتَّقُوا اللَّهَ مَا اسْتَطَعْتُمْ</div>
+      <p class="terjemah">&ldquo;Maka bertakwalah kamu kepada Allah sedaya upaya kamu.&rdquo;</p>
+      <div class="sumber">Surah at-Taghabun (64) : 16 &mdash; asas rukhsah ibadah orang sakit</div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">صَلِّ قَائِمًا، فَإِنْ لَمْ تَسْتَطِعْ فَقَاعِدًا، فَإِنْ لَمْ تَسْتَطِعْ فَعَلَى جَنْبٍ</div>
+      <p class="terjemah">&ldquo;Solatlah dalam keadaan berdiri; jika engkau tidak mampu maka duduk; jika tidak mampu juga maka (solatlah) secara mengiring.&rdquo;</p>
+      <div class="sumber">HR al-Bukhari &mdash; daripada 'Imran bin Husain r.a.</div>
+    </div>
+
+    <table class="tl-table">
+      <caption>Terjemahan Operasi &mdash; mengikut jenis aktiviti</caption>
+      <thead><tr><th>Jenis Aktiviti</th><th>Kawalan Syariah Yang Dituntut</th></tr></thead>
+      <tbody>
+        <tr><td class="elemen">Penerimaan &amp; pendaftaran pesakit</td><td>Merekod keperluan agama pesakit dan menawarkan khidmat bimbingan ibadah sejak awal kemasukan.</td></tr>
+        <tr><td class="elemen">Rawatan &amp; penjagaan di wad</td><td>Memaklumkan rukhsah solat, menyediakan bantuan bersuci (tayammum, air), arah kiblat dan waktu solat.</td></tr>
+        <tr><td class="elemen">Pemberian ubat &amp; bahan gunaan</td><td>Menentukan status halal bahan; jika tiada alternatif halal, keputusan dibuat berasaskan kaedah darurat dan direkodkan.</td></tr>
+        <tr><td class="elemen">Pengendalian pesakit kritikal</td><td>Bimbingan sakaratul maut dan talkin diaktifkan; keluarga dimaklumkan dan dibimbing.</td></tr>
+        <tr><td class="elemen">Pengendalian jenazah</td><td>Kesucian, kehormatan dan urutan pengurusan jenazah mengikut hukum Syarak dipatuhi tanpa lengah.</td></tr>
+        <tr><td class="elemen">Penjadualan tugas wargakerja</td><td>Syif disusun supaya waktu solat tidak terlepas; ruang solat dan pelan gantian tugas disediakan.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rumusan">
+      <div class="ikon">&#10022;</div>
+      <div>
+        <h4>Rumusan Maqsad</h4>
+        <p>Sakit menggugurkan sebahagian kewajipan, tetapi tidak pernah menggugurkan kehambaan. Tugas hospital adalah <b>memudahkan ibadah, bukan menjadi sebab tertinggalnya ibadah</b>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><i>&#10022;</i></div>
+
+<!-- ================= 2. AN-NAFS ================= -->
+<section id="nafs" class="value v-nafs reveal">
+  <div class="wrap">
+    <div class="value-head" data-letter="2">
+      <div class="value-letter">2</div>
+      <div class="value-name">
+        <h2>Memelihara Nyawa</h2>
+        <div class="my">Menyelamatkan satu nyawa &mdash; teras utama perkhidmatan hospital</div>
+      </div>
+      <div class="value-arab">
+        <div class="arab">حِفْظُ النَّفْسِ</div>
+        <div class="translit">Hifz an-Nafs</div>
+      </div>
+    </div>
+
+    <div class="v-grid">
+      <div class="v-card">
+        <h3>Takrif</h3>
+        <p>Memelihara nyawa merangkumi menjaga kehidupan, kesihatan dan keselamatan fizikal manusia daripada sebarang kebinasaan. Inilah maqsad yang <b>paling langsung berkait dengan teras perniagaan hospital</b>, dan sebab utama perubatan itu sendiri disyariatkan.</p>
+        <p>Ia menuntut dua perkara serentak: <b>mengelakkan mudarat</b> (<i>daf'ul mafsadah</i>) dan <b>mendatangkan manfaat</b> (<i>jalbul maslahah</i>) &mdash; dengan keutamaan diberikan kepada mengelak mudarat.</p>
+      </div>
+      <div class="v-card">
+        <h3>Isu Kritikal Yang Timbul</h3>
+        <ul>
+          <li>Kelewatan triaj dan tindakan kecemasan</li>
+          <li>Kesilapan pengenalan pesakit, ubat atau prosedur</li>
+          <li>Jangkitan berkaitan penjagaan kesihatan (HAI)</li>
+          <li>Peralatan perubatan tidak dikalibrasi atau rosak</li>
+          <li>Pengendalian sisa klinikal yang membahayakan</li>
+          <li>Keselamatan makanan pesakit &amp; risiko diet</li>
+          <li>Penolakan rawatan tanpa kefahaman risiko</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">مَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا</div>
+      <p class="terjemah">&ldquo;Dan sesiapa yang menghidupkan (menyelamatkan) seorang manusia, maka seolah-olah dia telah menghidupkan manusia seluruhnya.&rdquo;</p>
+      <div class="sumber">Surah al-Ma&rsquo;idah (5) : 32</div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">وَلَا تُلْقُوا بِأَيْدِيكُمْ إِلَى التَّهْلُكَةِ</div>
+      <p class="terjemah">&ldquo;Dan janganlah kamu mencampakkan diri kamu ke dalam kebinasaan.&rdquo;</p>
+      <div class="sumber">Surah al-Baqarah (2) : 195</div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">تَدَاوَوْا فَإِنَّ اللَّهَ لَمْ يَضَعْ دَاءً إِلَّا وَضَعَ لَهُ دَوَاءً</div>
+      <p class="terjemah">&ldquo;Berubatlah kamu, kerana sesungguhnya Allah tidak menurunkan sesuatu penyakit melainkan Dia turunkan juga ubat baginya.&rdquo;</p>
+      <div class="sumber">HR Abu Dawud &amp; at-Tirmizi</div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">لَا ضَرَرَ وَلَا ضِرَارَ</div>
+      <p class="terjemah">&ldquo;Tidak boleh memudaratkan diri sendiri dan tidak boleh memudaratkan orang lain.&rdquo;</p>
+      <div class="sumber">HR Ibn Majah &amp; Ahmad &mdash; asas kaedah <i>adh-dhararu yuzal</i></div>
+    </div>
+
+    <table class="tl-table">
+      <caption>Terjemahan Operasi &mdash; mengikut jenis aktiviti</caption>
+      <thead><tr><th>Jenis Aktiviti</th><th>Kawalan Syariah Yang Dituntut</th></tr></thead>
+      <tbody>
+        <tr><td class="elemen">Rawatan kecemasan &amp; triaj</td><td>Nyawa didahulukan tanpa mengira kemampuan bayar; kelewatan yang boleh dielak adalah pengabaian amanah.</td></tr>
+        <tr><td class="elemen">Pembedahan &amp; prosedur invasif</td><td>Keizinan bermaklumat (<i>informed consent</i>), semakan pra-prosedur, dan hanya mudarat yang perlu sahaja dilakukan.</td></tr>
+        <tr><td class="elemen">Pengambilan &amp; pengendalian spesimen</td><td>Ketepatan label dan rantaian jagaan; kesilapan spesimen boleh membawa kepada rawatan salah.</td></tr>
+        <tr><td class="elemen">Pemindahan pesakit antara unit</td><td>Pemantauan berterusan, penyerahan maklumat lengkap, dan pemeliharaan maruah semasa pemindahan.</td></tr>
+        <tr><td class="elemen">Kawalan infeksi &amp; kebersihan</td><td>Kebersihan sebagai tuntutan Syarak dan keselamatan; pengasingan kes berjangkit dan pelupusan sisa selamat.</td></tr>
+        <tr><td class="elemen">Penyelenggaraan peralatan &amp; utiliti</td><td>Kalibrasi berkala, kesiapsiagaan bekalan kritikal (oksigen, elektrik), tindakan segera atas kerosakan.</td></tr>
+        <tr><td class="elemen">Penyediaan makanan pesakit</td><td>Halal dan toyyib; kesesuaian diet perubatan; kawalan suhu dan kebersihan penyediaan.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rumusan">
+      <div class="ikon">&#10022;</div>
+      <div>
+        <h4>Rumusan Maqsad</h4>
+        <p>Setiap kelewatan, kecuaian dan kesilapan yang boleh dielak adalah persoalan Syarak, bukan sekadar isu kualiti. <b>Keselamatan pesakit adalah ibadah.</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><i>&#10022;</i></div>
+
+<!-- ================= 3. AL-'AQL ================= -->
+<section id="aql" class="value v-aql reveal">
+  <div class="wrap">
+    <div class="value-head" data-letter="3">
+      <div class="value-letter">3</div>
+      <div class="value-name">
+        <h2>Memelihara Akal</h2>
+        <div class="my">Akal yang waras &mdash; syarat taklif dan asas keizinan rawatan</div>
+      </div>
+      <div class="value-arab">
+        <div class="arab">حِفْظُ العَقْلِ</div>
+        <div class="translit">Hifz al-'Aql</div>
+      </div>
+    </div>
+
+    <div class="v-grid">
+      <div class="v-card">
+        <h3>Takrif</h3>
+        <p>Memelihara akal bermaksud melindungi kewarasan dan fungsi minda daripada sebarang perkara yang merosakkannya &mdash; sama ada bahan memabukkan, penyalahgunaan ubat, atau maklumat yang mengelirukan.</p>
+        <p>Akal adalah <b>syarat taklif</b>. Tanpa akal yang waras, tiada keizinan rawatan yang sah. Maka memelihara akal bererti memelihara hak pesakit untuk membuat keputusan ke atas dirinya sendiri.</p>
+      </div>
+      <div class="v-card">
+        <h3>Isu Kritikal Yang Timbul</h3>
+        <ul>
+          <li>Kandungan alkohol dalam ubat dan penyediaan farmaseutikal</li>
+          <li>Penyalahgunaan dan kebocoran ubat psikotropik / narkotik</li>
+          <li>Sedasi berlebihan tanpa indikasi klinikal</li>
+          <li>Keizinan diambil daripada pesakit yang tidak berkeupayaan mental</li>
+          <li>Wargakerja kurang kompeten menjalankan prosedur berisiko</li>
+          <li>Maklumat kesihatan tidak sahih atau mengelirukan pesakit</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">يَا أَيُّهَا الَّذِينَ آمَنُوا إِنَّمَا الْخَمْرُ وَالْمَيْسِرُ وَالْأَنصَابُ وَالْأَزْلَامُ رِجْسٌ مِّنْ عَمَلِ الشَّيْطَانِ فَاجْتَنِبُوهُ لَعَلَّكُمْ تُفْلِحُونَ</div>
+      <p class="terjemah">&ldquo;Wahai orang-orang yang beriman! Sesungguhnya arak, judi, berhala dan mengundi nasib dengan anak panah adalah kekejian daripada perbuatan syaitan. Maka jauhilah ia supaya kamu berjaya.&rdquo;</p>
+      <div class="sumber">Surah al-Ma&rsquo;idah (5) : 90</div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">كُلُّ مُسْكِرٍ خَمْرٌ وَكُلُّ خَمْرٍ حَرَامٌ</div>
+      <p class="terjemah">&ldquo;Setiap yang memabukkan adalah arak, dan setiap arak adalah haram.&rdquo;</p>
+      <div class="sumber">HR Muslim &mdash; daripada Ibn 'Umar r.a.</div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">يَرْفَعِ اللَّهُ الَّذِينَ آمَنُوا مِنكُمْ وَالَّذِينَ أُوتُوا الْعِلْمَ دَرَجَاتٍ</div>
+      <p class="terjemah">&ldquo;Allah meninggikan darjat orang-orang yang beriman di antara kamu, dan orang-orang yang diberi ilmu pengetahuan beberapa darjat.&rdquo;</p>
+      <div class="sumber">Surah al-Mujadalah (58) : 11 &mdash; asas tuntutan ilmu &amp; kompetensi</div>
+    </div>
+
+    <table class="tl-table">
+      <caption>Terjemahan Operasi &mdash; mengikut jenis aktiviti</caption>
+      <thead><tr><th>Jenis Aktiviti</th><th>Kawalan Syariah Yang Dituntut</th></tr></thead>
+      <tbody>
+        <tr><td class="elemen">Pembekalan &amp; dispensing ubat</td><td>Status bahan disemak; ubat mengandungi alkohol digunakan hanya bila tiada alternatif dan mengikut kadar keperluan.</td></tr>
+        <tr><td class="elemen">Kawalan ubat terkawal</td><td>Simpanan berkunci, rekod dua tandatangan, audit berkala &mdash; menutup pintu penyalahgunaan.</td></tr>
+        <tr><td class="elemen">Sedasi &amp; anestesia</td><td>Diberi mengikut keperluan klinikal sebenar; kesedaran dipulihkan seawal yang selamat.</td></tr>
+        <tr><td class="elemen">Pengambilan keizinan rawatan</td><td>Keupayaan mental dinilai; jika hilang keupayaan, wali atau waris yang sah dirujuk.</td></tr>
+        <tr><td class="elemen">Latihan &amp; pengesahan kompetensi</td><td>Tiada prosedur berisiko dilakukan tanpa kelayakan; menuntut ilmu adalah sebahagian amanah jawatan.</td></tr>
+        <tr><td class="elemen">Komunikasi &amp; penyebaran maklumat</td><td>Maklumat kesihatan yang tepat dan tidak mengelirukan; promosi tidak melebih-lebih atau menipu.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rumusan">
+      <div class="ikon">&#10022;</div>
+      <div>
+        <h4>Rumusan Maqsad</h4>
+        <p>Memelihara akal bukan sekadar mengelak arak. Ia termasuk <b>memelihara kejernihan pertimbangan</b> &mdash; pada pesakit ketika memberi keizinan, dan pada wargakerja ketika membuat keputusan klinikal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><i>&#10022;</i></div>
+
+<!-- ================= 4. AN-NASL ================= -->
+<section id="nasl" class="value v-nasl reveal">
+  <div class="wrap">
+    <div class="value-head" data-letter="4">
+      <div class="value-letter">4</div>
+      <div class="value-name">
+        <h2>Memelihara Keturunan &amp; Maruah</h2>
+        <div class="my">Aurat, batasan pergaulan, privasi dan ketulenan nasab</div>
+      </div>
+      <div class="value-arab">
+        <div class="arab">حِفْظُ النَّسْلِ وَالعِرْضِ</div>
+        <div class="translit">Hifz an-Nasl wa al-'Ird</div>
+      </div>
+    </div>
+
+    <div class="v-grid">
+      <div class="v-card">
+        <h3>Takrif</h3>
+        <p>Maqsad ini merangkumi <b>dua komponen yang berbeza tetapi saling berkait</b>:</p>
+        <p><b>Al-'Ird</b> (العِرْض) &mdash; maruah, kehormatan diri dan kesucian peribadi. Ia meliputi penutupan aurat, batasan pergaulan, privasi dan pemeliharaan rahsia. <b>Ia terpakai walaupun sesama jantina</b>, kerana asasnya ialah kemuliaan insan itu sendiri, bukan semata-mata risiko percampuran nasab.</p>
+        <p><b>An-Nasl</b> (النَّسْل) &mdash; ketulenan keturunan dan perlindungan sistem reproduktif manusia daripada percampuran nasab.</p>
+        <p>Inilah maqsad yang <b>paling kerap diuji dalam operasi hospital harian</b>, kerana pemeriksaan perubatan pada dasarnya menuntut pendedahan aurat dan sentuhan &mdash; yang asalnya terlarang, dan hanya diharuskan mengikut kadar keperluan.</p>
+      </div>
+      <div class="v-card">
+        <h3>Isu Kritikal Yang Timbul</h3>
+        <ul>
+          <li>Pendedahan aurat melebihi keperluan pemeriksaan</li>
+          <li><b>Aurat sesama jantina</b> diabaikan &mdash; katil, bilik salin, bilik air, wudu&rsquo; dan mandian</li>
+          <li>Ikhtilat dan khalwat semasa pemeriksaan atau rawatan</li>
+          <li>Ketiadaan pengamal sejantina atau <i>chaperone</i></li>
+          <li>Perbualan tentang pesakit di ruang terbuka &mdash; umpatan dan pendedahan rahsia</li>
+          <li>Rakaman dan imej klinikal tanpa kawalan</li>
+          <li>Rawatan kesuburan yang berisiko mencampuradukkan nasab</li>
+          <li>Pengenalan bayi baru lahir yang tidak selamat</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="nota"><b>Nota rujukan &mdash;</b> Bayan Linnas Siri Ke-189 (Jabatan Mufti Wilayah Persekutuan) mengekalkan kerangka <i>al-dharuriyyat al-khamsah</i> dengan istilah <b>&ldquo;memelihara keturunan&rdquo;</b>. Dokumen SCCP PUSRAWI sedia ada (SCCP/PP/16 &amp; SCCP/SK/01) pula menyebutnya <b>&ldquo;memelihara keturunan atau kehormatan&rdquo;</b>. Tajuk gandingan ini mengikut sebutan dokumen dalaman tersebut supaya isu aurat, maruah dan privasi tidak tertinggal daripada skop kawalan. Asas hukum bagi kawalan aurat dalam rawatan ialah kaedah <i>adh-dharurah tuqaddar bi qadariha</i> &mdash; Bayan Linnas 189 menyatakan pendedahan aurat ketika menerima rawatan diharuskan <b>hanya mengikut kadar keperluan merawat penyakit</b>, tanpa dibataskan kepada jantina pihak yang merawat.</div>
+
+    <div class="dalil">
+      <div class="arab">وَلَا تَقْرَبُوا الزِّنَىٰ ۖ إِنَّهُ كَانَ فَاحِشَةً وَسَاءَ سَبِيلًا</div>
+      <p class="terjemah">&ldquo;Dan janganlah kamu menghampiri zina; sesungguhnya ia adalah satu perbuatan yang keji dan jalan yang buruk.&rdquo;</p>
+      <div class="sumber">Surah al-Isra&rsquo; (17) : 32 &mdash; larangan menghampiri, bukan sekadar melakukan</div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">قُل لِّلْمُؤْمِنِينَ يَغُضُّوا مِنْ أَبْصَارِهِمْ وَيَحْفَظُوا فُرُوجَهُمْ ۚ ذَٰلِكَ أَزْكَىٰ لَهُمْ</div>
+      <p class="terjemah">&ldquo;Katakanlah kepada orang-orang lelaki yang beriman supaya mereka menahan pandangan mereka dan memelihara kehormatan mereka; yang demikian itu lebih suci bagi mereka.&rdquo;</p>
+      <div class="sumber">Surah an-Nur (24) : 30</div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">لَا يَخْلُوَنَّ رَجُلٌ بِامْرَأَةٍ إِلَّا وَمَعَهَا ذُو مَحْرَمٍ</div>
+      <p class="terjemah">&ldquo;Janganlah sekali-kali seorang lelaki bersendirian dengan seorang wanita melainkan bersamanya ada mahram.&rdquo;</p>
+      <div class="sumber">HR al-Bukhari &amp; Muslim &mdash; asas keperluan <i>chaperone</i></div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">إِنَّ دِمَاءَكُمْ وَأَمْوَالَكُمْ وَأَعْرَاضَكُمْ عَلَيْكُمْ حَرَامٌ كَحُرْمَةِ يَوْمِكُمْ هَذَا</div>
+      <p class="terjemah">&ldquo;Sesungguhnya darah kamu, harta kamu dan maruah kamu adalah haram (terpelihara) ke atas kamu, sebagaimana kemuliaan hari kamu ini.&rdquo;</p>
+      <div class="sumber">HR al-Bukhari &amp; Muslim &mdash; Khutbah al-Wada&rsquo;; dalil utama <i>al-'ird</i></div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">لَا يَنْظُرُ الرَّجُلُ إِلَى عَوْرَةِ الرَّجُلِ، وَلَا الْمَرْأَةُ إِلَى عَوْرَةِ الْمَرْأَةِ</div>
+      <p class="terjemah">&ldquo;Janganlah seorang lelaki melihat aurat lelaki lain, dan jangan pula seorang wanita melihat aurat wanita lain.&rdquo;</p>
+      <div class="sumber">HR Muslim &mdash; dalil jelas bahawa <b>aurat terpakai sesama jantina</b></div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">احْفَظْ عَوْرَتَكَ إِلَّا مِنْ زَوْجَتِكَ أَوْ مَا مَلَكَتْ يَمِينُكَ</div>
+      <p class="terjemah">&ldquo;Peliharalah auratmu kecuali daripada isterimu atau hamba yang kamu miliki.&rdquo;</p>
+      <div class="sumber">HR Abu Dawud &amp; at-Tirmizi &mdash; daripada Bahz bin Hakim, daripada bapanya, daripada datuknya</div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">وَلَا تَجَسَّسُوا وَلَا يَغْتَب بَّعْضُكُم بَعْضًا</div>
+      <p class="terjemah">&ldquo;Dan janganlah kamu mencari-cari kesalahan orang lain, dan janganlah setengah kamu mengumpat setengah yang lain.&rdquo;</p>
+      <div class="sumber">Surah al-Hujurat (49) : 12 &mdash; asas rahsia perubatan &amp; privasi pesakit</div>
+    </div>
+
+    <table class="tl-table">
+      <caption>A. Al-'Ird (Maruah) &mdash; Terjemahan Operasi mengikut jenis aktiviti</caption>
+      <thead><tr><th>Jenis Aktiviti</th><th>Kawalan Syariah Yang Dituntut</th></tr></thead>
+      <tbody>
+        <tr><td class="elemen">Pemeriksaan fizikal &amp; klinikal</td><td>Pendedahan aurat dihadkan kepada bahagian yang diperiksa sahaja; ditutup semula sebaik selesai.</td></tr>
+        <tr><td class="elemen">Pemeriksaan bahagian sulit</td><td>Diutamakan pengamal sejantina; jika tiada, kehadiran pihak ketiga (<i>chaperone</i>) diwajibkan dan direkodkan.</td></tr>
+        <tr><td class="elemen">Penjagaan diri &amp; kebersihan pesakit</td><td>Batasan aurat dipatuhi <b>walaupun pengamal sejantina</b> &mdash; memandikan, menukar pakaian, membantu wudu&rsquo; dan penggunaan bilik air.</td></tr>
+        <tr><td class="elemen">Prosedur pengimejan &amp; radiologi</td><td>Persalinan yang menutup aurat disediakan; ruang salin berasingan dan berkunci.</td></tr>
+        <tr><td class="elemen">Penjagaan di wad &amp; susun atur katil</td><td>Pengasingan jantina, penggunaan tirai berkesan, dan kawalan lawatan pada waktu sensitif.</td></tr>
+        <tr><td class="elemen">Perbincangan kes &amp; serah tugas</td><td>Maklumat pesakit tidak dibincangkan di ruang terbuka; mengelak umpatan dan pendedahan aib.</td></tr>
+        <tr><td class="elemen">Rakaman imej &amp; rekod klinikal</td><td>Imej diambil hanya untuk tujuan klinikal, disimpan selamat, akses terkawal dan tidak disebarkan.</td></tr>
+      </tbody>
+    </table>
+
+    <table class="tl-table">
+      <caption>B. An-Nasl (Keturunan) &mdash; Terjemahan Operasi mengikut jenis aktiviti</caption>
+      <thead><tr><th>Jenis Aktiviti</th><th>Kawalan Syariah Yang Dituntut</th></tr></thead>
+      <tbody>
+        <tr><td class="elemen">Rawatan bersalin &amp; reproduktif</td><td>Prosedur reproduktif dipastikan hanya melibatkan pasangan sah untuk menjaga ketulenan nasab.</td></tr>
+        <tr><td class="elemen">Pengesahan status perkahwinan</td><td>Dokumen perkahwinan disemak sebelum prosedur yang melibatkan gamet atau embrio.</td></tr>
+        <tr><td class="elemen">Pengenalan &amp; penyerahan bayi</td><td>Sistem pengenalan berganda ibu dan bayi untuk mengelak pertukaran &mdash; melindungi nasab secara langsung.</td></tr>
+        <tr><td class="elemen">Pengendalian gamet, embrio &amp; tisu reproduktif</td><td>Pelabelan, penyimpanan dan rantaian jagaan yang ketat; pelupusan mengikut prosedur yang diluluskan.</td></tr>
+        <tr><td class="elemen">Rawatan mempengaruhi kesuburan</td><td>Kesan terhadap keupayaan reproduktif dimaklumkan kepada pesakit sebelum keizinan diambil.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rumusan">
+      <div class="ikon">&#10022;</div>
+      <div>
+        <h4>Rumusan Maqsad</h4>
+        <p>Keharusan mendedahkan aurat untuk rawatan adalah <b>rukhsah berkadar</b> &mdash; diukur dengan kadar keperluan sebenar, dan <b>tidak gugur hanya kerana pengamal itu sejantina</b>. Apa yang melebihi keperluan, kembali kepada hukum asalnya iaitu terlarang.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><i>&#10022;</i></div>
+
+<!-- ================= 5. AL-MAL ================= -->
+<section id="mal" class="value v-mal reveal">
+  <div class="wrap">
+    <div class="value-head" data-letter="5">
+      <div class="value-letter">5</div>
+      <div class="value-name">
+        <h2>Memelihara Harta</h2>
+        <div class="my">Ketelusan urusan kewangan, perolehan dan amanah aset</div>
+      </div>
+      <div class="value-arab">
+        <div class="arab">حِفْظُ المَالِ</div>
+        <div class="translit">Hifz al-Mal</div>
+      </div>
+    </div>
+
+    <div class="v-grid">
+      <div class="v-card">
+        <h3>Takrif</h3>
+        <p>Memelihara harta bermaksud melindungi harta daripada dirampas, disalahguna atau diperoleh melalui jalan yang batil. Ia merangkumi <b>harta pesakit</b> (caj dan bil), <b>harta organisasi</b> (aset dan bekalan) dan <b>harta pihak ketiga</b> (pembekal, penginsurans dan penaja).</p>
+        <p>Dalam operasi hospital, maqsad ini paling ketara pada urusan pengebilan, perolehan, kawalan kredit, pengurusan stor dan pelupusan aset.</p>
+      </div>
+      <div class="v-card">
+        <h3>Isu Kritikal Yang Timbul</h3>
+        <ul>
+          <li>Caj yang tidak telus atau tidak dimaklumkan awal</li>
+          <li>Pengebilan untuk perkhidmatan yang tidak diberikan</li>
+          <li>Unsur riba, gharar atau penalti tidak syarie dalam terma kredit</li>
+          <li>Konflik kepentingan &amp; rasuah dalam perolehan</li>
+          <li>Pembaziran bekalan, ubat luput dan penyalahgunaan aset</li>
+          <li>Kelewatan bayaran kepada pembekal dan wargakerja</li>
+          <li>Pengurusan wang, barang berharga dan derma pesakit</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَأْكُلُوا أَمْوَالَكُم بَيْنَكُم بِالْبَاطِلِ إِلَّا أَن تَكُونَ تِجَارَةً عَن تَرَاضٍ مِّنكُمْ</div>
+      <p class="terjemah">&ldquo;Wahai orang-orang yang beriman! Janganlah kamu memakan harta sesama kamu dengan jalan yang batil, kecuali dengan jalan perniagaan yang berdasarkan kerelaan antara kamu.&rdquo;</p>
+      <div class="sumber">Surah an-Nisa&rsquo; (4) : 29</div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا</div>
+      <p class="terjemah">&ldquo;Dan Allah menghalalkan jual beli dan mengharamkan riba.&rdquo;</p>
+      <div class="sumber">Surah al-Baqarah (2) : 275</div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">إِنَّ اللَّهَ يَأْمُرُكُمْ أَن تُؤَدُّوا الْأَمَانَاتِ إِلَىٰ أَهْلِهَا</div>
+      <p class="terjemah">&ldquo;Sesungguhnya Allah menyuruh kamu supaya menyerahkan segala amanah kepada ahlinya (yang berhak menerimanya).&rdquo;</p>
+      <div class="sumber">Surah an-Nisa&rsquo; (4) : 58</div>
+    </div>
+
+    <div class="dalil">
+      <div class="arab">وَأَوْفُوا الْكَيْلَ وَالْمِيزَانَ بِالْقِسْطِ</div>
+      <p class="terjemah">&ldquo;Dan sempurnakanlah sukatan dan timbangan dengan adil.&rdquo;</p>
+      <div class="sumber">Surah al-An'am (6) : 152 &mdash; asas ketepatan pengiraan &amp; caj</div>
+    </div>
+
+    <table class="tl-table">
+      <caption>Terjemahan Operasi &mdash; mengikut jenis aktiviti</caption>
+      <thead><tr><th>Jenis Aktiviti</th><th>Kawalan Syariah Yang Dituntut</th></tr></thead>
+      <tbody>
+        <tr><td class="elemen">Penetapan &amp; pemakluman caj</td><td>Kadar caj dimaklumkan sebelum perkhidmatan diberi &mdash; menghapuskan unsur gharar.</td></tr>
+        <tr><td class="elemen">Penyediaan bil &amp; kutipan bayaran</td><td>Setiap butiran bil sepadan dengan perkhidmatan sebenar; kesilapan dibetulkan dan dipulangkan.</td></tr>
+        <tr><td class="elemen">Pengurusan kredit &amp; tunggakan</td><td>Terma bebas riba; tindakan terhadap penghutang bersifat adil dan tidak menzalimi.</td></tr>
+        <tr><td class="elemen">Perolehan &amp; pemilihan pembekal</td><td>Penilaian telus, pengisytiharan konflik kepentingan, penolakan sebarang bentuk hadiah yang mempengaruhi.</td></tr>
+        <tr><td class="elemen">Pengurusan stor &amp; bekalan</td><td>Kawalan tarikh luput, pusingan stok, dan pencegahan pembaziran sebagai amanah harta.</td></tr>
+        <tr><td class="elemen">Penyelenggaraan &amp; pelupusan aset</td><td>Aset dijaga agar berhemah; pelupusan mengikut prosedur dan direkodkan.</td></tr>
+        <tr><td class="elemen">Pengurusan harta pesakit &amp; derma</td><td>Barang berharga pesakit direkod dan dipulangkan; dana derma diasingkan dan digunakan mengikut niat penderma.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rumusan">
+      <div class="ikon">&#10022;</div>
+      <div>
+        <h4>Rumusan Maqsad</h4>
+        <p>Harta yang masuk melalui jalan yang tidak bersih akan menjejaskan keberkatan seluruh organisasi. <b>Ketelusan kewangan adalah sebahagian daripada pematuhan Syariah</b>, bukan sekadar tadbir urus korporat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= KAEDAH FIQHIYYAH ================= -->
+<section id="kaedah" class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">Alat Pelaksana</div>
+    <h2 class="title">12 Kaedah Fiqh dalam Perubatan</h2>
+    <p class="lead">Maqasid menetapkan <b>apa</b> yang perlu dipelihara. Kaedah fiqh pula menetapkan <b>bagaimana</b> bertindak apabila dua kepentingan bertembung. Dua belas kaedah berikut disenaraikan oleh Jabatan Mufti Wilayah Persekutuan dalam <b>Bayan Linnas Siri Ke-189: Maqasid Syariah dalam Perubatan</b> sebagai kaedah yang berkaitan secara langsung dengan bidang perubatan.</p>
+
+    <div class="kgrid">
+      <div class="kcard">
+        <div class="kn">Kaedah 01</div>
+        <div class="arab">لَا ضَرَرَ وَلَا ضِرَارَ</div>
+        <div class="mk">La Dharara wa la Dhirar &mdash; Tidak boleh memudaratkan diri sendiri dan tidak boleh memudaratkan orang lain.</div>
+        <div class="ap"><b>Aplikasi:</b> Asas imunisasi, kawalan infeksi dan pelaporan insiden &mdash; tindakan yang melindungi pesakit itu sendiri sekali gus melindungi pesakit lain.</div>
+        <div class="ap" style="margin-top:8px;font-size:.8rem;opacity:.8">Rujuk: al-Asybah wa al-Nazha'ir, al-Suyuti</div>
+      </div>
+      <div class="kcard">
+        <div class="kn">Kaedah 02</div>
+        <div class="arab">الضَّرُورَاتُ تُبِيحُ المَحْظُورَاتِ</div>
+        <div class="mk">Adh-Dharurat Tubih al-Mahzurat &mdash; Keadaan darurat mengharuskan perkara yang terlarang.</div>
+        <div class="ap"><b>Aplikasi:</b> Ubat berasaskan bahan haram diharuskan apabila disyorkan oleh pengamal yang dipercayai agama &amp; kepakarannya, serta terbukti tiada alternatif halal.</div>
+        <div class="ap" style="margin-top:8px;font-size:.8rem;opacity:.8">Rujuk: al-Asybah wa al-Nazha'ir, Ibn Nujaim</div>
+      </div>
+      <div class="kcard">
+        <div class="kn">Kaedah 03</div>
+        <div class="arab">الضَّرُورَةُ تُقَدَّرُ بِقَدَرِهَا</div>
+        <div class="mk">Adh-Dharurah Tuqaddar bi Qadariha &mdash; Darurat ditentukan mengikut kadarnya sahaja.</div>
+        <div class="ap"><b>Aplikasi:</b> Pendedahan aurat yang asalnya terlarang diharuskan ketika rawatan <b>hanya setakat kadar yang diperlukan</b> untuk merawat penyakit tersebut.</div>
+        <div class="ap" style="margin-top:8px;font-size:.8rem;opacity:.8">Rujuk: al-Asybah wa al-Nazha'ir, al-Suyuti</div>
+      </div>
+      <div class="kcard">
+        <div class="kn">Kaedah 04</div>
+        <div class="arab">الضَّرَرُ الأَشَدُّ يُزَالُ بِالضَّرَرِ الأَخَفِّ</div>
+        <div class="mk">Adh-Dharar al-Asyadd Yuzal bi al-Akhaff &mdash; Kemudaratan yang lebih berat dihapuskan dengan yang lebih ringan.</div>
+        <div class="ap"><b>Aplikasi:</b> Pemotongan anggota yang telah rosak bagi menghalang penyakit merebak ke organ yang lebih kritikal.</div>
+        <div class="ap" style="margin-top:8px;font-size:.8rem;opacity:.8">Rujuk: Syarh al-Qawa'id al-Fiqhiyyah</div>
+      </div>
+      <div class="kcard">
+        <div class="kn">Kaedah 05</div>
+        <div class="arab">الضَّرَرُ يُزَالُ</div>
+        <div class="mk">Adh-Dhararu Yuzal &mdash; Kemudaratan hendaklah dihilangkan.</div>
+        <div class="ap"><b>Aplikasi:</b> Ketumbuhan atau tisu yang disahkan memudaratkan wajib dikeluarkan. Asas keseluruhan sistem keselamatan pesakit.</div>
+        <div class="ap" style="margin-top:8px;font-size:.8rem;opacity:.8">Rujuk: al-Wajiz fi Idhah Qawa'id al-Fiqh al-Kulliyyah</div>
+      </div>
+      <div class="kcard">
+        <div class="kn">Kaedah 06</div>
+        <div class="arab">الضَّرَرُ يُدْفَعُ بِقَدَرِ الإِمْكَانِ</div>
+        <div class="mk">Adh-Dhararu Yudfa' bi Qadar al-Imkan &mdash; Kemudaratan dihindari mengikut kadar kemampuan.</div>
+        <div class="ap"><b>Aplikasi:</b> Kalibrasi peralatan, penyelenggaraan berkala, saringan kesihatan dan langkah pencegahan setakat yang termampu organisasi.</div>
+        <div class="ap" style="margin-top:8px;font-size:.8rem;opacity:.8">Rujuk: al-Wajiz fi Idhah Qawa'id al-Fiqh al-Kulliyyah</div>
+      </div>
+      <div class="kcard">
+        <div class="kn">Kaedah 07</div>
+        <div class="arab">الضَّرَرُ لَا يُزَالُ بِمِثْلِهِ</div>
+        <div class="mk">Adh-Dhararu la Yuzalu bi Mithlih &mdash; Kemudaratan tidak dihilangkan dengan kemudaratan yang seumpamanya.</div>
+        <div class="ap"><b>Aplikasi:</b> Pendermaan organ tidak dibenarkan sekiranya ia mengorbankan nyawa penderma itu sendiri.</div>
+        <div class="ap" style="margin-top:8px;font-size:.8rem;opacity:.8">Rujuk: Syarh al-Qawa'id al-Fiqhiyyah</div>
+      </div>
+      <div class="kcard">
+        <div class="kn">Kaedah 08</div>
+        <div class="arab">يُتَحَمَّلُ الضَّرَرُ الخَاصُّ لِدَفْعِ ضَرَرٍ عَامٍّ</div>
+        <div class="mk">Yutahammal adh-Dharar al-Khas li Daf'i Dharar 'Am &mdash; Kemudaratan khusus ditanggung bagi menolak kemudaratan umum.</div>
+        <div class="ap"><b>Aplikasi:</b> Asas perintah kuarantin, pengasingan kes berjangkit dan sekatan lawatan semasa wabak.</div>
+        <div class="ap" style="margin-top:8px;font-size:.8rem;opacity:.8">Rujuk: al-Asybah wa al-Nazha'ir, Ibn Nujaim</div>
+      </div>
+      <div class="kcard">
+        <div class="kn">Kaedah 09</div>
+        <div class="arab">دَرْءُ المَفَاسِدِ أَوْلَى مِنْ جَلْبِ المَصَالِحِ</div>
+        <div class="mk">Dar'u al-Mafasid Awla min Jalb al-Masalih &mdash; Menghindari kerosakan lebih diutamakan daripada memperoleh kebaikan.</div>
+        <div class="ap"><b>Aplikasi:</b> Bahan memabukkan tetap dilarang walaupun padanya ada sedikit manfaat, kerana mudaratnya lebih besar.</div>
+        <div class="ap" style="margin-top:8px;font-size:.8rem;opacity:.8">Rujuk: al-Asybah wa al-Nazha'ir, al-Subki</div>
+      </div>
+      <div class="kcard">
+        <div class="kn">Kaedah 10</div>
+        <div class="arab">الأُمُورُ بِمَقَاصِدِهَا</div>
+        <div class="mk">Al-Umuru bi Maqasidiha &mdash; Setiap perkara dinilai mengikut niat dan tujuannya.</div>
+        <div class="ap"><b>Aplikasi:</b> Hukum pembedahan plastik berbeza antara tujuan kecantikan semata-mata dengan tujuan perubatan yang sah.</div>
+        <div class="ap" style="margin-top:8px;font-size:.8rem;opacity:.8">Rujuk: al-Asybah wa al-Nazha'ir</div>
+      </div>
+      <div class="kcard">
+        <div class="kn">Kaedah 11</div>
+        <div class="arab">المَشَقَّةُ تَجْلِبُ التَّيْسِيرَ</div>
+        <div class="mk">Al-Masyaqqah Tajlib at-Taysir &mdash; Kesukaran membawa kepada keringanan.</div>
+        <div class="ap"><b>Aplikasi:</b> Pesakit berluka atau kulitnya sensitif kepada air dibenarkan bertayammum. Asas seluruh rukhsah ibadah pesakit.</div>
+        <div class="ap" style="margin-top:8px;font-size:.8rem;opacity:.8">Rujuk: al-Asybah wa al-Nazha'ir, al-Suyuti</div>
+      </div>
+      <div class="kcard">
+        <div class="kn">Kaedah 12</div>
+        <div class="arab">العِبْرَةُ لِلْغَالِبِ الشَّائِعِ لَا لِلنَّادِرِ</div>
+        <div class="mk">Al-'Ibrah li al-Ghalib asy-Sya'i' la li an-Nadir &mdash; Yang diambil kira ialah keadaan yang lazim, bukan kes terpencil.</div>
+        <div class="ap"><b>Aplikasi:</b> Penilaian risiko klinikal dan protokol rawatan disandarkan kepada kelaziman, bukan kepada kes luar biasa yang jarang berlaku.</div>
+        <div class="ap" style="margin-top:8px;font-size:.8rem;opacity:.8">Rujuk: Syarh al-Qawa'id al-Fiqhiyyah</div>
+      </div>
+    </div>
+
+    <div class="nota"><b>Pengendalian pertembungan maqasid &mdash;</b> Urutan keutamaan yang diguna pakai ialah <b>Agama &rarr; Nyawa &rarr; Akal &rarr; Keturunan &amp; Maruah &rarr; Harta</b>. Namun dalam kecemasan yang mengancam nyawa, tindakan menyelamatkan nyawa didahulukan kerana kehilangan nyawa menutup pintu kepada seluruh maqsad yang lain. Setiap keputusan sebegini hendaklah <b>direkodkan</b> dan dirujuk kepada Jabatan Perundangan dan Perkhidmatan Syariah.</div>
+  </div>
+</section>
+
+<!-- ================= KESIMPULAN ================= -->
+<section id="kesimpulan" class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">Penutup</div>
+    <h2>Daripada Maqasid, Lahir Nilai. Daripada Nilai, Lahir Kawalan.</h2>
+    <p>Dokumen ini adalah titik permulaan. Ia menjelaskan <b>mengapa</b> Hospital PUSRAWI menetapkan nilai-nilai murni tertentu, dan <b>mengapa</b> 48 dokumen SCCP disusun sebagaimana adanya.</p>
+    <p>Tanpa Maqasid, nilai murni menjadi slogan dan SCCP menjadi senarai semak. Dengan Maqasid, kedua-duanya menjadi <b>ibadah yang tersusun</b>.</p>
+
+    <div class="chain">
+      <span>Maqasid Syariah</span><i>&rarr;</i>
+      <span>Nilai-Nilai Murni (AM01)</span><i>&rarr;</i>
+      <span>Dokumen Asas AM02&ndash;AM05</span><i>&rarr;</i>
+      <span>SCCP PP &middot; PK &middot; SK</span>
+    </div>
+
+    <p style="margin-top:26px;font-size:.95rem;opacity:.85">Selaras dengan MS 1900:2015 &mdash; Sistem Pengurusan Kualiti: Keperluan dari Perspektif Islam</p>
+  </div>
+</section>
+
+<footer>
+  <p><b>Hospital PUSRAWI Sdn. Bhd.</b> &mdash; Jabatan Perundangan dan Perkhidmatan Syariah</p>
+  <p style="margin-top:6px">Dokumen Asas Pematuhan Syariah &middot; MS 1900:2015</p>
+</footer>
+
+<button id="toTop" aria-label="Kembali ke atas">&uarr;</button>
+
+<script>
+(function(){
+  var prog=document.getElementById('progress'),top=document.getElementById('toTop');
+  var links=[].slice.call(document.querySelectorAll('.topnav-inner a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+
+  function onScroll(){
+    var h=document.documentElement;
+    var pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+    prog.style.width=Math.min(pct,100)+'%';
+    if(h.scrollTop>420){top.classList.add('show');}else{top.classList.remove('show');}
+    var idx=-1;
+    for(var i=0;i<secs.length;i++){
+      if(secs[i] && secs[i].getBoundingClientRect().top<=140){idx=i;}
+    }
+    links.forEach(function(a,i){a.classList.toggle('active',i===idx);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    },{threshold:.08});
+    [].slice.call(document.querySelectorAll('.reveal')).forEach(function(el){io.observe(el);});
+  }else{
+    [].slice.call(document.querySelectorAll('.reveal')).forEach(function(el){el.classList.add('in');});
+  }
+})();
+</script>
+
+<a href="index.html" style="position:fixed;bottom:18px;left:18px;z-index:999;display:inline-flex;align-items:center;gap:8px;background:#081C33;color:#F0D878;border:1.5px solid #C9A227;border-radius:24px;padding:11px 20px;font:700 13.5px/1 'Segoe UI',system-ui,sans-serif;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.28)">&#8592; Portal Utama</a>
+</body>
+</html>

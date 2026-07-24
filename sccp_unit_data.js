@@ -1,0 +1,55 @@
+export const UNIT = [
+  // PP — Perkhidmatan Pengurusan (20)
+  {k:"SCCP/PP/01",n:"Jabatan Perundangan & Perkhidmatan Syariah",c:"PP",p:[["Penyediaan Kontrak / Perjanjian / MoU","PPJ/LGL/01"],["Pengurusan Kes Medico-Legal","PPJ/LGL/02"],["Ziarah Pesakit","PPJ/BK/01"],["Pembangunan Kerohanian","PPJ/BK/03"],["Pengurusan Ibadah Pesakit","PPJ/BK/04"],["Pengurusan Isu Syariah","PPJ/BK/05"]]},
+  {k:"SCCP/PP/02",n:"Jabatan Sumber Manusia",c:"PP",p:[["Pelantikan","PPJ/JSM/01"],["Tempoh Kontrak & Pengesahan Jawatan","PPJ/JSM/02"],["Induksi Wargakerja","PPJ/JSM/05"],["Tanggung Kerja","PPJ/JSM/06"],["Peminjaman Wargakerja","PPJ/JSM/08"],["Kenaikan Pangkat","PPJ/JSM/09"],["Kenaikan Gaji Tahunan","PPJ/JSM/10"],["Penilaian Prestasi","PPJ/JSM/11"],["Penyediaan Latihan & Kursus","PPJ/JSM/12"],["Cuti","PPJ/JSM/13"],["Sakit Berpanjangan","PPJ/JSM/14"],["Pemeriksaan Kesihatan","PPJ/JSM/15"],["Waktu Kerja","PPJ/JSM/16"],["Peraturan Berpakaian","PPJ/JSM/17"],["Pembayaran Tuntutan & Elaun","PPJ/JSM/19"],["Ketidakpuasan Kerja","PPJ/JSM/25"],["Gangguan Seksual","PPJ/JSM/26"],["Disiplin & Amaran","PPJ/JSM/28"],["Hadiah, Ganjaran atau Tajaan","PPJ/JSM/32"],["Penyalahgunaan Dadah & Alkohol","PPJ/JSM/33"]]},
+  {k:"SCCP/PP/03",n:"Jabatan Kewangan",c:"PP",p:[["Operasi Jabatan Kewangan","PPJ/KEW/01"],["Perolehan","PPJ/KEW/06"],["Bayaran Fi Pakar","PPJ/KEW/10"],["Pengurusan Maklumat Aset Tetap","PPJ/KEW/13"],["Perolehan Ubat","PPJ/KEW/17"],["Pengurusan Tabung Wakalah PUSRAWI","PPJ/KEW/22"]]},
+  {k:"SCCP/PP/04",n:"Unit Kawalan Kredit",c:"PP",p:[["Kawalan Kredit","POJ/CR/01"]]},
+  {k:"SCCP/PP/05",n:"Unit Perolehan",c:"PP",p:[["Pembelian Bekalan Stok (Disposable & Barangan Am) & Konsainan","PPJ/PUR/01"]]},
+  {k:"SCCP/PP/06",n:"Unit Bil",c:"PP",p:[["Pengeluaran Bil Pesakit Dalam","PPJ/BILL/01"],["Pengeluaran Bil Pesakit Luar","PPJ/BILL/02"],["Pengeluaran Bil Pesakit Luar Tunai","PPJ/JW/01"]]},
+  {k:"SCCP/PP/07",n:"Unit Pengurusan Material",c:"PP",p:[["Pengurusan Borang Disposable serta Barangan Am","POJ/UPM/01"],["Pengurusan Dokumen Terkawal di Unit Pengurusan Material","POJ/UPM/02"]]},
+  {k:"SCCP/PP/08",n:"Pentadbiran & Pembangunan",c:"PP",p:[["Kontraktor Luar","PPH/ADM/05"]]},
+  {k:"SCCP/PP/09",n:"Jabatan Kualiti",c:"PP",p:[["Kawalan Dokumen","PPJ/QLT/01"],["Kawalan Rekod Sistem Pengurusan Kualiti","PPJ/QLT/02"],["Mesyuarat Kajian Semula Pengurusan","PPJ/QLT/03"],["Audit Dalaman","PPJ/QLT/04"],["Aktiviti Penambahbaikan Berterusan","PPJ/QLT/05"],["Ketakakuran & Tindakan Pembetulan","PPJ/QLT/06"],["Petunjuk Prestasi Utama","PPJ/QLT/08"],["Laporan Insiden","PPH/ADM/10"]]},
+  {k:"SCCP/PP/10",n:"Jabatan Pemasaran",c:"PP",p:[["Pengurusan Pelanggan Korporat Baru & Sedia Ada","PPJ/MAR/01"],["Hak Pesakit & Keluarga","PPH/ADM/09"],["Aduan Ketidakpuasan Pelanggan","PPH/ADM/03"],["Pemantauan & Mengemaskini Laman Sesawang, Enjin Carian & Media Sosial","PPJ/UPD/01"]]},
+  {k:"SCCP/PP/11",n:"Unit Pendaftaran",c:"PP",p:[["Pendaftaran Pesakit","PPH/ADM/17"]]},
+  {k:"SCCP/PP/12",n:"Unit Temujanji",c:"PP",p:[["Pengurusan Temujanji","PPJ/TJ/01"]]},
+  {k:"SCCP/PP/13",n:"Unit Audit Dalam",c:"PP",p:[["Unit Audit Dalam","PPJ/UAD/01"]]},
+  {k:"SCCP/PP/14",n:"Jabatan Teknologi Informasi",c:"PP",p:[["Pengendalian Kerosakan Teknologi Maklumat","PPJ/IT/01"],["Pengurusan Back-up Data","PPJ/IT/02"],["Pengurusan E-mel & Internet","PPJ/IT/03"],["Pengurusan Perkakasan & Perisian Komputer","PPJ/IT/04"],["Pengurusan Web","PPJ/IT/05"],["Pengurusan Keselamatan Firewall","PPJ/IT/06"],["Operasi Jabatan","PPJ/IT/07"]]},
+  {k:"SCCP/PP/15",n:"Jabatan Penyelenggaraan",c:"PP",p:[["Pengurusan Kerosakan Alat Sokongan","PPJ/BM/01"],["Penyelenggaraan Pencegahan Berjadual","PPJ/BM/02"]]},
+  {k:"SCCP/PP/16",n:"Unit Biomedik",c:"PP",p:[["Penyelenggaraan Berkala & Terancang Peralatan","PPJ/BE/02"],["Pemantauan Kalibrasi Peralatan Penentu Ukuran","PPJ/BE/03"],["Penerimaan & Pentauliahan Peralatan Baru Biomedikal","PPJ/BE/04"]]},
+  {k:"SCCP/PP/17",n:"Unit Keselamatan, Kesihatan & Alam Sekitar",c:"PP",p:[["Pengurusan Bahan Kimia & Bahan Berbahaya","PPJ/KKAS/01"],["Pengurusan Makhluk Perosak","PPJ/KKAS/02"],["Pengurusan Risiko","PPH/ADM/04"],["Notifikasi & Siasatan Kemalangan","PPJ/KKAS/04"],["Pelan Tindakan Kecemasan","PPH/ADM/13"]]},
+  {k:"SCCP/PP/18",n:"Unit Sekuriti",c:"PP",p:[["Pengurusan Sekuriti Hospital","PPJ/SS/01"],["Melawat Hospital PUSRAWI","PPJ/SS/02"],["Pengurusan Pembantu Keselamatan Am","PPJ/SS/03"],["Pengurusan Insiden","PPJ/SS/04"],["Keselamatan Kerja-Kerja Kontraktor","PPJ/SS/05"],["Pengurusan Kebakaran","PPH/ADM/19"]]},
+  {k:"SCCP/PP/19",n:"Unit Kebersihan",c:"PP",p:[["Pengurusan Kebersihan","PPH/ADM/11"]]},
+  {k:"SCCP/PP/20",n:"Unit Linen",c:"PP",p:[["Pengurusan Linen","PPJ/JPP/03"]]},
+  // PK — Perkhidmatan Klinikal (17)
+  {k:"SCCP/PK/01",n:"Jabatan Kejururawatan",c:"PK",p:[["Kemasukan Pesakit","PPH/MED/01"],["Pemindahan Pesakit","PPH/MED/02"],["Discaj","PPH/MED/04"],["Pesanan Ubat Melalui Telefon / Lisan","PPH/MED/11"],["Penggantian Sementara","PPJ/NUR/01"],["Orientasi Kejururawatan","PPJ/NUR/02"],["Pengurusan Harta Benda Pesakit","PPJ/NUR/05"],["Latihan Jangka Pendek Kejururawatan","PPJ/NUR/14"]]},
+  {k:"SCCP/PK/02",n:"Unit Kawalan Infeksi",c:"PK",p:[["Hand Hygiene","PPJ/KWI/01"],["Perawatan Isolasi / Pengasingan","PPJ/KWI/02"],["Langkah Pencegahan","PPJ/KWI/03"],["Pengurusan & Pencegahan Penyakit Berjangkit","PPJ/KWI/05"],["Kawalan Infeksi untuk Teknik Aseptik & Amalan Pensterilan/Disinfeksi","PPJ/KWI/11"]]},
+  {k:"SCCP/PK/03",n:"Wad Medikal Al-Aman",c:"PK",p:[["Pengurusan Pesakit Perubatan","PPJ/NUR/15"]]},
+  {k:"SCCP/PK/04",n:"Wad Surgikal As-Salam",c:"PK",p:[["Pengurusan Pesakit Pembedahan","PPJ/NUR/07"]]},
+  {k:"SCCP/PK/05",n:"Jabatan Obstetrik & Ginekologi",c:"PK",p:[["Operasi Jabatan Obstetrik & Ginekologi","PPJ/MAT/01"],["Sistem Kawalan Keselamatan Bayi","PPJ/MAT/07"],["Pengurusan Bayi di Bilik Rawatan Bayi","PPJ/MAT/12"]]},
+  {k:"SCCP/PK/06",n:"Wad Pediatrik Ar-Raihan",c:"PK",p:[["Pengurusan Pesakit Kanak-Kanak Untuk Berkhatan","PPJ/NUR/07"]]},
+  {k:"SCCP/PK/07",n:"Jabatan Kemalangan & Kecemasan",c:"PK",p:[["Pengurusan Kes Kecemasan","PPJ/AE/01"],["Panggilan Ambulans","PPJ/AE/02"]]},
+  {k:"SCCP/PK/08",n:"Wad Bersalin",c:"PK",p:[["Operasi Wad Bersalin","PPJ/MAT/02"],["Pengurusan Pesakit Bersalin","PPJ/MAT/03"],["Pengurusan Plasenta","PPJ/MAT/08"]]},
+  {k:"SCCP/PK/09",n:"Dewan Bedah & Anestesiologi",c:"PK",p:[["Operasi Jabatan Anestesiologi","PPJ/ANES/01"]]},
+  {k:"SCCP/PK/10",n:"Unit Rawatan Harian (UPE)",c:"PK",p:[["Pengurusan Pesakit Rawatan Harian","PPJ/DCS/01"],["Pengurusan Pesakit Menjalani Endoskopi","PPJ/DCS/02"]]},
+  {k:"SCCP/PK/11",n:"Unit Rawatan Rapi (ICU)",c:"PK",p:[["Pengurusan Pesakit di Unit Rawatan Rapi","PPJ/ICU/01"],["End of Life Care","PPJ/ICU/03"]]},
+  {k:"SCCP/PK/12",n:"Makmal Kardiovaskular",c:"PK",p:[["Prosedur Pengurusan Pesakit Koronari Angiogram","PPJ/KAR/02"]]},
+  {k:"SCCP/PK/13",n:"Unit Hemodialisis",c:"PK",p:[["Operasi Hemodialisis","PPJ/HD/01"],["Pengurusan Pesakit di Unit Hemodialisis","PPJ/HD/02"]]},
+  {k:"SCCP/PK/14",n:"CSSU (Central Sterile Services Unit)",c:"PK",p:[["Operasi Central Sterile Services Unit","PPJ/CSSU/01"],["Perancangan Kontingensi Kerosakan Autoclave","PPJ/CSSU/02"]]},
+  {k:"SCCP/PK/15",n:"Klinik Pesakit Luar",c:"PK",p:[["Kemasukan Pesakit Luar Klinik Pakar","PPJ/NUR/18"]]},
+  {k:"SCCP/PK/16",n:"Pemeriksaan Kesihatan Eksekutif Al-Ihsan",c:"PK",p:[["Pengambilan Sampel Urin","PPJ/PPE/01"],["Pengendalian Pemeriksaan Kesihatan","PPJ/PPE/03"]]},
+  {k:"SCCP/PK/17",n:"Mortuari",c:"PK",p:[["Pengurusan Kematian & Jenazah","PPH/MED/03"]]},
+  // SK — Sokongan Klinikal (6)
+  {k:"SCCP/SK/01",n:"Jabatan Rekod Perubatan",c:"SK",p:[["Pengurusan Rekod Perubatan Pesakit","PPJ/MR/01"],["Dokumentasi Rekod Perubatan Pesakit","PPJ/MR/02"],["Pengurusan Rekod Perubatan Pesakit Dalam","PPJ/MR/03"],["Laporan Perubatan","PPJ/MR/06"]]},
+  {k:"SCCP/SK/02",n:"Jabatan Farmasi",c:"SK",p:[["Polisi Am Jabatan Farmasi","PPJ/PHAR/01"],["Pendispensan Ubat","PPJ/PHAR/02"]]},
+  {k:"SCCP/SK/03",n:"Makmal Patologi & Transfusi Darah",c:"SK",p:[["Operasi Perkhidmatan Patologi","PPJ/LAB/01"],["Pemprosesan Spesimen","PPJ/LAB/02"],["Pengurusan Stok Makmal","PPJ/LAB/03"],["Pengurusan Pinjaman Peralatan Makmal","PPJ/LAB/04"],["Pengurusan Spesimen ke Makmal Luar","PPJ/LAB/05"],["Pengurusan Sisa Klinikal, Sisa Awam, Sisa Bahan Kimia & Sisa Makmal","PPJ/LAB/06"]]},
+  {k:"SCCP/SK/04",n:"Jabatan Radiologi",c:"SK",p:[["Pengurusan Pengimejan","PPJ/DID/01"],["Pemberian Kontras & Pengurusan Reaksi Kepada Kontras Media","PPJ/DID/02"]]},
+  {k:"SCCP/SK/05",n:"Jabatan Fisioterapi",c:"SK",p:[["Pengurusan Pesakit Luar untuk Fisioterapi","PPJ/PSIO/01"],["Pengurusan Pesakit Dalam untuk Fisioterapi","PPJ/PSIO/02"],["Pengurusan Sisa Klinikal Jabatan Fisioterapi","PPJ/PSIO/03"]]},
+  {k:"SCCP/SK/06",n:"Jabatan Dietetik & Dietari",c:"SK",p:[["Operasi Jabatan Dietetik & Dietari","PPJ/DIET/01"],["Perkhidmatan Nasihat Pemakanan","PPJ/DIET/02"],["Pakaian & Kebersihan Diri Pengendalian Makanan","PPJ/DIET/04"],["Kawalan Makhluk Perosak","PPJ/DIET/05"],["Pengurusan Sisa Buangan & Sisa Makanan","PPJ/DIET/06"],["Penerimaan, Penyimpanan & Pengendalian Makanan","PPJ/DIET/07"],["Pembersihan & Pencucian","PPJ/DIET/08"],["Kawalan Stok","PPJ/DIET/10"],["Pesanan, Penerimaan & Penghidangan Bekalan Makanan","PPJ/DIET/12"],["Penyediaan Makanan","PPJ/DIET/15"]]}
+];
+
+export const KATEGORI = {
+  AM: {nama:"Asas / Nilai Murni", warna:"#0d7a5f", desc:"Dokumen induk yang dirujuk oleh semua unit"},
+  PP: {nama:"Perkhidmatan Pengurusan", warna:"#1565a8", desc:"20 unit pentadbiran & sokongan pengurusan"},
+  PK: {nama:"Perkhidmatan Klinikal", warna:"#a8434f", desc:"17 unit rawatan & perkhidmatan klinikal"},
+  SK: {nama:"Sokongan Klinikal", warna:"#8a6212", desc:"6 unit sokongan klinikal"}
+};

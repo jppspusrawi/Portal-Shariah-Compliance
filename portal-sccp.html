@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal SCCP — Hospital PUSRAWI Sdn. Bhd.</title>
+<style>
+:root{
+  --hijau:#0d5c47; --hijau2:#0d7a5f; --hijau-lembut:#e8f3ef;
+  --emas:#a8842c; --emas-lembut:#fbf5e6;
+  --teks:#1d2721; --teks2:#5b6b63; --garis:#dfe6e2; --bg:#f5f7f6; --putih:#fff;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  background:var(--bg);color:var(--teks);line-height:1.6;font-size:15px}
+a{color:var(--hijau2)}
+
+/* ---- Header ---- */
+header{background:linear-gradient(135deg,#0d5c47,#0a4437);color:#fff;padding:18px 20px 14px}
+.hwrap{max-width:1180px;margin:0 auto}
+.hrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo{width:44px;height:44px;border-radius:10px;background:var(--emas);display:grid;place-items:center;
+  font-weight:800;font-size:14px;color:#2a2000;flex:none;letter-spacing:.5px}
+h1{margin:0;font-size:19px;font-weight:700;letter-spacing:.2px}
+.sub{font-size:12.5px;opacity:.85;margin-top:2px}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.badge{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  padding:3px 10px;border-radius:20px;font-size:11.5px}
+
+/* ---- Nav ---- */
+nav{background:var(--putih);border-bottom:1px solid var(--garis);position:sticky;top:0;z-index:50;
+  box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.nwrap{max-width:1180px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;padding:0 10px}
+.tab{border:0;background:none;padding:12px 14px;font-size:13.5px;font-weight:600;color:var(--teks2);
+  cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;font-family:inherit}
+.tab:hover{color:var(--hijau2);background:var(--hijau-lembut)}
+.tab.on{color:var(--hijau);border-bottom-color:var(--emas)}
+
+/* ---- Layout ---- */
+main{max-width:1180px;margin:0 auto;padding:18px 16px 60px}
+.searchbar{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.searchbar input{flex:1;min-width:200px;padding:11px 14px;border:1px solid var(--garis);border-radius:9px;
+  font-size:14.5px;font-family:inherit;background:var(--putih)}
+.searchbar input:focus{outline:2px solid var(--hijau2);outline-offset:-1px}
+.btn{padding:11px 15px;border:1px solid var(--garis);background:var(--putih);border-radius:9px;
+  cursor:pointer;font-size:13.5px;font-weight:600;color:var(--teks2);font-family:inherit}
+.btn:hover{background:var(--hijau-lembut);color:var(--hijau);border-color:var(--hijau2)}
+.btn.on{background:var(--hijau);color:#fff;border-color:var(--hijau)}
+
+.notis{background:var(--emas-lembut);border:1px solid #e6d4a3;border-left:4px solid var(--emas);
+  padding:12px 14px;border-radius:8px;font-size:13px;margin-bottom:18px;color:#5c4818}
+.notis b{color:#3d3010}
+
+h2.sec{font-size:17px;margin:26px 0 4px;color:var(--hijau);display:flex;align-items:center;gap:9px}
+h2.sec .kod{font-size:11px;background:var(--hijau);color:#fff;padding:2px 8px;border-radius:5px;font-weight:600}
+p.secnote{margin:2px 0 14px;font-size:13px;color:var(--teks2)}
+
+/* ---- Kad ---- */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.card{background:var(--putih);border:1px solid var(--garis);border-radius:11px;overflow:hidden}
+.chead{padding:13px 15px;cursor:pointer;display:flex;align-items:flex-start;gap:11px;user-select:none}
+.chead:hover{background:var(--hijau-lembut)}
+.pil{flex:none;width:30px;height:30px;border-radius:8px;background:var(--hijau);color:#fff;
+  display:grid;place-items:center;font-weight:700;font-size:13px}
+.ctitle{flex:1;min-width:0}
+.ctitle strong{display:block;font-size:14.5px;line-height:1.35}
+.ctitle span{display:block;font-size:12px;color:var(--teks2);margin-top:2px}
+.chev{flex:none;color:var(--teks2);font-size:12px;transition:transform .2s;margin-top:5px}
+.card.open .chev{transform:rotate(90deg)}
+.cbody{display:none;padding:2px 15px 16px;border-top:1px solid var(--garis)}
+.card.open .cbody{display:block}
+
+.lbl{font-size:10.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--teks2);
+  margin:14px 0 6px}
+ul.k{margin:0;padding-left:19px}
+ul.k li{margin-bottom:5px;font-size:13.8px}
+.rekod{display:flex;flex-wrap:wrap;gap:6px}
+.rekod span{background:var(--hijau-lembut);border:1px solid #c8e0d7;color:#0b5240;
+  padding:3px 9px;border-radius:6px;font-size:12px}
+
+/* ---- Dalil ---- */
+.dalil{background:#fbfcfb;border:1px solid var(--garis);border-left:3px solid var(--emas);
+  border-radius:8px;padding:11px 13px;margin-bottom:9px}
+.dref{font-size:12px;font-weight:700;color:var(--emas);margin-bottom:7px}
+.ar{font-family:"Traditional Arabic","Amiri","Scheherazade New","Noto Naskh Arabic","Segoe UI",serif;
+  direction:rtl;text-align:right;font-size:1.55em;line-height:2.15;color:#0b3f32;margin:6px 0 9px;
+  padding:4px 2px}
+.tr{font-size:13.3px;color:var(--teks2);font-style:italic;border-top:1px dashed var(--garis);padding-top:7px}
+
+/* ---- Direktori ---- */
+.ucard{background:var(--putih);border:1px solid var(--garis);border-radius:11px;padding:14px 15px}
+.ucard .kod2{font-size:11px;font-weight:700;color:#fff;padding:2px 8px;border-radius:5px;display:inline-block}
+.ucard h3{margin:8px 0 9px;font-size:14.5px;line-height:1.35}
+.ucard ol{margin:0;padding-left:18px}
+.ucard ol li{font-size:12.9px;margin-bottom:4px;color:var(--teks2)}
+.ucard ol li b{color:var(--teks);font-weight:600}
+.ucard ol li code{font-size:11px;background:var(--bg);padding:1px 5px;border-radius:4px;color:#6a5220}
+
+/* ---- Statistik ---- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:20px}
+.stat{background:var(--putih);border:1px solid var(--garis);border-radius:11px;padding:14px;text-align:center}
+.stat b{display:block;font-size:26px;color:var(--hijau);line-height:1.1}
+.stat span{font-size:12px;color:var(--teks2)}
+
+.empty{text-align:center;padding:40px 20px;color:var(--teks2);font-size:14px}
+footer{max-width:1180px;margin:0 auto;padding:20px 16px 40px;font-size:12px;color:var(--teks2);
+  border-top:1px solid var(--garis)}
+.hide{display:none!important}
+mark{background:#fff2a8;padding:0 1px;border-radius:2px}
+
+
+/* ---- Unit berperingkat ---- */
+.unit{background:var(--putih);border:1px solid var(--garis);border-radius:11px;margin-bottom:11px;overflow:hidden}
+.uhead{padding:13px 15px;cursor:pointer;display:flex;align-items:center;gap:11px;user-select:none}
+.uhead:hover{background:var(--hijau-lembut)}
+.uhead .kod2{font-size:10.5px;font-weight:700;color:#fff;padding:3px 8px;border-radius:5px;flex:none}
+.uhead b{flex:1;font-size:15px}
+.uhead .cnt{font-size:11.5px;color:var(--teks2);background:var(--bg);padding:2px 9px;border-radius:12px;flex:none}
+.ubody{display:none;padding:0 15px 14px;border-top:1px solid var(--garis)}
+.unit.open .ubody{display:block}
+.unit.open .uhead .chev{transform:rotate(90deg)}
+
+.pol{margin-top:14px;border-left:3px solid var(--garis);padding-left:13px}
+.pol h4{margin:0 0 3px;font-size:13.5px;color:var(--hijau)}
+.pol .pkod{font-size:11px;color:var(--teks2);font-family:ui-monospace,Consolas,monospace}
+
+.isu{background:#fbfcfb;border:1px solid var(--garis);border-radius:9px;padding:11px 13px;margin-top:9px}
+.isu .ino{font-size:11px;font-weight:700;color:#fff;background:var(--teks2);padding:1px 7px;border-radius:4px;margin-right:7px}
+.isu .ipro{font-size:14px;font-weight:600;line-height:1.4}
+.isu .iam{font-size:11.5px;color:var(--teks2);margin-top:3px}
+.isu dl{margin:9px 0 0;display:grid;grid-template-columns:112px 1fr;gap:4px 10px;font-size:13px}
+.isu dt{font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--teks2);padding-top:2px}
+.isu dd{margin:0}
+.isu dd ul{margin:0;padding-left:16px}
+.isu dd li{margin-bottom:3px}
+.tagrow{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.tg{font-size:10.5px;background:var(--emas-lembut);border:1px solid #e6d4a3;color:#6b5418;
+  padding:2px 8px;border-radius:11px}
+.ref{background:var(--hijau-lembut);border:1px solid #c8e0d7;color:#0b5240;padding:2px 8px;
+  border-radius:5px;font-size:12px;display:inline-block;margin:2px 4px 2px 0}
+.filt{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.filt button{font-size:12px;padding:6px 12px;border:1px solid var(--garis);background:var(--putih);
+  border-radius:20px;cursor:pointer;font-family:inherit;color:var(--teks2)}
+.filt button:hover{border-color:var(--hijau2);color:var(--hijau)}
+.filt button.on{background:var(--hijau);color:#fff;border-color:var(--hijau)}
+@media(max-width:560px){.isu dl{grid-template-columns:1fr;gap:2px}.isu dt{margin-top:7px}}
+
+@media print{
+  nav,.searchbar,.btn,.chev{display:none!important}
+  .cbody,.ubody{display:block!important}
+  body{background:#fff}
+  .card,.ucard,.unit,.isu{break-inside:avoid;border-color:#bbb}
+}
+@media(max-width:560px){
+  h1{font-size:16px}.ar{font-size:1.3em;line-height:2}
+  main{padding:14px 11px 50px}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="hwrap">
+  <div class="hrow">
+   <div class="logo">SCCP</div>
+   <div>
+     <h1>Portal Rujukan SCCP — Hospital PUSRAWI Sdn. Bhd.</h1>
+     <div class="sub">Shariah Critical Control Point · Rujukan Dalaman Wargakerja</div>
+   </div>
+  </div>
+  <div class="badges">
+   <span class="badge">MS 1900:2015</span>
+   <span class="badge">48 Dokumen SCCP</span>
+   <span class="badge">Dokumen Terkawal — Kegunaan Dalaman</span>
+  </div>
+ </div>
+</header>
+
+<nav><div class="nwrap" id="nav"></div></nav>
+
+<main>
+ <div class="searchbar">
+   <input id="q" type="search" placeholder="Cari apa sahaja — nilai, hukum, unit, polisi, dalil…" autocomplete="off">
+   <button class="btn" id="bAr">Sembunyi Arab</button>
+   <button class="btn" id="bAll">Buka Semua</button>
+   <button class="btn" onclick="window.print()">Cetak</button>
+ </div>
+ <div id="view"></div>
+</main>
+
+<footer>
+ <b>Hospital PUSRAWI Sdn. Bhd.</b> — Jabatan Perundangan &amp; Perkhidmatan Syariah dengan kerjasama Jabatan Kualiti.<br>
+ Portal ini adalah ringkasan rujukan pantas. Dokumen SCCP asal yang ditandatangani kekal sebagai rujukan rasmi dan muktamad.
+</footer>
+
+<script>
+/* ============ DATA SCCP HOSPITAL PUSRAWI ============ */
+
+const AM01 = {
+  kod: "SCCP/AM/01", tajuk: "Nilai-Nilai Murni", tarikh: "23/11/2023",
+  nota: "Tujuh nilai murni Hospital PUSRAWI membentuk akronim P-U-S-R-A-W-I. Rekod penilaian bagi kesemua nilai ialah Borang Penilaian Prestasi (JSM 8-01 / JSM 8-02 / JSM 8-03).",
+  nilai: [
+    {
+      no: "1.1", en: "Professionalism", bm: "Profesionalisme", huruf: "P",
+      kriteria: [
+        "Mempunyai kebolehpercayaan yang tinggi, bertindak dengan konsisten, memiliki kejujuran sesama pekerja, majikan dan pelanggan.",
+        "Menyampaikan hasil kerja mengikut piawaian kualiti dan skala yang ditetapkan.",
+        "Berketerampilan menarik, kemas dan menunjukkan imej Islam semasa berada di dalam premis hospital.",
+        "Sentiasa menepati masa dalam setiap tindakan yang dilakukan.",
+        "Mengamalkan budaya menawarkan bantuan kepada semua orang — wargakerja, pelawat, pesakit atau sesiapa sahaja dalam premis hospital.",
+        "Mengamalkan tatacara bercakap dengan tetamu: (a) berdiri dengan kedua belah tangan di hadapan, tapak tangan kanan di atas tangan kiri; (b) memandang wajah; (c) menunjukkan ekspresi muka yang sepadan.",
+        "Mengamalkan budaya membaca Bismillahirrahmanirrahim apabila memulakan pekerjaan, rawatan, prosedur atau apa jua aktiviti.",
+        "Mengamalkan budaya menyebut Alhamdulillah apabila selesai melakukan pekerjaan, rawatan, prosedur atau apa jua aktiviti."
+      ],
+      dalil: [
+        { ref: "HR al-Thabrani", ar: "إِنَّ اللَّهَ يُحِبُّ إِذَا عَمِلَ أَحَدُكُمْ عَمَلًا أَنْ يُتْقِنَهُ", tr: "Sesungguhnya Allah amat menyukai apabila seseorang daripada kamu melakukan sesuatu pekerjaan, dia melakukannya dengan itqan (tekun dan sempurna)." },
+        { ref: "Surah at-Taubah: 119", ar: "يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ ٱتَّقُوا۟ ٱللَّهَ وَكُونُوا۟ مَعَ ٱلصَّٰدِقِينَ", tr: "Wahai orang-orang yang beriman! Bertakwalah kamu kepada Allah, dan hendaklah kamu berada bersama orang-orang yang benar." },
+        { ref: "Surah al-An'am: 152", ar: "وَأَوْفُوا۟ ٱلْكَيْلَ وَٱلْمِيزَانَ بِٱلْقِسْطِ ۖ لَا نُكَلِّفُ نَفْسًا إِلَّا وُسْعَهَا", tr: "Dan sempurnakanlah sukatan serta timbangan dengan adil. Kami tidak membebani seseorang melainkan apa yang terdaya olehnya." },
+        { ref: "HR al-Bukhari", ar: "", tr: "Setiap kamu adalah pemimpin dan setiap kamu akan dipertanggungjawabkan terhadap apa yang dipimpinnya." },
+        { ref: "Surah al-A'raf: 31", ar: "يَٰبَنِىٓ ءَادَمَ خُذُوا۟ زِينَتَكُمْ عِندَ كُلِّ مَسْجِدٍ", tr: "Wahai anak-anak Adam! Pakailah pakaian kamu yang indah pada setiap kali kamu ke tempat ibadat." },
+        { ref: "HR Abu Daud", ar: "", tr: "Riwayat berkaitan adab berpakaian dan menzahirkan nikmat Allah pada diri hamba-Nya." },
+        { ref: "Surah al-Ahzab: 33", ar: "وَقَرْنَ فِى بُيُوتِكُنَّ وَلَا تَبَرَّجْنَ تَبَرُّجَ ٱلْجَٰهِلِيَّةِ ٱلْأُولَىٰ", tr: "Dan hendaklah kamu tetap di rumah kamu, dan janganlah kamu berhias serta bertingkah laku seperti orang jahiliah dahulu." },
+        { ref: "Surah al-'Asr: 1-3", ar: "وَٱلْعَصْرِ ۞ إِنَّ ٱلْإِنسَٰنَ لَفِى خُسْرٍ ۞ إِلَّا ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّٰلِحَٰتِ وَتَوَاصَوْا۟ بِٱلْحَقِّ وَتَوَاصَوْا۟ بِٱلصَّبْرِ", tr: "Demi masa! Sesungguhnya manusia itu dalam kerugian — kecuali orang yang beriman dan beramal soleh, dan saling berpesan dengan kebenaran serta saling berpesan dengan kesabaran." },
+        { ref: "Surah al-Maidah: 2", ar: "وَتَعَاوَنُوا۟ عَلَى ٱلْبِرِّ وَٱلتَّقْوَىٰ ۖ وَلَا تَعَاوَنُوا۟ عَلَى ٱلْإِثْمِ وَٱلْعُدْوَٰنِ", tr: "Dan hendaklah kamu bertolong-tolongan untuk membuat kebajikan dan bertakwa, dan janganlah kamu bertolong-tolongan pada melakukan dosa dan permusuhan." },
+        { ref: "HR Muslim", ar: "", tr: "Riwayat berkaitan tanggungjawab menunaikan amanah dan berbuat baik dalam setiap perkara." },
+        { ref: "HR at-Tirmizi", ar: "", tr: "Riwayat berkaitan adab pergaulan dan tutur kata yang baik." },
+        { ref: "HR Ibnu Majah", ar: "", tr: "Riwayat berkaitan menyegerakan hak dan menunaikan tanggungjawab." },
+        { ref: "HR at-Tirmizi", ar: "", tr: "Riwayat berkaitan senyuman sebagai sedekah dan akhlak dalam berinteraksi." }
+      ]
+    },
+    {
+      no: "1.2", en: "Unity", bm: "Perpaduan / Kerja Berpasukan", huruf: "U",
+      kriteria: [
+        "Berada dalam satu semangat berpasukan, fokus pada kerja berpasukan dan bekerja secara harmoni.",
+        "Menumpukan perhatian dan bersungguh-sungguh terhadap pekerjaan yang dilakukan."
+      ],
+      dalil: [
+        { ref: "Surah al-Hujurat: 10", ar: "إِنَّمَا ٱلْمُؤْمِنُونَ إِخْوَةٌ فَأَصْلِحُوا۟ بَيْنَ أَخَوَيْكُمْ ۚ وَٱتَّقُوا۟ ٱللَّهَ لَعَلَّكُمْ تُرْحَمُونَ", tr: "Sesungguhnya orang-orang beriman itu bersaudara, maka damaikanlah antara dua saudara kamu; dan bertakwalah kepada Allah supaya kamu beroleh rahmat." },
+        { ref: "Surah al-Maidah: 2", ar: "وَتَعَاوَنُوا۟ عَلَى ٱلْبِرِّ وَٱلتَّقْوَىٰ ۖ وَلَا تَعَاوَنُوا۟ عَلَى ٱلْإِثْمِ وَٱلْعُدْوَٰنِ", tr: "Dan hendaklah kamu bertolong-tolongan untuk membuat kebajikan dan bertakwa, dan janganlah kamu bertolong-tolongan pada melakukan dosa dan permusuhan." }
+      ]
+    },
+    {
+      no: "1.3", en: "Success", bm: "Kejayaan", huruf: "S",
+      kriteria: [
+        "Berusaha mencapai matlamat dan objektif pengurusan.",
+        "Melakukan pekerjaan dengan teliti agar tidak menimbulkan masalah kepada diri sendiri dan pengurusan syarikat."
+      ],
+      dalil: [
+        { ref: "Surah al-Ankabut: 69", ar: "وَٱلَّذِينَ جَٰهَدُوا۟ فِينَا لَنَهْدِيَنَّهُمْ سُبُلَنَا ۚ وَإِنَّ ٱللَّهَ لَمَعَ ٱلْمُحْسِنِينَ", tr: "Dan orang-orang yang berusaha bersungguh-sungguh kerana Kami, sesungguhnya Kami akan memimpin mereka ke jalan-jalan Kami; dan sesungguhnya Allah bersama orang-orang yang berusaha membaiki amalannya." },
+        { ref: "Surah at-Taubah: 100", ar: "وَٱلسَّٰبِقُونَ ٱلْأَوَّلُونَ مِنَ ٱلْمُهَٰجِرِينَ وَٱلْأَنصَارِ وَٱلَّذِينَ ٱتَّبَعُوهُم بِإِحْسَٰنٍ رَّضِىَ ٱللَّهُ عَنْهُمْ وَرَضُوا۟ عَنْهُ", tr: "Dan orang-orang yang terdahulu — yang mula-mula (berhijrah dan memberi bantuan) dari orang Muhajirin dan Ansar, dan orang-orang yang menurut mereka dengan kebaikan — Allah reda akan mereka dan mereka pula reda akan Dia." },
+        { ref: "HR al-Baihaqi", ar: "", tr: "Riwayat berkaitan galakan bersungguh-sungguh dan menyempurnakan amalan." },
+        { ref: "HR Muslim", ar: "", tr: "Riwayat berkaitan kelebihan mukmin yang kuat dan bersemangat dalam kebaikan." }
+      ]
+    },
+    {
+      no: "1.4", en: "Respect", bm: "Hormat", huruf: "R",
+      kriteria: [
+        "Menunjukkan penghargaan, penghormatan dan tindakan positif terhadap orang sekeliling tanpa mengira bangsa dan agama.",
+        "Berlaku adil dalam memberikan hak kepada sesiapa sahaja tanpa menzalimi mana-mana pihak.",
+        "Menjaga maruah pesakit dengan mengamalkan etika perawatan yang betul.",
+        "Mengamalkan budaya senyum, budaya memberi salam atau ucapan selamat dan budaya berterima kasih kepada semua orang dalam apa jua keadaan.",
+        "Mengamalkan adab sebelum memasuki ruangan orang lain atau ruangan pesakit."
+      ],
+      dalil: [
+        { ref: "HR al-Bukhari", ar: "", tr: "Riwayat berkaitan memuliakan tetamu dan berkata baik atau diam." },
+        { ref: "Surah al-Maidah: 8", ar: "يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ كُونُوا۟ قَوَّٰمِينَ لِلَّهِ شُهَدَآءَ بِٱلْقِسْطِ ۖ وَلَا يَجْرِمَنَّكُمْ شَنَـَٔانُ قَوْمٍ عَلَىٰٓ أَلَّا تَعْدِلُوا۟ ۚ ٱعْدِلُوا۟ هُوَ أَقْرَبُ لِلتَّقْوَىٰ", tr: "Wahai orang-orang yang beriman! Hendaklah kamu menegakkan keadilan kerana Allah, menjadi saksi dengan adil. Dan janganlah kebencian kamu terhadap sesuatu kaum mendorong kamu berlaku tidak adil. Berlaku adillah, kerana ia lebih hampir kepada takwa." },
+        { ref: "Surah an-Nisa: 58", ar: "إِنَّ ٱللَّهَ يَأْمُرُكُمْ أَن تُؤَدُّوا۟ ٱلْأَمَٰنَٰتِ إِلَىٰٓ أَهْلِهَا وَإِذَا حَكَمْتُم بَيْنَ ٱلنَّاسِ أَن تَحْكُمُوا۟ بِٱلْعَدْلِ", tr: "Sesungguhnya Allah menyuruh kamu supaya menyerahkan segala amanah kepada ahlinya, dan apabila kamu menghukum antara manusia hendaklah kamu menghukum dengan adil." },
+        { ref: "HR Ahmad", ar: "", tr: "Riwayat berkaitan akhlak mulia dan memuliakan sesama manusia." },
+        { ref: "HR Muslim", ar: "", tr: "Riwayat berkaitan larangan menzalimi dan kewajipan memelihara maruah orang lain." },
+        { ref: "HR al-Bukhari", ar: "", tr: "Riwayat berkaitan menyebarkan salam sesama Muslim." },
+        { ref: "HR at-Tirmizi", ar: "", tr: "Riwayat berkaitan senyuman kepada saudaramu adalah sedekah." }
+      ]
+    },
+    {
+      no: "1.5", en: "Accountability", bm: "Akauntabiliti", huruf: "A",
+      kriteria: [
+        "Mempunyai kesanggupan untuk menerima tanggungjawab.",
+        "Sentiasa bertanggungjawab terhadap setiap tindakan yang dilakukan dan tidak menyalahkan orang lain.",
+        "Bertanggungjawab menjaga kerahsiaan pesakit."
+      ],
+      dalil: [
+        { ref: "Surah an-Nisa: 58", ar: "إِنَّ ٱللَّهَ يَأْمُرُكُمْ أَن تُؤَدُّوا۟ ٱلْأَمَٰنَٰتِ إِلَىٰٓ أَهْلِهَا", tr: "Sesungguhnya Allah menyuruh kamu supaya menyerahkan segala amanah kepada ahlinya." },
+        { ref: "Surah al-Anfal: 27", ar: "يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ لَا تَخُونُوا۟ ٱللَّهَ وَٱلرَّسُولَ وَتَخُونُوٓا۟ أَمَٰنَٰتِكُمْ وَأَنتُمْ تَعْلَمُونَ", tr: "Wahai orang-orang yang beriman! Janganlah kamu mengkhianati Allah dan Rasul-Nya, dan janganlah kamu mengkhianati amanah-amanah kamu, sedang kamu mengetahui." },
+        { ref: "Surah al-Muddaththir: 38", ar: "كُلُّ نَفْسٍۭ بِمَا كَسَبَتْ رَهِينَةٌ", tr: "Tiap-tiap diri terikat, tidak terlepas daripada balasan buruk bagi amal jahat yang dikerjakannya." },
+        { ref: "HR al-Bukhari", ar: "", tr: "Riwayat berkaitan apabila amanah disia-siakan maka tunggulah saat kehancurannya." },
+        { ref: "Surah al-Hujurat: 12", ar: "يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ ٱجْتَنِبُوا۟ كَثِيرًا مِّنَ ٱلظَّنِّ إِنَّ بَعْضَ ٱلظَّنِّ إِثْمٌ ۖ وَلَا تَجَسَّسُوا۟ وَلَا يَغْتَب بَّعْضُكُم بَعْضًا", tr: "Wahai orang-orang yang beriman! Jauhilah kebanyakan prasangka, sesungguhnya sebahagian prasangka itu dosa. Dan janganlah kamu mengintip serta janganlah setengah kamu mengumpat setengah yang lain." }
+      ]
+    },
+    {
+      no: "1.6", en: "Wisdom", bm: "Kebijaksanaan", huruf: "W",
+      kriteria: [
+        "Bijak mengurus ilmu untuk disesuaikan dengan tindakan.",
+        "Mampu mengurus diri dalam apa jua situasi dan menyampaikannya kepada orang lain.",
+        "Bersikap proaktif dan bijak mengambil inisiatif demi mencapai kecemerlangan perkhidmatan.",
+        "Mengamalkan budaya mendoakan kesejahteraan pesakit apabila berinteraksi dengan mereka.",
+        "Meminta maaf jika perlu."
+      ],
+      dalil: [
+        { ref: "Surah an-Nahl: 125", ar: "ٱدْعُ إِلَىٰ سَبِيلِ رَبِّكَ بِٱلْحِكْمَةِ وَٱلْمَوْعِظَةِ ٱلْحَسَنَةِ ۖ وَجَٰدِلْهُم بِٱلَّتِى هِىَ أَحْسَنُ", tr: "Serulah ke jalan Tuhanmu dengan hikmah kebijaksanaan dan nasihat pengajaran yang baik, dan berbahaslah dengan mereka dengan cara yang lebih baik." },
+        { ref: "HR al-Bukhari & Muslim", ar: "", tr: "Riwayat berkaitan kelebihan orang yang difahamkan agama dan menuntut ilmu." },
+        { ref: "HR Muslim", ar: "", tr: "Riwayat berkaitan mendoakan kesembuhan pesakit dan menziarahinya." }
+      ]
+    },
+    {
+      no: "1.7", en: "Integrity", bm: "Integriti", huruf: "I",
+      kriteria: [
+        "Mempunyai sifat jati diri yang merangkumi keikhlasan, ketelusan, berpegang kepada prinsip dan tidak mudah dipengaruhi.",
+        "Sentiasa bersikap benar dalam penyampaian maklumat."
+      ],
+      dalil: [
+        { ref: "Surah al-Mukminun: 8", ar: "وَٱلَّذِينَ هُمْ لِأَمَٰنَٰتِهِمْ وَعَهْدِهِمْ رَٰعُونَ", tr: "Dan mereka yang menjaga amanah dan janjinya." },
+        { ref: "HR Ahmad & al-Bazzar", ar: "", tr: "Riwayat berkaitan tiada iman bagi orang yang tidak beramanah dan tiada agama bagi orang yang tidak menepati janji." }
+      ]
+    }
+  ]
+};
+
+const AM02 = {
+  kod: "SCCP/AM/02", tajuk: "Fiqh Medik", tarikh: "30/10/2023",
+  nota: "Rujukan hukum-hakam perubatan bagi wargakerja. Sebarang kemusykilan hendaklah dirujuk kepada Pegawai Agama / Jabatan Perundangan & Perkhidmatan Syariah (SCCP/PP/01).",
+  item: [
+    { no: "1.1", tajuk: "Solat Jumaat Wargakerja Lelaki", unit: "Dewan Bedah, Sekuriti",
+      kriteria: ["Semua wargakerja lelaki hendaklah memenuhi tuntutan solat Jumaat."],
+      dalil: [
+        { ref: "Surah al-Jumu'ah: 9", ar: "يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوٓا۟ إِذَا نُودِىَ لِلصَّلَوٰةِ مِن يَوْمِ ٱلْجُمُعَةِ فَٱسْعَوْا۟ إِلَىٰ ذِكْرِ ٱللَّهِ وَذَرُوا۟ ٱلْبَيْعَ ۚ ذَٰلِكُمْ خَيْرٌ لَّكُمْ إِن كُنتُمْ تَعْلَمُونَ", tr: "Wahai orang-orang yang beriman! Apabila diserukan azan untuk mengerjakan sembahyang pada hari Jumaat, maka segeralah kamu pergi (ke masjid) untuk mengingati Allah, dan tinggalkanlah berjual beli. Yang demikian adalah baik bagi kamu, jika kamu mengetahui." },
+        { ref: "Surah al-Baqarah: 173", ar: "فَمَنِ ٱضْطُرَّ غَيْرَ بَاغٍ وَلَا عَادٍ فَلَآ إِثْمَ عَلَيْهِ", tr: "Kemudian sesiapa yang terdesak (memakannya kerana darurat) sedang ia tidak mengingininya dan tidak melampaui batas, maka tidaklah ia berdosa." }
+      ] },
+    { no: "1.2", tajuk: "Pengurusan Anggota Badan Yang Tidak Dituntut (Unwanted Body Part)", unit: "Dewan Bedah, Kawalan Infeksi",
+      kriteria: ["Staf perubatan hendaklah menyerahkan anggota badan yang terpotong kepada tuannya atau waris.","Jika tidak dituntut, perlu ditanam secara terhormat.","Rujuk Jabatan Agama Islam untuk tempat tanam."],
+      dalil: [
+        { ref: "Surah al-Isra: 70", ar: "وَلَقَدْ كَرَّمْنَا بَنِىٓ ءَادَمَ", tr: "Dan sesungguhnya Kami telah memuliakan anak-anak Adam." },
+        { ref: "Mesyuarat Jawatankuasa Perundingan Hukum Syarak Wilayah Persekutuan, 21 Februari 2019", ar: "", tr: "Keputusan berkaitan pengurusan anggota badan yang tidak dituntut." },
+        { ref: "Garis Panduan Tatacara Pengurusan Jenazah Islam (COVID-19), JAKIM", ar: "", tr: "Rujukan prosedur pengendalian anggota/jenazah." }
+      ] },
+    { no: "1.3", tajuk: "Pengurusan Uri Yang Tidak Dituntut", unit: "Wad Ar-Rahmah",
+      kriteria: ["Menyerahkan uri kepada keluarga atau waris bayi serta menasihatkan mereka menanam di tempat yang bersesuaian.","Jika tidak mampu, uri boleh dibuang bersama clinical waste yang lain dan perbuatan tersebut tidaklah berdosa."],
+      dalil: [{ ref: "Ibnu Qudamah, al-Syarh al-Kabir (1/104-105); Mughni al-Muhtaj (1/349)", ar: "", tr: "Rujukan kitab fiqh berkaitan pengurusan uri." }] },
+    { no: "1.4", tajuk: "Garis Panduan Pengurusan Jenazah Khunsa Musykil", unit: "Mortuari",
+      kriteria: ["Memastikan jenazah mempunyai waris lelaki atau perempuan untuk memandikan jenazah.","Jika tiada, harus bagi lelaki dan wanita memandikan jenazah khunsa musykil kerana darurat, dan kekal hukum bagi kanak-kanak."],
+      dalil: [{ ref: "Al-Kafi #1899, Mufti Wilayah Persekutuan — Siapakah Yang Layak Memandikan Jenazah Khunsa Musykil", ar: "", tr: "Rujukan fatwa Mufti Wilayah Persekutuan." }] },
+    { no: "1.5", tajuk: "Garis Panduan Pengurusan Jenazah Transgender", unit: "Mortuari",
+      kriteria: ["Jenazah transgender hendaklah dikenal pasti status asal jantina mereka dan diuruskan mengikut jantina yang asal."],
+      dalil: [
+        { ref: "Fatwa Muzakarah Jawatankuasa Fatwa MKI kali ke-25, 13 Disember 1989 (Bab Sosial & Masyarakat)", ar: "", tr: "Keputusan fatwa kebangsaan." },
+        { ref: "Al-Kafi #1837, Mufti Wilayah Persekutuan — Cara Pengurusan Jenazah Transgender", ar: "", tr: "Rujukan fatwa Mufti Wilayah Persekutuan." },
+        { ref: "HR al-Bukhari: 5943", ar: "", tr: "Riwayat berkaitan laknat terhadap lelaki yang menyerupai wanita dan wanita yang menyerupai lelaki." }
+      ] },
+    { no: "1.6", tajuk: "Garis Panduan Melakukan Prosedur Pada Bulan Puasa", unit: "Radiologi",
+      kriteria: ["Wargakerja mengetahui secara umum hukum berpuasa ketika mengambil ubatan.","Pengambilan ubat melalui mulut akan membatalkan puasa.","Pengambilan ubat secara suntikan tidak membatalkan puasa."],
+      dalil: [
+        { ref: "Surah al-Baqarah: 183", ar: "يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ كُتِبَ عَلَيْكُمُ ٱلصِّيَامُ كَمَا كُتِبَ عَلَى ٱلَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ", tr: "Wahai orang-orang yang beriman! Kamu diwajibkan berpuasa sebagaimana diwajibkan atas orang-orang yang dahulu daripada kamu, supaya kamu bertakwa." },
+        { ref: "Garis Panduan Puasa Bagi Pesakit, JAKIM", ar: "", tr: "Rujukan garis panduan rasmi JAKIM." }
+      ] },
+    { no: "1.7", tajuk: "Status Puasa Ibu Yang Hamil Atau Menyusukan Bayi", unit: "O&G / Wad Bersalin",
+      kriteria: ["Ibu yang hamil atau menyusu wajib berpuasa seperti orang lain.","Dibenarkan berbuka apabila: (a) bimbangkan keselamatan dirinya; (b) bimbangkan keselamatan dirinya dan anaknya; (c) bimbangkan keselamatan anaknya sahaja.","Nasihat doktor hendaklah diambil kira."],
+      dalil: [{ ref: "Surah al-Hajj: 78", ar: "وَمَا جَعَلَ عَلَيْكُمْ فِى ٱلدِّينِ مِنْ حَرَجٍ", tr: "Dan Dia tidak menjadikan kamu menanggung sesuatu keberatan dan susah payah dalam perkara agama." }] },
+    { no: "1.8", tajuk: "Do Not Resuscitate (DNR)", unit: "ICU & Kejururawatan",
+      kriteria: ["Doktor hendaklah memastikan pesakit tersebut layak mendapat DNR.","Doktor perlu memberikan penjelasan yang jelas kepada waris pesakit serta difahami sebelum menandatangani DNR."],
+      dalil: [
+        { ref: "Bayan Linnas Siri ke-226 — Hukum Enggan Mendapatkan Rawatan Atau Menjalani Pembedahan", ar: "", tr: "Rujukan pandangan Mufti Wilayah Persekutuan." },
+        { ref: "Muzakarah Jawatankuasa Fatwa MKI kali ke-97, 15–17 Disember 2011 (Hukum Eutanasia / Mercy Killing)", ar: "", tr: "Keputusan fatwa kebangsaan." }
+      ] },
+    { no: "1.9", tajuk: "Panduan Ibadah Pesakit", unit: "Hospital Mesra Ibadah",
+      kriteria: ["Mengetahui panduan ibadah pesakit.","Merujuk Pegawai Agama sekiranya mempunyai kemusykilan."],
+      dalil: [
+        { ref: "HR Muslim: 705", ar: "", tr: "Riwayat berkaitan rukhsah (keringanan) dalam ibadah ketika keuzuran." },
+        { ref: "Mesyuarat Jawatankuasa Perunding Hukum Syarak (Fatwa) Negeri Selangor", ar: "", tr: "Keputusan fatwa negeri." },
+        { ref: "Muzakarah Jawatankuasa Fatwa kali ke-14, 22–23 Oktober 1985", ar: "", tr: "Keputusan fatwa kebangsaan." }
+      ] },
+    { no: "1.10", tajuk: "Panduan Penggunaan Ubat Yang Mempunyai Unsur Tidak Halal", unit: "Farmasi",
+      kriteria: ["Mempunyai senarai ubatan yang mengandungi unsur haram atau meragukan.","Merujuk panduan fiqh medik bagi menentukan keadaan darurat atau tidak.","Sekiranya tiada alternatif lain, pesakit perlu diberi penerangan yang jelas."],
+      dalil: [
+        { ref: "Surah al-Baqarah: 168", ar: "يَٰٓأَيُّهَا ٱلنَّاسُ كُلُوا۟ مِمَّا فِى ٱلْأَرْضِ حَلَٰلًا طَيِّبًا", tr: "Wahai sekalian manusia! Makanlah daripada apa yang ada di bumi yang halal lagi baik." },
+        { ref: "HR Muslim: 1599", ar: "إِنَّ اللَّهَ طَيِّبٌ لَا يَقْبَلُ إِلَّا طَيِّبًا", tr: "Sesungguhnya Allah itu baik, tidak menerima melainkan yang baik." },
+        { ref: "Surah al-Baqarah: 173", ar: "فَمَنِ ٱضْطُرَّ غَيْرَ بَاغٍ وَلَا عَادٍ فَلَآ إِثْمَ عَلَيْهِ", tr: "Kemudian sesiapa yang terdesak kerana darurat sedang ia tidak mengingininya dan tidak melampaui batas, maka tidaklah ia berdosa." },
+        { ref: "HR at-Tirmizi: 2518", ar: "", tr: "Riwayat berkaitan meninggalkan perkara yang meragukan kepada perkara yang tidak meragukan." }
+      ] },
+    { no: "1.11", tajuk: "Hukum Darah Wanita", unit: "O&G, Kejururawatan",
+      kriteria: ["Mengetahui hukum asas darah wanita (haid, nifas, istihadhah).","Mengikut garis panduan hukum-hakam Darah Wanita yang disediakan."],
+      dalil: [
+        { ref: "Panduan Bersuci & Bersolat Bagi Pesakit (JAWI)", ar: "", tr: "Rujukan panduan rasmi." },
+        { ref: "Pedoman Pesakit: Panduan Ibadah & Motivasi Pesakit (Azhar Yahya)", ar: "", tr: "Rujukan panduan." },
+        { ref: "Surah al-Baqarah: 222", ar: "وَيَسْـَٔلُونَكَ عَنِ ٱلْمَحِيضِ ۖ قُلْ هُوَ أَذًى فَٱعْتَزِلُوا۟ ٱلنِّسَآءَ فِى ٱلْمَحِيضِ", tr: "Dan mereka bertanya kepadamu tentang haid. Katakanlah: Ia adalah satu keadaan yang tidak suci, oleh itu jauhkanlah diri daripada perempuan ketika haid." }
+      ] },
+    { no: "1.12", tajuk: "Pengurusan Janin", unit: "O&G & Wad An-Nur",
+      kriteria: ["Livebirth hendaklah dimandikan, dikafan, disolatkan serta dikebumikan.","Stillbirth cukup sekadar dibasuh dan ditanam di tempat yang selamat."],
+      dalil: [{ ref: "HR al-Bukhari: 3208", ar: "", tr: "Riwayat berkaitan peringkat kejadian janin dalam kandungan ibu." }] },
+    { no: "1.13", tajuk: "Hukum Penyusuan Melalui Cetusan Laktasi (Induced Lactation)", unit: "O&G / Pediatrik",
+      kriteria: ["Mengetahui hukum asas tentang cetusan laktasi dan kesan penyusuan terhadap hubungan mahram."],
+      dalil: [
+        { ref: "Cetusan Laktasi & Hukum-Hakam Penyusuan", ar: "", tr: "Rujukan kajian/panduan berkaitan." },
+        { ref: "Surah an-Nisa': 23", ar: "وَأُمَّهَٰتُكُمُ ٱلَّٰتِىٓ أَرْضَعْنَكُمْ وَأَخَوَٰتُكُم مِّنَ ٱلرَّضَٰعَةِ", tr: "Dan (diharamkan juga berkahwin dengan) ibu-ibu kamu yang telah menyusukan kamu, dan saudara-saudara kamu yang sepersusuan." }
+      ] },
+    { no: "1.14", tajuk: "Menghilangkan Mudarat", unit: "Semua unit",
+      kriteria: ["Keadaan darurat mengharuskan untuk melakukan perkara-perkara yang dilarang, mengikut kadar keperluan sahaja."],
+      dalil: [{ ref: "Bayan Linnas Siri ke-189 — Maqasid Syariah Dalam Perubatan (Mufti Wilayah Persekutuan)", ar: "", tr: "Rujukan berkaitan kaedah menghilangkan mudarat dan maqasid syariah." }] },
+    { no: "1.15", tajuk: "Hand Hygiene", unit: "Kawalan Infeksi",
+      kriteria: ["Menjaga kebersihan diri dan persekitaran."],
+      dalil: [
+        { ref: "Surah al-Baqarah: 222", ar: "إِنَّ ٱللَّهَ يُحِبُّ ٱلتَّوَّٰبِينَ وَيُحِبُّ ٱلْمُتَطَهِّرِينَ", tr: "Sesungguhnya Allah mengasihi orang-orang yang banyak bertaubat, dan mengasihi orang-orang yang sentiasa mensucikan diri." },
+        { ref: "HR at-Tirmizi: 2799", ar: "", tr: "Riwayat berkaitan Allah itu baik dan menyukai kebaikan, bersih dan menyukai kebersihan." }
+      ] },
+    { no: "1.16", tajuk: "Pemulangan Barang Pinjaman dan Tuntutan Semula Barang Yang Dipinjam", unit: "Semua unit",
+      kriteria: ["Membuat pemulangan semula barang yang dipinjam.","Mengganti semula barang yang dipinjam jika berlaku kehilangan."],
+      dalil: [{ ref: "Surah al-Maidah: 1", ar: "يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوٓا۟ أَوْفُوا۟ بِٱلْعُقُودِ", tr: "Wahai orang-orang yang beriman! Penuhi serta sempurnakanlah perjanjian-perjanjian." }] }
+  ]
+};
+
+const AM03 = {
+  kod: "SCCP/AM/03", tajuk: "Hospital Mesra Ibadah", tarikh: "23/11/2023",
+  nota: "Berpaksikan Polisi Hospital Mesra Ibadah (PPJ/BK/06).",
+  item: [
+    { no: "1.1", tajuk: "Laungan Azan", unit: "Bimbingan & Kaunseling",
+      kriteria: ["Memastikan azan berkumandang setiap waktu solat."], rekod: ["CD azan"],
+      dalil: [{ ref: "HR al-Bukhari: 628", ar: "", tr: "Riwayat berkaitan perintah melaungkan azan ketika masuk waktu solat." }] },
+    { no: "1.2", tajuk: "Peneman Bagi Pesakit Di Bilik Berkongsi Wad Kanak-Kanak Adalah Wanita", unit: "Pediatrik",
+      kriteria: ["Menjaga ikhtilat (pergaulan) dan memelihara batasan aurat."], rekod: ["Borang Peneman Pesakit Dalam (ADM 115)"],
+      dalil: [{ ref: "Rujuk SCCP/AM/05 — Etika Wargakerja & Pesakit: Peneman Mahram", ar: "", tr: "Rujukan silang dokumen asas." }] },
+    { no: "1.3", tajuk: "Pengurusan Jenazah Jika Diperlukan", unit: "Mortuari",
+      kriteria: ["Menjalankan kewajipan fardhu kifayah."], rekod: ["Borang Penerimaan Jenazah (ADM 02)"],
+      dalil: [
+        { ref: "HR Abu Daud: 4031", ar: "مَنْ تَشَبَّهَ بِقَوْمٍ فَهُوَ مِنْهُمْ", tr: "Sesiapa yang menyerupai sesuatu kaum maka dia termasuk dalam golongan mereka." },
+        { ref: "Irsyad Fatwa Ke-117 — Hukum Mengiringi Jenazah Bukan Islam", ar: "", tr: "Rujukan fatwa Mufti Wilayah Persekutuan." }
+      ] },
+    { no: "1.4", tajuk: "Peringatan Solat Untuk Pesakit Sebelum & Selepas Menjalani Pembedahan", unit: "Dewan Bedah, Kejururawatan",
+      kriteria: ["Memberi peringatan kepada pesakit Muslim."], rekod: ["Senarai Semak Orientasi Pesakit (NUR 23)"],
+      dalil: [
+        { ref: "HR Muslim: 78", ar: "مَنْ رَأَىٰ مِنْكُمْ مُنْكَرًا فَلْيُغَيِّرْهُ بِيَدِهِ، فَإِنْ لَمْ يَسْتَطِعْ فَبِلِسَانِهِ، فَإِنْ لَمْ يَسْتَطِعْ فَبِقَلْبِهِ، وَذَٰلِكَ أَضْعَفُ الْإِيمَانِ", tr: "Sesiapa antara kamu yang melihat kemungkaran, hendaklah dia mengubahnya dengan tangannya; jika tidak mampu maka dengan lidahnya; jika tidak mampu maka dengan hatinya, dan itulah selemah-lemah iman." },
+        { ref: "Surah Ali-Imran: 104", ar: "وَلْتَكُن مِّنكُمْ أُمَّةٌ يَدْعُونَ إِلَى ٱلْخَيْرِ وَيَأْمُرُونَ بِٱلْمَعْرُوفِ وَيَنْهَوْنَ عَنِ ٱلْمُنكَرِ ۚ وَأُو۟لَٰٓئِكَ هُمُ ٱلْمُفْلِحُونَ", tr: "Dan hendaklah ada antara kamu satu puak yang menyeru kepada kebajikan, menyuruh berbuat makruf dan melarang daripada kemungkaran; dan mereka itulah orang-orang yang berjaya." }
+      ] }
+  ]
+};
+
+const AM04 = {
+  kod: "SCCP/AM/04", tajuk: "Pakar Perunding Perubatan", tarikh: "15/07/2024",
+  nota: "Terpakai kepada semua Pakar Perunding dan doktor yang berkhidmat di Hospital PUSRAWI.",
+  item: [
+    { no: "1.1", tajuk: "Pemberian Cuti Sakit (MC)", unit: "MMA Guidelines For Medical Practitioners In Malaysia",
+      kriteria: ["Memberi MC yang munasabah."], rekod: ["Sijil Cuti Sakit"],
+      dalil: [{ ref: "Rujuk Nilai-Nilai Murni — Professionalism, Integrity", ar: "", tr: "Rujukan silang SCCP/AM/01 [1.1] & [1.7]." }] },
+    { no: "1.2", tajuk: "Caj Perkhidmatan Pakar", unit: "Jadual 13 (Akta 586)",
+      kriteria: ["Mengikut perkhidmatan yang diberikan."], rekod: ["Bil Terperinci"],
+      dalil: [
+        { ref: "Surah an-Nisa: 29–30", ar: "يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ لَا تَأْكُلُوٓا۟ أَمْوَٰلَكُم بَيْنَكُم بِٱلْبَٰطِلِ إِلَّآ أَن تَكُونَ تِجَٰرَةً عَن تَرَاضٍ مِّنكُمْ", tr: "Wahai orang-orang yang beriman! Janganlah kamu makan harta sesama kamu dengan jalan yang salah, kecuali dengan jalan perniagaan yang dilakukan secara suka sama suka antara kamu." },
+        { ref: "HR Ahmad: 19774", ar: "", tr: "Riwayat berkaitan larangan mengambil harta orang lain tanpa hak." },
+        { ref: "HR Abu Daud: 2943", ar: "", tr: "Riwayat berkaitan amanah dalam urusan harta dan upah." }
+      ] },
+    { no: "1.3", tajuk: "Mengeluarkan Laporan Perubatan Pesakit", unit: "Polisi Laporan Perubatan (PPJ/MR/06)",
+      kriteria: ["Laporan perubatan pesakit disediakan mengikut masa yang telah ditetapkan."],
+      rekod: ["Borang Permohonan Laporan Perubatan (MR 12)","Slip Reminder Laporan Perubatan (MR 15)"],
+      dalil: [
+        { ref: "Rujuk Nilai-Nilai Murni — Professionalism", ar: "", tr: "Rujukan silang SCCP/AM/01 [1.1]." },
+        { ref: "HR al-Bukhari: 33", ar: "إِذَا ضُيِّعَتِ الْأَمَانَةُ فَانْتَظِرِ السَّاعَةَ", tr: "Apabila amanah telah disia-siakan, maka tunggulah saat kehancurannya." }
+      ] },
+    { no: "1.4", tajuk: "Merawat Pesakit Di Luar Kepakaran", unit: "Polisi Credentialing & Privileging (PPH/MED/08)",
+      kriteria: ["Merawat pesakit bersesuaian dengan bidang kepakaran.","Merujuk kepada pakar tertentu jika melibatkan perkara di luar kepakaran."],
+      rekod: ["Sijil Credentialing & Privileging"],
+      dalil: [
+        { ref: "Surah an-Nahl: 43", ar: "فَسْـَٔلُوٓا۟ أَهْلَ ٱلذِّكْرِ إِن كُنتُمْ لَا تَعْلَمُونَ", tr: "Maka bertanyalah kamu kepada orang-orang yang berpengetahuan jika kamu tidak mengetahui." },
+        { ref: "Surah al-Furqan: 59", ar: "فَسْـَٔلْ بِهِۦ خَبِيرًا", tr: "Maka bertanyalah mengenainya kepada yang benar-benar mengetahui." },
+        { ref: "HR an-Nasa'i: 4830", ar: "", tr: "Riwayat berkaitan tanggungan perubatan oleh orang yang tidak diketahui kepakarannya." },
+        { ref: "HR Ibnu Majah: 3466", ar: "", tr: "Riwayat berkaitan sesiapa yang berubat tanpa ilmu maka dia bertanggungjawab." }
+      ] },
+    { no: "1.5", tajuk: "Solat Jumaat Wargakerja Lelaki", unit: "Polisi Hospital Mesra Ibadah (PPJ/BK/06)",
+      kriteria: ["Menjadualkan konsultansi pada waktu yang sesuai dan tidak melanggar kewajipan solat Jumaat, melainkan terdapat kecemasan yang tidak dapat dielakkan."],
+      rekod: ["Jadual Doktor di Dewan Pembedahan","Jadual bertugas wargakerja"],
+      dalil: [{ ref: "Rujuk Fiqh Medik — Solat Jumaat (SCCP/AM/02 [1.1])", ar: "", tr: "Rujukan silang dokumen asas." }] },
+    { no: "1.6", tajuk: "Masa Pemberian Rawatan Kepada Pesakit", unit: "Kontrak Perjanjian Pakar",
+      kriteria: ["Menepati masa yang ditetapkan."], rekod: ["Surat Tawaran Pakar"],
+      dalil: [{ ref: "Rujuk Nilai-Nilai Murni — Professionalism, Accountability, Integrity", ar: "", tr: "Rujukan silang SCCP/AM/01 [1.1], [1.5], [1.7]." }] },
+    { no: "1.7", tajuk: "Pemberian Rawatan Kepada Pesakit (Komunikasi)", unit: "Polisi Hak Pesakit dan Keluarga (PPH/ADM/09)",
+      kriteria: ["Penerangan yang jelas kepada pesakit.","Mengelakkan keciciran maklumat dan salah faham."], rekod: ["Consent Form"],
+      dalil: [
+        { ref: "Rujuk Nilai-Nilai Murni — Professionalism", ar: "", tr: "SCCP/AM/01 [1.1]." },
+        { ref: "Rujuk Etika Wargakerja & Pesakit — Komunikasi Berkesan", ar: "", tr: "SCCP/AM/05 [1.4]." }
+      ] },
+    { no: "1.8", tajuk: "Penggunaan Barangan Yang Mengandungi Unsur Tidak Halal", unit: "Polisi Pendispensan Ubat (PPJ/PHAR/02)",
+      kriteria: ["Mengutamakan yang halal.","Harus jika tiada pilihan atau alternatif lain."],
+      rekod: ["Borang Keizinan Menggunakan Ubatan (PHAR 55)"],
+      dalil: [{ ref: "Rujuk Fiqh Medik — Ubatan Yang Mengandungi Unsur Haram (SCCP/AM/02 [1.10])", ar: "", tr: "Rujukan silang dokumen asas." }] },
+    { no: "1.9", tajuk: "Pemberian Rawatan Kepada Pesakit (Aurat & Ikhtilat)", unit: "Polisi Hospital Mesra Ibadah (PPJ/BK/06)",
+      kriteria: ["Menjaga aurat pesakit.","Menjaga ikhtilat (pergaulan) ketika bekerja atau merawat pesakit."],
+      rekod: ["Jadual Tugasan Pembantu Jagaan Pesakit & Jururawat di wad","Buku Assignment"],
+      dalil: [{ ref: "Rujuk Etika Wargakerja & Pesakit — Batasan Aurat (SCCP/AM/05 [1.1])", ar: "", tr: "Rujukan silang dokumen asas." }] }
+  ]
+};
+
+const AM05 = {
+  kod: "SCCP/AM/05", tajuk: "Etika Wargakerja Dan Pesakit", tarikh: "23/11/2023",
+  nota: "Dokumen ini adalah rujukan utama bagi isu aurat, ikhtilat, peneman dan adab perawatan. Semua unit hendaklah merujuk dokumen ini dan tidak mengulang kandungannya.",
+  item: [
+    { no: "1.1", tajuk: "Batasan Aurat", unit: "Polisi Hospital Mesra Ibadah (PPJ/BK/06) & Polisi Peraturan Berpakaian (PPJ/JSM/17)",
+      kriteria: ["Mematuhi garis panduan penjagaan aurat ketika bekerja atau merawat pesakit."],
+      rekod: ["Pakaian Linen Pesakit Dalam dan Jururawat","Borang Penilaian Prestasi (JSM 08-01/08-02/08-03)"],
+      dalil: [{ ref: "HR Muslim", ar: "", tr: "Riwayat berkaitan perintah menutup aurat dan larangan mendedahkannya." }] },
+    { no: "1.2", tajuk: "Adab Pergaulan Berlainan Jantina (Ikhtilat)", unit: "Polisi Hospital Mesra Ibadah (PPJ/BK/06)",
+      kriteria: ["Mematuhi adab pergaulan berlainan jantina."],
+      rekod: ["Jadual kerja jabatan yang memerlukan wargakerja wanita sahaja (Bilik Bersalin)"],
+      dalil: [{ ref: "Surah an-Nur: 30–31", ar: "قُل لِّلْمُؤْمِنِينَ يَغُضُّوا۟ مِنْ أَبْصَٰرِهِمْ وَيَحْفَظُوا۟ فُرُوجَهُمْ ۚ ذَٰلِكَ أَزْكَىٰ لَهُمْ", tr: "Katakanlah kepada orang lelaki yang beriman supaya mereka menyekat pandangan mereka dan memelihara kehormatan mereka; yang demikian itu lebih suci bagi mereka." }] },
+    { no: "1.3", tajuk: "Peneman Ketika Mendapatkan Rawatan", unit: "Polisi Hospital Mesra Ibadah (PPJ/BK/06)",
+      kriteria: [
+        "Rawatan di Bilik Rawatan Tertutup diharuskan bagi menjaga privasi pesakit dan mesti ditemani peneman yang sama jantina dengan pesakit/perawat.",
+        "Perawat & pesakit berlainan jantina yang melibatkan pembukaan aurat: perawat mesti mengamalkan etika 3S — Sopan, Sekadar, Sama Jantina.",
+        "Sopan: sentiasa menghormati maruah pesakit.",
+        "Sekadar: menyentuh dan melihat hanya setakat yang perlu sahaja.",
+        "Sama Jantina: mengutamakan perawat yang sama jantina dengan pesakit."
+      ],
+      rekod: ["Senarai Semak Ziarah Pesakit (BK 01)","Jadual kerja jabatan"],
+      dalil: [{ ref: "HR at-Tirmizi", ar: "", tr: "Riwayat berkaitan larangan berdua-duaan (khalwat) antara lelaki dan wanita yang bukan mahram." }],
+      tambahan: {
+        tajuk: "Syarat Perawatan Berlainan Jantina",
+        senarai: [
+          "Ditemani oleh mahram, suami, atau wanita yang tsiqah (dipercayai).",
+          "Tidak boleh berdua-duaan yang berlainan jantina antara pesakit dan perawat.",
+          "Hanya boleh melihat/memegang aurat pesakit setakat yang perlu sahaja dan tidak boleh lebih.",
+          "Sekiranya penyakit dapat dikenal pasti hanya dengan memegang secara berlapik, maka tidak boleh menyentuh secara langsung."
+        ],
+        keutamaan: {
+          tajuk: "Susunan Keutamaan Doktor Bagi Pesakit Wanita",
+          senarai: ["Doktor perempuan Muslim pakar.", "Doktor perempuan bukan Muslim pakar.", "Doktor lelaki Muslim pakar.", "Doktor lelaki bukan Muslim pakar."]
+        },
+        garisPanduan: {
+          tajuk: "Garis Panduan Am",
+          senarai: ["Tidak bersendirian.", "Menahan pandangan mata.", "Menyentuh hanya di tempat yang berkaitan.", "Menyediakan doktor pakar mengikut jantina."]
+        }
+      } },
+    { no: "1.4", tajuk: "Komunikasi Berkesan", unit: "Semua unit",
+      kriteria: [
+        "Mengamalkan adab Islam sebelum, semasa atau selepas melakukan apa-apa prosedur.",
+        "Memberikan penerangan yang jelas dan mudah difahami mengikut keadaan pesakit.",
+        "Profesional dalam menghadapi apa jua situasi."
+      ],
+      rekod: ["Borang Penilaian Prestasi (JSM 08-01/08-02/08-03)"],
+      dalil: [{ ref: "Rujuk Nilai-Nilai Murni — Professionalism, Respect", ar: "", tr: "SCCP/AM/01 [1.1] & [1.4]." }] },
+    { no: "1.5", tajuk: "Meminta Izin (Isti'zan)", unit: "Semua unit",
+      kriteria: ["Meminta izin sebelum memasuki ruangan pesakit dan sebelum memberikan rawatan."],
+      rekod: ["Borang Penilaian Prestasi (JSM 08-01/08-02/08-03)"],
+      dalil: [{ ref: "HR al-Bukhari: 6241 & HR Muslim: 2156", ar: "الِاسْتِئْذَانُ ثَلَاثٌ، فَإِنْ أُذِنَ لَكَ وَإِلَّا فَارْجِعْ", tr: "Meminta izin itu tiga kali. Jika diizinkan (masuklah), jika tidak maka kembalilah." }] }
+  ]
+};
+
+/* ---------- DIREKTORI UNIT PP / PK / SK ---------- */
+const UNIT = [
+  // PP — Perkhidmatan Pengurusan (20)
+  {k:"SCCP/PP/01",n:"Jabatan Perundangan & Perkhidmatan Syariah",c:"PP",p:[["Penyediaan Kontrak / Perjanjian / MoU","PPJ/LGL/01"],["Pengurusan Kes Medico-Legal","PPJ/LGL/02"],["Ziarah Pesakit","PPJ/BK/01"],["Pembangunan Kerohanian","PPJ/BK/03"],["Pengurusan Ibadah Pesakit","PPJ/BK/04"],["Pengurusan Isu Syariah","PPJ/BK/05"]]},
+  {k:"SCCP/PP/02",n:"Jabatan Sumber Manusia",c:"PP",p:[["Pelantikan","PPJ/JSM/01"],["Tempoh Kontrak & Pengesahan Jawatan","PPJ/JSM/02"],["Induksi Wargakerja","PPJ/JSM/05"],["Tanggung Kerja","PPJ/JSM/06"],["Peminjaman Wargakerja","PPJ/JSM/08"],["Kenaikan Pangkat","PPJ/JSM/09"],["Kenaikan Gaji Tahunan","PPJ/JSM/10"],["Penilaian Prestasi","PPJ/JSM/11"],["Penyediaan Latihan & Kursus","PPJ/JSM/12"],["Cuti","PPJ/JSM/13"],["Sakit Berpanjangan","PPJ/JSM/14"],["Pemeriksaan Kesihatan","PPJ/JSM/15"],["Waktu Kerja","PPJ/JSM/16"],["Peraturan Berpakaian","PPJ/JSM/17"],["Pembayaran Tuntutan & Elaun","PPJ/JSM/19"],["Ketidakpuasan Kerja","PPJ/JSM/25"],["Gangguan Seksual","PPJ/JSM/26"],["Disiplin & Amaran","PPJ/JSM/28"],["Hadiah, Ganjaran atau Tajaan","PPJ/JSM/32"],["Penyalahgunaan Dadah & Alkohol","PPJ/JSM/33"]]},
+  {k:"SCCP/PP/03",n:"Jabatan Kewangan",c:"PP",p:[["Operasi Jabatan Kewangan","PPJ/KEW/01"],["Perolehan","PPJ/KEW/06"],["Bayaran Fi Pakar","PPJ/KEW/10"],["Pengurusan Maklumat Aset Tetap","PPJ/KEW/13"],["Perolehan Ubat","PPJ/KEW/17"],["Pengurusan Tabung Wakalah PUSRAWI","PPJ/KEW/22"]]},
+  {k:"SCCP/PP/04",n:"Unit Kawalan Kredit",c:"PP",p:[["Kawalan Kredit","POJ/CR/01"]]},
+  {k:"SCCP/PP/05",n:"Unit Perolehan",c:"PP",p:[["Pembelian Bekalan Stok (Disposable & Barangan Am) & Konsainan","PPJ/PUR/01"]]},
+  {k:"SCCP/PP/06",n:"Unit Bil",c:"PP",p:[["Pengeluaran Bil Pesakit Dalam","PPJ/BILL/01"],["Pengeluaran Bil Pesakit Luar","PPJ/BILL/02"],["Pengeluaran Bil Pesakit Luar Tunai","PPJ/JW/01"]]},
+  {k:"SCCP/PP/07",n:"Unit Pengurusan Material",c:"PP",p:[["Pengurusan Borang Disposable serta Barangan Am","POJ/UPM/01"],["Pengurusan Dokumen Terkawal di Unit Pengurusan Material","POJ/UPM/02"]]},
+  {k:"SCCP/PP/08",n:"Pentadbiran & Pembangunan",c:"PP",p:[["Kontraktor Luar","PPH/ADM/05"]]},
+  {k:"SCCP/PP/09",n:"Jabatan Kualiti",c:"PP",p:[["Kawalan Dokumen","PPJ/QLT/01"],["Kawalan Rekod Sistem Pengurusan Kualiti","PPJ/QLT/02"],["Mesyuarat Kajian Semula Pengurusan","PPJ/QLT/03"],["Audit Dalaman","PPJ/QLT/04"],["Aktiviti Penambahbaikan Berterusan","PPJ/QLT/05"],["Ketakakuran & Tindakan Pembetulan","PPJ/QLT/06"],["Petunjuk Prestasi Utama","PPJ/QLT/08"],["Laporan Insiden","PPH/ADM/10"]]},
+  {k:"SCCP/PP/10",n:"Jabatan Pemasaran",c:"PP",p:[["Pengurusan Pelanggan Korporat Baru & Sedia Ada","PPJ/MAR/01"],["Hak Pesakit & Keluarga","PPH/ADM/09"],["Aduan Ketidakpuasan Pelanggan","PPH/ADM/03"],["Pemantauan & Mengemaskini Laman Sesawang, Enjin Carian & Media Sosial","PPJ/UPD/01"]]},
+  {k:"SCCP/PP/11",n:"Unit Pendaftaran",c:"PP",p:[["Pendaftaran Pesakit","PPH/ADM/17"]]},
+  {k:"SCCP/PP/12",n:"Unit Temujanji",c:"PP",p:[["Pengurusan Temujanji","PPJ/TJ/01"]]},
+  {k:"SCCP/PP/13",n:"Unit Audit Dalam",c:"PP",p:[["Unit Audit Dalam","PPJ/UAD/01"]]},
+  {k:"SCCP/PP/14",n:"Jabatan Teknologi Informasi",c:"PP",p:[["Pengendalian Kerosakan Teknologi Maklumat","PPJ/IT/01"],["Pengurusan Back-up Data","PPJ/IT/02"],["Pengurusan E-mel & Internet","PPJ/IT/03"],["Pengurusan Perkakasan & Perisian Komputer","PPJ/IT/04"],["Pengurusan Web","PPJ/IT/05"],["Pengurusan Keselamatan Firewall","PPJ/IT/06"],["Operasi Jabatan","PPJ/IT/07"]]},
+  {k:"SCCP/PP/15",n:"Jabatan Penyelenggaraan",c:"PP",p:[["Pengurusan Kerosakan Alat Sokongan","PPJ/BM/01"],["Penyelenggaraan Pencegahan Berjadual","PPJ/BM/02"]]},
+  {k:"SCCP/PP/16",n:"Unit Biomedik",c:"PP",p:[["Penyelenggaraan Berkala & Terancang Peralatan","PPJ/BE/02"],["Pemantauan Kalibrasi Peralatan Penentu Ukuran","PPJ/BE/03"],["Penerimaan & Pentauliahan Peralatan Baru Biomedikal","PPJ/BE/04"]]},
+  {k:"SCCP/PP/17",n:"Unit Keselamatan, Kesihatan & Alam Sekitar",c:"PP",p:[["Pengurusan Bahan Kimia & Bahan Berbahaya","PPJ/KKAS/01"],["Pengurusan Makhluk Perosak","PPJ/KKAS/02"],["Pengurusan Risiko","PPH/ADM/04"],["Notifikasi & Siasatan Kemalangan","PPJ/KKAS/04"],["Pelan Tindakan Kecemasan","PPH/ADM/13"]]},
+  {k:"SCCP/PP/18",n:"Unit Sekuriti",c:"PP",p:[["Pengurusan Sekuriti Hospital","PPJ/SS/01"],["Melawat Hospital PUSRAWI","PPJ/SS/02"],["Pengurusan Pembantu Keselamatan Am","PPJ/SS/03"],["Pengurusan Insiden","PPJ/SS/04"],["Keselamatan Kerja-Kerja Kontraktor","PPJ/SS/05"],["Pengurusan Kebakaran","PPH/ADM/19"]]},
+  {k:"SCCP/PP/19",n:"Unit Kebersihan",c:"PP",p:[["Pengurusan Kebersihan","PPH/ADM/11"]]},
+  {k:"SCCP/PP/20",n:"Unit Linen",c:"PP",p:[["Pengurusan Linen","PPJ/JPP/03"]]},
+  // PK — Perkhidmatan Klinikal (17)
+  {k:"SCCP/PK/01",n:"Jabatan Kejururawatan",c:"PK",p:[["Kemasukan Pesakit","PPH/MED/01"],["Pemindahan Pesakit","PPH/MED/02"],["Discaj","PPH/MED/04"],["Pesanan Ubat Melalui Telefon / Lisan","PPH/MED/11"],["Penggantian Sementara","PPJ/NUR/01"],["Orientasi Kejururawatan","PPJ/NUR/02"],["Pengurusan Harta Benda Pesakit","PPJ/NUR/05"],["Latihan Jangka Pendek Kejururawatan","PPJ/NUR/14"]]},
+  {k:"SCCP/PK/02",n:"Unit Kawalan Infeksi",c:"PK",p:[["Hand Hygiene","PPJ/KWI/01"],["Perawatan Isolasi / Pengasingan","PPJ/KWI/02"],["Langkah Pencegahan","PPJ/KWI/03"],["Pengurusan & Pencegahan Penyakit Berjangkit","PPJ/KWI/05"],["Kawalan Infeksi untuk Teknik Aseptik & Amalan Pensterilan/Disinfeksi","PPJ/KWI/11"]]},
+  {k:"SCCP/PK/03",n:"Wad Medikal Al-Aman",c:"PK",p:[["Pengurusan Pesakit Perubatan","PPJ/NUR/15"]]},
+  {k:"SCCP/PK/04",n:"Wad Surgikal As-Salam",c:"PK",p:[["Pengurusan Pesakit Pembedahan","PPJ/NUR/07"]]},
+  {k:"SCCP/PK/05",n:"Jabatan Obstetrik & Ginekologi",c:"PK",p:[["Operasi Jabatan Obstetrik & Ginekologi","PPJ/MAT/01"],["Sistem Kawalan Keselamatan Bayi","PPJ/MAT/07"],["Pengurusan Bayi di Bilik Rawatan Bayi","PPJ/MAT/12"]]},
+  {k:"SCCP/PK/06",n:"Wad Pediatrik Ar-Raihan",c:"PK",p:[["Pengurusan Pesakit Kanak-Kanak Untuk Berkhatan","PPJ/NUR/07"]]},
+  {k:"SCCP/PK/07",n:"Jabatan Kemalangan & Kecemasan",c:"PK",p:[["Pengurusan Kes Kecemasan","PPJ/AE/01"],["Panggilan Ambulans","PPJ/AE/02"]]},
+  {k:"SCCP/PK/08",n:"Wad Bersalin",c:"PK",p:[["Operasi Wad Bersalin","PPJ/MAT/02"],["Pengurusan Pesakit Bersalin","PPJ/MAT/03"],["Pengurusan Plasenta","PPJ/MAT/08"]]},
+  {k:"SCCP/PK/09",n:"Dewan Bedah & Anestesiologi",c:"PK",p:[["Operasi Jabatan Anestesiologi","PPJ/ANES/01"]]},
+  {k:"SCCP/PK/10",n:"Unit Rawatan Harian (UPE)",c:"PK",p:[["Pengurusan Pesakit Rawatan Harian","PPJ/DCS/01"],["Pengurusan Pesakit Menjalani Endoskopi","PPJ/DCS/02"]]},
+  {k:"SCCP/PK/11",n:"Unit Rawatan Rapi (ICU)",c:"PK",p:[["Pengurusan Pesakit di Unit Rawatan Rapi","PPJ/ICU/01"],["End of Life Care","PPJ/ICU/03"]]},
+  {k:"SCCP/PK/12",n:"Makmal Kardiovaskular",c:"PK",p:[["Prosedur Pengurusan Pesakit Koronari Angiogram","PPJ/KAR/02"]]},
+  {k:"SCCP/PK/13",n:"Unit Hemodialisis",c:"PK",p:[["Operasi Hemodialisis","PPJ/HD/01"],["Pengurusan Pesakit di Unit Hemodialisis","PPJ/HD/02"]]},
+  {k:"SCCP/PK/14",n:"CSSU (Central Sterile Services Unit)",c:"PK",p:[["Operasi Central Sterile Services Unit","PPJ/CSSU/01"],["Perancangan Kontingensi Kerosakan Autoclave","PPJ/CSSU/02"]]},
+  {k:"SCCP/PK/15",n:"Klinik Pesakit Luar",c:"PK",p:[["Kemasukan Pesakit Luar Klinik Pakar","PPJ/NUR/18"]]},
+  {k:"SCCP/PK/16",n:"Pemeriksaan Kesihatan Eksekutif Al-Ihsan",c:"PK",p:[["Pengambilan Sampel Urin","PPJ/PPE/01"],["Pengendalian Pemeriksaan Kesihatan","PPJ/PPE/03"]]},
+  {k:"SCCP/PK/17",n:"Mortuari",c:"PK",p:[["Pengurusan Kematian & Jenazah","PPH/MED/03"]]},
+  // SK — Sokongan Klinikal (6)
+  {k:"SCCP/SK/01",n:"Jabatan Rekod Perubatan",c:"SK",p:[["Pengurusan Rekod Perubatan Pesakit","PPJ/MR/01"],["Dokumentasi Rekod Perubatan Pesakit","PPJ/MR/02"],["Pengurusan Rekod Perubatan Pesakit Dalam","PPJ/MR/03"],["Laporan Perubatan","PPJ/MR/06"]]},
+  {k:"SCCP/SK/02",n:"Jabatan Farmasi",c:"SK",p:[["Polisi Am Jabatan Farmasi","PPJ/PHAR/01"],["Pendispensan Ubat","PPJ/PHAR/02"]]},
+  {k:"SCCP/SK/03",n:"Makmal Patologi & Transfusi Darah",c:"SK",p:[["Operasi Perkhidmatan Patologi","PPJ/LAB/01"],["Pemprosesan Spesimen","PPJ/LAB/02"],["Pengurusan Stok Makmal","PPJ/LAB/03"],["Pengurusan Pinjaman Peralatan Makmal","PPJ/LAB/04"],["Pengurusan Spesimen ke Makmal Luar","PPJ/LAB/05"],["Pengurusan Sisa Klinikal, Sisa Awam, Sisa Bahan Kimia & Sisa Makmal","PPJ/LAB/06"]]},
+  {k:"SCCP/SK/04",n:"Jabatan Radiologi",c:"SK",p:[["Pengurusan Pengimejan","PPJ/DID/01"],["Pemberian Kontras & Pengurusan Reaksi Kepada Kontras Media","PPJ/DID/02"]]},
+  {k:"SCCP/SK/05",n:"Jabatan Fisioterapi",c:"SK",p:[["Pengurusan Pesakit Luar untuk Fisioterapi","PPJ/PSIO/01"],["Pengurusan Pesakit Dalam untuk Fisioterapi","PPJ/PSIO/02"],["Pengurusan Sisa Klinikal Jabatan Fisioterapi","PPJ/PSIO/03"]]},
+  {k:"SCCP/SK/06",n:"Jabatan Dietetik & Dietari",c:"SK",p:[["Operasi Jabatan Dietetik & Dietari","PPJ/DIET/01"],["Perkhidmatan Nasihat Pemakanan","PPJ/DIET/02"],["Pakaian & Kebersihan Diri Pengendalian Makanan","PPJ/DIET/04"],["Kawalan Makhluk Perosak","PPJ/DIET/05"],["Pengurusan Sisa Buangan & Sisa Makanan","PPJ/DIET/06"],["Penerimaan, Penyimpanan & Pengendalian Makanan","PPJ/DIET/07"],["Pembersihan & Pencucian","PPJ/DIET/08"],["Kawalan Stok","PPJ/DIET/10"],["Pesanan, Penerimaan & Penghidangan Bekalan Makanan","PPJ/DIET/12"],["Penyediaan Makanan","PPJ/DIET/15"]]}
+];
+
+const KATEGORI = {
+  AM: {nama:"Asas / Nilai Murni", warna:"#0d7a5f", desc:"Dokumen induk yang dirujuk oleh semua unit"},
+  PP: {nama:"Perkhidmatan Pengurusan", warna:"#1565a8", desc:"20 unit pentadbiran & sokongan pengurusan"},
+  PK: {nama:"Perkhidmatan Klinikal", warna:"#a8434f", desc:"17 unit rawatan & perkhidmatan klinikal"},
+  SK: {nama:"Sokongan Klinikal", warna:"#8a6212", desc:"6 unit sokongan klinikal"}
+};
+
+const DETAIL = {"SCCP/PP/01":[{"no":"1","nama":"Penyedian Kontrak / Perjanjian / Memorandum Persefahaman","kod":"PPJ/LGL/01","rows":[{"no":"1.1","proses":"Penyediaan dokumen perjanjian","amalan":"Polisi Penyedian Kontrak / Perjanjian / Memorandum Persefahaman (PPJ/LGL/01)","k":["Permetraian perjanjian yang dipersetujui tanpa paksaan diantara keduadua pihak"],"r":["Senarai Utama Perjanjian/MOU","Contoh Dokumen Perjanjian yang ditandatangani kedua-dua pihak"],"j":["Surah an-Nisa’: 29","Surah al-Maidah: 1"],"dasar":[],"t":["Muamalat & Kewangan"]}]},{"no":"2","nama":"Pengurusan Kes Medico-Legal","kod":"PPJ/LGL/02","rows":[{"no":"2.1","proses":"Pengurusan Kes Medicolegal","amalan":"","k":["Polisi Penyedian Kontrak / Perjanjian / Memorandum Persefahaman (PPJ/LGL/01)"],"r":[],"j":["Akta 586 Akta Kemudahan Dan Perkhidmatan Jagaan Kesihatan Swasta 1998","Tatacara pengurusan yang telus","Email Notifikasi","Fail Kes","Rujuk Nilai-nilai murni – Profesionalisme, Accountibility, Integrity"],"dasar":[],"t":["Muamalat & Kewangan"]}]},{"no":"3","nama":"Ziarah Pesakit","kod":"PPJ/BK/01","rows":[{"no":"3.1","proses":"Ziarah Pesakit Berlainan Jantina","amalan":"","k":["Polisi Ziarah Pesakit (PPJ/BK/01)"],"r":[],"j":["Akta 559, Akta Kesalahan Jenayah Syariah (WilayahWilayah Persekutuan) 1997 Seksyen 27","Menjaga ikhtilat (pergaulan) dan memelihara batasan aurat","Senarai semak ziarah pesakit (BK 01)","HR al-Bukhari 5233","HR Muslim 1341"],"dasar":[],"t":["Aurat","Ikhtilat / Pergaulan"]}]},{"no":"4","nama":"Pembangunan Kerohanian","kod":"PPJ/BK/03","rows":[{"no":"4.1","proses":"Aktiviti kerohanian dan Kelas Fardhu Ain","amalan":"Polisi Pembangunan Kerohanian (PPJ/BK/03)","k":["Wargakerja wajib mengikuti kelas fardu ain sekurangkurangnya sekali sepanjang perkhidmatan","Profesionalisme","Wisdom"],"r":["Senarai Kehadiran Orientasi","Senarai Kehadiran Taklimat Patuh Syariah","Senarai Kehadiran Kelas Fardhu Ain","Borang Temuduga Pegawai Agama (BK 07)"],"j":["HR Muslim 16","HR Muslim 8"],"dasar":[],"t":[]}]},{"no":"5","nama":"Pengurusan Ibadah Pesakit","kod":"PPJ/BK/04","rows":[{"no":"5.1","proses":"Latihan wargakerja kejururawatan","amalan":"Polisi Pengurusan Ibadah Pesakit (PPJ/BK/04)","k":["Memberi pengetahuan bantuan ibadah pesakit kepada jururawat"],"r":["Senarai Kehadiran Orientasi","Slide Orientasi Kejururawatan"],"j":["RujukNilai-Nilai Murni – Profesionalism Wisdom"],"dasar":[],"t":["Ibadah Pesakit"]},{"no":"5.2","proses":"Bantuan Ibadah Kepada Pesakit","amalan":"Polisi Pengurusan Ibadah Pesakit (PPJ/BK/04)","k":["Memberi bantuan dan pengetahuan kepada pesakit dalam kewajipan ibadah jika diperlukan"],"r":["Borang Rujukan Kes Pegawai Agama (BK 02)","Slide Bantuan Ibadah Pesakit Surah al-Maidah: 2"],"j":[],"dasar":[],"t":["Ibadah Pesakit"]}]},{"no":"6","nama":"Pengurusan Isu Syariah","kod":"PPJ/BK/05","rows":[{"no":"6.1","proses":"Isu Syariah yang timbul dalam Jabatan atau Unit","amalan":"Polisi Pengurusan Isu Syariah (PPJ/BK/05)","k":["Penyelesaian isu syariah yang ditimbulkan"],"r":["Borang Isu Syariah (BK/06)"],"j":["Surah an-Nahl: 43","HR Abu Daud 336"],"dasar":[],"t":[]}]}],"SCCP/PP/02":[{"no":"1","nama":"Pelantikan","kod":"PPJ/JSM/01","rows":[{"no":"1.1","proses":"Pelantikan jawatan","amalan":"Polisi Pelantikan (PPJ/JSM/01)","k":["Mempunyai kompetensi yang diperlukan. Dapat menjalankan tanggungjawab seperti yang diamanahkan"],"r":["Borang Permohonan Pengisian Jawatan Kosong (JSM 1- 02)","Borang Sesi Temuduga Pegawai Agama (JSM 1-05)"],"j":["Surah an-Nisa’: 58"],"dasar":[],"t":["Amanah & Kerahsiaan"]}]},{"no":"2","nama":"Tempoh Kontrak Dan Pengesahan Jawatan","kod":"PPJ/JSM/02","rows":[{"no":"2.1","proses":"Tempoh","amalan":"Kontrak Dan Pengesahan Jawatan Polisi Tempoh Kontrak Dan Pengesahan Jawatan (PPJ/JSM/02)","k":["Ketelusan dan keadilan dalam pengesahan jawatan","Menepati hak kepada wargakerja"],"r":["Borang Penilaian Prestasi Wargakerja (JSM 2-10)"],"j":["Surah an-Nahl: 90","HR Abu Daud","HR Tirmizi"],"dasar":[],"t":[]}]},{"no":"3","nama":"Induksi Wargakerja","kod":"PPJ/JSM/05","rows":[{"no":"3.1","proses":"Induksi Wargakerja","amalan":"Polisi Induksi Wargakerja (PPJ/JSM/05)","k":["Menetapkan pemahaman wargakerja tentang Hospital PUSRAWI","Perancangan induksi wargakerja","Memo- Induksi program","Attendance"],"r":[],"j":["Surah al-Hujurat: 13"],"dasar":[],"t":[]}]},{"no":"4","nama":"Tanggung Kerja","kod":"PPJ/JSM/06","rows":[{"no":"4.1","proses":"Tanggung Kerja","amalan":"Polisi Tanggung Kerja (PPJ/JSM/06)","k":["Keperluan untuk proses tanggung kerja untuk memastikan kerja berjalan lancar"],"r":["Fail peribadi wargakerja berkenaan","Surat Tanggung Kerja"],"j":["HR Bukhari"],"dasar":[],"t":[]}]},{"no":"5","nama":"Peminjaman Wargakerja","kod":"PPJ/JSM/08","rows":[{"no":"5.1","proses":"Peminjaman wargakerja","amalan":"Polisi Peminjaman Wargakerja (PPJ/JSM/08)","k":["Keperluan peminjaman wargakerja untuk melancarkan operasi syarikat"],"r":["Surat peminjaman fail peribadi wargakerja"],"j":["Surah al-Maidah: 2"],"dasar":[],"t":[]}]},{"no":"6","nama":"Kenaikan Pangkat","kod":"PPJ/JSM/09","rows":[{"no":"6.1","proses":"Kenaikan pangkat","amalan":"Polisi Kenaikan Pangkat (PPJ/JSM/09)","k":["Proses kenaikan pangkat mengikut kelayakan dan telus"],"r":["Borang Kenaikan Pangkat (JSM 2-26)"],"j":["Surah al-Mutaffifin: 26","Surah Yusuf: 55","HR Bukhari"],"dasar":[],"t":[]}]},{"no":"7","nama":"Kenaikan Gaji Tahunan","kod":"PPJ/JSM/10","rows":[{"no":"7.1","proses":"Kenaikan gaji tahunan","amalan":"Polisi Kenaikan Gaji Tahunan (PPJ/JSM/10)","k":["Kenaikan gaji pekerja mengikut perjanjian yang ditetapkan","Kertas kerja disediakan oleh JSM dan disokong oleh KPE serta diluluskan oleh Lembaga pengarah"],"r":["Surat agreement personal file","Bulugh al-Maram: 166"],"j":["Surah al-Hasyr: 7"],"dasar":[],"t":["Muamalat & Kewangan"]}]},{"no":"8","nama":"Penilaian Prestasi","kod":"PPJ/JSM/11","rows":[{"no":"8.1","proses":"Penilaian Prestasi","amalan":"Polisi Penilaian Prestasi (PPJ/JSM/11)","k":["Mempunyai kompetensi yang diperlukan. Dapat menjalankan tanggungjawab seperti yang diamanahkan","Proses penilaian prestasi dilakukan dengan telus"],"r":["Borang JSM 08-01","Borang JSM 08-02","Borang JSM 08-03"],"j":["HR Muslim 1826"],"dasar":[],"t":["Amanah & Kerahsiaan"]}]},{"no":"9","nama":"Penyediaan Latihan Dan Kursus","kod":"PPJ/JSM/12","rows":[{"no":"9.1","proses":"Penyedian latihan dan kursus","amalan":"Polisi Penyedian Latihan Dan Kursus (PPJ/JSM/12)","k":["Meningkatkan pengetahuan dan kemahiran pekerja"],"r":["Borang pencalonan Latihan JSM 402","Training calender","Email pemakluman Latihan daripada HR","Attendence"],"j":["HR at-Thabrani: 929"],"dasar":[],"t":[]}]},{"no":"10","nama":"Cuti","kod":"PPJ/JSM/13","rows":[{"no":"10.1","proses":"Cuti","amalan":"","k":["Permohonan dan kebenaran cuti dilakukan mengikut prosedur yang telah ditetapkan"],"r":["Rekod cuti yang terdapat di Jabatan Sumber Manusia yang telah diluluskan oleh Ketua Jabatan","Sistem PeopleESS"],"j":["HR Abu Daud (3594)","HR Tirmizi (1352)"],"dasar":[],"t":[]}]},{"no":"11","nama":"Sakit Berpanjangan","kod":"PPJ/JSM/14","rows":[{"no":"11.1","proses":"Sijil cuti sakit","amalan":"Polisi Sakit Berpanjangan (PPJ/JSM/14)","k":["Memberikan ruang kepada wargakerja yang sakit untuk berehat. Dalam Islam memberikan keringanan apabila sakit"],"r":["Sijil Cuti Sakit","Sistem people.ess"],"j":["Rujuk Nilai-nilai Murni - Integrity"],"dasar":["(SCCP/AM/01[1.7])"],"t":[]}]},{"no":"12","nama":"Pemeriksaan Kesihatan","kod":"PPJ/JSM/15","rows":[{"no":"12.1","proses":"Pemeriksaan Kesihatan","amalan":"Polisi Pemeriksaan Kesihatan (PPJ/JSM/15)","k":["Menjaga kepentingan syarikat"],"r":["Rekod medical check up","File peribadi perubatan kesihatan wargakerja"],"j":["HR al-Bukhari 30"],"dasar":[],"t":[]}]},{"no":"13","nama":"Waktu Kerja","kod":"PPJ/JSM/16","rows":[{"no":"13.1","proses":"Waktu Kerja","amalan":"","k":["Ketelusan bekerja di dalam waktu bekerka","Integriti"],"r":["Rekod kehadiran pekerja","Permohonan untuk tuntutan kerja lebih masa melalui email","Sistem people.ess"],"j":["HR Bukhari","HR Abu Daud (3594)"],"dasar":[],"t":["Amanah & Kerahsiaan"]}]},{"no":"14","nama":"Peraturan Berpakaian","kod":"PPJ/JSM/17","rows":[{"no":"14.1","proses":"Peraturan Berpakaian","amalan":"Polisi Peraturan Berpakaian (PPJ/JSM/17)","k":["Sopan dan menutup aurat","Profesionalisme"],"r":["Borang JSM 08-01","Borang JSM 08-02","iii. Borang JSM 08- 03"],"j":["Rujuk Nilai-nilai Murni – Profesionalism (Menjaga Keterampilan Diri)"],"dasar":["(SCCP/AM/01[1.1])"],"t":["Aurat"]}]},{"no":"15","nama":"Pembayaran Tuntutan Dan Elaun","kod":"PPJ/JSM/19","rows":[{"no":"15.1","proses":"Pembayaran Tuntutan Dan Elaun","amalan":"Polisi Pembayaran Tuntutan Dan Elaun (PPJ/JSM/19)","k":["Adil dan memberi hak kepada wargakerja","Wargakerja perlu jujur dalam membuat sebarang tuntutan"],"r":["Borang Tuntutan Perjalanan (KEW 10)"],"j":["Rujuk Nilai-nilai Murni – Profesionalism, Integrity"],"dasar":["(SCCP/AM/01[1.1])","(SCCP/AM/01[1.7])"],"t":["Muamalat & Kewangan"]}]},{"no":"16","nama":"Ketidakpuasan Kerja","kod":"PPJ/JSM/25","rows":[{"no":"16.1","proses":"Ketidakpuasan Wargakerja","amalan":"Polisi Ketidakpuasan Wargakerja (PPJ/JSM/25)","k":["Proses tabayyun dilaksanakan dengan baik serta lakukan sesi nasihat kepada pihak yang berkaitan"],"r":["Borang Pernyataan Ketidakpuasan (JSM 7-11)"],"j":["Rujuk Nilai-nilai Murni – Profesionalism, Integrity"],"dasar":["(SCCP/AM/01[1.1])","(SCCP/AM/01[1.7])"],"t":["Ibadah Pesakit"]}]},{"no":"17","nama":"Gangguan Seksual","kod":"PPJ/JSM/26","rows":[{"no":"17.1","proses":"Melaporkan Gangguan Seksual","amalan":"Polisi Gangguan Seksual (PPJ/JSM/26)","k":["Menjaga maslahah dan mengelakkan kemudharatan berlaku"],"r":["Borang Aduan Gangguan Seksual (JSM 5-01)"],"j":["Surah AnNisa’: 148"],"dasar":[],"t":[]}]},{"no":"18","nama":"Disiplin Dan Amaran","kod":"PPJ/JSM/28","rows":[{"no":"18.1","proses":"Tindakan Disiplin Dan Amaran","amalan":"Polisi Disiplin Dan Amaran (PPJ/JSM/28)","k":["Memastikan segala peraturan hospital dipatuhi"],"r":["Surat Amaran","Surat Tindakan Tatatertib","Nilai Murni - Profesionalism"],"j":["Etika Wargakerja dan Pesakit – Beri Penerangan Jelas"],"dasar":["(SCCP/AM/01[1.1])","(SCCP/AM/05[1.4])"],"t":["Adab & Komunikasi"]}]},{"no":"19","nama":"Hadiah Ganjaran Atau Tajaan","kod":"PPJ/JSM/32","rows":[{"no":"19.1","proses":"Pemberian dan Penerimaan Hadiah, Ganjaran atau Tajaan","amalan":"Polisi Hadiah Ganjaran Atau Tajaan (PPJ/JSM/32)","k":["Terhindar dari terlibat dengan rasuah","Pengakuan/Pengesahan Penerimaan Hadiah/Ganjaran/Tajaan (JSM 6-06)"],"r":["Borang Penyataan Penyataan Tajaan Kursus (JSM 6-07)"],"j":["Surah al-Baqarah: 188","HR Abu Daud 3580","HR Tirmizi 1337"],"dasar":[],"t":[]}]},{"no":"20","nama":"Penyalahgunaan Dadah Dan Alkohol","kod":"PPJ/JSM/33","rows":[{"no":"20.1","proses":"Penyalahgunaan Dadah Dan Alkohol","amalan":"Polisi Penyalahgunaan Dadah Dan Alkohol (PPJ/JSM/33)","k":["Menghindari penyalahgunaan dadah dan alkohol"],"r":["Borang Kebenaran Ujian Pengesahan Dadah dan Alkohol (JSM 2-23)","Laporan ujian makmal"],"j":["Muzakarah Jawatankuasa Fatwa Majlis Kebangsaan","Surah Al-Baqarah: 219"],"dasar":[],"t":["Halal & Haram"]}]}],"SCCP/PP/03":[{"no":"1","nama":"Operasi Jabatan Kewangan","kod":"PPJ/KEW/01","rows":[{"no":"1.1","proses":"Akaun Syarikat dan Akaun Pelaburan","amalan":"Polisi Pelaburan Dan Simpanan Tetap (PPJ/KEW/11) Garis Panduan Dan Tabir Urus Syarikat – MAIWP (Perkara 7.8)","k":["Mengelakkan Riba","Memastikan pelaburan dan simpanan tetap patuh syariah","BIMB","MAYBANK ISLAMIC","BANK RAKYAT"],"r":[],"j":["Surah al-Baqarah: 275","Surah al-Nisa': 29"],"dasar":[],"t":["Muamalat & Kewangan"]},{"no":"1.2","proses":"Akaun Simpanan dan KWSP Wargakerja","amalan":"","k":["Menggalakkan Penukaran ke Akaun Simpanan Syariah dan KWSP patuh syariah"],"r":["Borang Maklumat Wargakerja (JSM 2-06)","Memo Galakan"],"j":["Surah al-Baqarah: 275","Surah al-Nisa': 29"],"dasar":[],"t":[]},{"no":"1.3","proses":"Jual Beli (Tunai)","amalan":"Polisi Baucer Tunai Runcit (PPJ/KEW/02) Garis Panduan Pembayaran Kepada Pembekal (GP/KEW/03)","k":["Akauntabiliti","Mengikut terma syarat","Pejanjian Jual Beli"],"r":["Rekod Pembelian Tunai (Disposable Item)","Rekod Pembayaran Bil Pesakit Tunai"],"j":["Surah al-Baqarah: 275","Surah al-Nisa': 29"],"dasar":[],"t":[]},{"no":"1.4","proses":"Pembelian Sewa Beli (Hire Purchase)","amalan":"Akta Bank Islam 1983 (Akta 276)","k":["Mengelakkan Riba","Pembelian Peralatan Perubatan","Pembelian Kereta Syarikat","Mesin MRI – Bank Islam Islamic hirepurchase contract: Ijarah Thumma Bai-i (AITAB)","Digital Xray -AITAB BIMB","MRI Mesin -AITAB BIMB","Maklumat Produk – Al Ijarah Thumma Al Bai’ (Aitab) – BIMB"],"r":[],"j":[],"dasar":[],"t":["Muamalat & Kewangan"]},{"no":"1.5","proses":"Bayaran Deposit","amalan":"","k":["Deposit Perlu Dipulangkan Semula"],"r":["Rekod Pembayaran","Bil Akhir Pesakit","Borang Electronic Fund Transfer (EFT)","Baucer pembayaran","Jabatan Mufti Wilayah Persekutuan: AL-KAFI #424: HUKUM JUAL BELI SECARA URBUN (DEPOSIT)"],"j":["HR Abu Daud (3502)"],"dasar":[],"t":["Muamalat & Kewangan"]},{"no":"1.6","proses":"Perjanjian Pajakan Banggunan Kompleks PUSRAWI","amalan":"","k":["Menepati Penjanjian"],"r":["Perjanjian Pajakan Banggunan Kompleks PUSRAWI - MAIWP"],"j":["Rujuk Nilai-Nilai Murni – Accountability, Integrity"],"dasar":[],"t":["Muamalat & Kewangan"]},{"no":"1.7","proses":"Upah Kepada Kontraktor (Ujrah)","amalan":"","k":["Menepati Penjanjian"],"r":["Borang Payment Voucher","Purchase Order (Work Progres)"],"j":["Surah Al-Maidah: 1"],"dasar":[],"t":["Muamalat & Kewangan"]},{"no":"1.8","proses":"Sewaan (Ijarah)","amalan":"Polisi Penyediaan Kontrak Perjanjian Memorandum Persefahaman (P. 4.2) (PPJ/LGL/01)","k":["Menepati Penjanjian","Penjanjian Sewaan Peralatan Makmal","Al Kafi Li al-Fatawi #928, PEJABAT MUFTI WILAYAH PERSEKUTUAN"],"r":[],"j":["Surah al-Maidah: 1"],"dasar":[],"t":[]},{"no":"1.9","proses":"Pengauditan (Audit dalam & Audit Dari Juru Audit Luar)","amalan":"Polisi Pelantikan Juruaudit Luar (PPJ/KEW/21) Garis Panduan Dan Tabir Urus Syarikat - MAIWP","k":["Integriti","Akuantabiliti"],"r":["Laporan Audit Dalam","Laporan Audit Luar (Kewangan)"],"j":["Rujuk Nilai-Nilai Murni – Accountability, Integrity"],"dasar":[],"t":["Amanah & Kerahsiaan"]},{"no":"1.10","proses":"Zakat Perniagaan 2.5% dari Keuntungan Bersih Nisab Zakat PPZ MAIWP","amalan":"","k":["Kewajipan Zakat"],"r":["Resit Pembayaran Zakat","Sijil Pembayaran Zakat"],"j":["Surah al-Taubah: 60"],"dasar":[],"t":[]},{"no":"1.11","proses":"Takaful","amalan":"","k":["Perkhidmatan Takaful","Pelan Perlindungan Tahunan Hospital","Pelan Pelindungan Kelompok -GTA -GTL","Jabatan Mufti Wilayah Persekututan: AL-KAFI #1799: HUKUM JUAL BELI INSURANS"],"r":[],"j":["Surah al-Maidah: 2"],"dasar":[],"t":[]},{"no":"1.12","proses":"Pembayaran Kepada Pembekal","amalan":"Polisi Perolehan (PPJ/KEW/06)","k":["Menepati Janji"],"r":["Borang Payment Voucher","Purchase Order Form"],"j":["Surah Al-Maidah: 1"],"dasar":[],"t":["Muamalat & Kewangan"]},{"no":"1.13","proses":"Bank guarantee dari panel / pembekal (Kafalah)","amalan":"Polisi Pengurusan Pelanggan Korporat (PPJ/MAR/01)","k":["Menjaga Hak Syarikat","Pemilihan Pembekal yang berkelayakan","Wisdom"],"r":["Surat Jaminan Bank","Penilaian Kewangan","Penilaian Teknikal"],"j":["Surah Yusuf: 66","Rujuk Nilai Murni - Wisdom"],"dasar":[],"t":[]},{"no":"2.1","proses":"Bayaran Melalui Cek dan Electronic Fund Transfer (EFT)","amalan":"Polisi Bayaran Melalui Cek Dan Electronic Fund Transfer (EFT) (PPJ/KEW/03)","k":["Profesional","Akauntabiliti"],"r":["Penyata Transaksi EFT (System)"],"j":["Rujuk Nilai-Nilai Murni – Professionalism, Accountability 3 POLISI PEROLEHAN (PPJ/KEW/06)"],"dasar":[],"t":["Muamalat & Kewangan"]},{"no":"3.1","proses":"Melantik Jawatankuasa Penilaian Perolehan","amalan":"Polisi Perolehan (PPJ/KEW/06)","k":["Jawatankuasa yang berkelayakan","Profesional","Akauntabiliti","Kebijaksanaan","Integriti"],"r":["Surat Lantikan","Borang Penilaian Teknikal","Borang Penilaian Kewangan","Minit Mesyuarat Jawatankuasa Perolehan","Laporan Jawatankuasa Penilaian Teknikal, Jawatankuasa Penilaian Kewangan"],"j":["Rujuk Nilai-Nilai Murni – Professionalism, Accountability, Wisdom, Integrity"],"dasar":[],"t":["Amanah & Kerahsiaan","Muamalat & Kewangan"]},{"no":"3.2","proses":"Memastikan proses perolehan dijalankan dengan telus","amalan":"Polisi Perolehan (PPJ/KEW/06)","k":["Pembekal Menepati Syarat (Paling Terbaik)","Integriti","Akauntabiliti"],"r":["Borang PUR 04","Borang KEW 34","Borang KEW 38","Borang PUR 11","Minit Mesyuarat Jawatankuasa Perolehan"],"j":["Rujuk Nilai-Nilai Murni – Accountability, Integrity"],"dasar":[],"t":["Amanah & Kerahsiaan","Muamalat & Kewangan"]},{"no":"4.1","proses":"Bayaran Pembiayaan rawatan yang tertangguh kepada Doktor Pakar","amalan":"Polisi Bayaran Fi Pakar (PPJ/KEW/10)","k":["Membuat perjanjian bertulis (Kontrak) dengan penerangan yang jelas diantara Hospital dan Pakar"],"r":["Kontrak Perjanjian Dr Pakar / Borang Permohonan Ansuran (KEW 16)","Rekod Pembayaran Pesakit / Bil Terakhir Pesakit / Portal Syarikat Insurans","Surat Aku Janji Bayaran Secara Kredit","KEW 32","Rekod Status Hutang"],"j":["HR al-Nasaie (4632)","Rujuk Etika Wargakerja dan Pesakit – Komunikasi Berkesan"],"dasar":[],"t":["Muamalat & Kewangan","Adab & Komunikasi"]},{"no":"5.1","proses":"Pembayaran Zakat Pendapatan Syarikat","amalan":"","k":["Kewajipan Membayar Zakat"],"r":["Slip Pembayaran Zakat","Sijil Pembayaran Zakat"],"j":["Surah al-Baqarah: 110","Surah al-Baqarah: 267"],"dasar":[],"t":["Muamalat & Kewangan"]},{"no":"5.2","proses":"Pengagihan Wakalah Zakat Panduan Pengagihan Zakat Melalui Wakalah - MAIWP","amalan":"","k":["Pengagihan Zakat Kepada golongan Asnaf"],"r":["Borang Maklumat Pemohon Tabung Wakalah Sumbangan Baitulmal MAIWP (KEW 36)","Borang Permohonan Bantuan Persekolahan & Orang Kurang Upaya (KEW 45)","Senarai penerima Wakalah","Minit Mesyuarat Wakalah","Kalkulator Had Kifayah MAIWP: https://www.maiwp.gov.my/i/index.ph p/en/kalkulator1"],"j":["Surah At-Taubah: 60"],"dasar":[],"t":[]},{"no":"5.3","proses":"Perlantikan Jawatankuasa Pengurusan Tabung Wakalah yang berkelayakan","amalan":"Polisi Pengurusan Tabung Wakalah Pusrawi (PPJ/KEW/22)","k":["Jawatankuasa yang berkelayakan","Profesional","Akauntabiliti","Kebijaksanaan","Integriti"],"r":["Surat Lantikan","Minit Mesyuarat Wakalah"],"j":["Rujuk Nilai-Nilai Murni – Professionalism, Accountability, Wisdom, Integrity"],"dasar":[],"t":["Amanah & Kerahsiaan"]},{"no":"6.1","proses":"Pengurusan Harta Wakaf dan Sedekah","amalan":"Akta Pentadbiran Undang-Undang Islam (Wilayahwilayah Persekutuan) Akta 505 Tahun 1993","k":["Pengurusan Harta Wakaf Dan Sedekah Mengikut Syarak"],"r":["Borang Serahan Aset (KEW 25)","Manual Pengurusan Agihan Manfaat Wakaf – JAWHAR"],"j":["HR Muslim 1631","BAYAN LINNAS SIRI KE-237: WAQAF: DEFINISI, KONSEP DAN KEPENTINGANNYA"],"dasar":[],"t":["Halal & Haram"]},{"no":"6.2","proses":"Pelupusan / Istibdal Harta Wakaf","amalan":"Akta Pentadbiran Undang-Undang Islam (Wilayahwilayah Persekutuan) Akta 505 Tahun 1993 Fatwa Wilayah Persekutuan","k":["Istibdal Wakaf (Mengeluar atau menukar sesuatu yang diwakafkan)"],"r":["Borang Pelupusan Aset (KEW 23)","Manual Pengurusan Istibdal Wakaf – JAWHAR","AL-KAFI #1164: HUKUM TUKAR GANTI HARTA WAKAF"],"j":[],"dasar":[],"t":[]},{"no":"7.1","proses":"Ubat Mengandungi Unsur Khinzir (Porcine)","amalan":"","k":["Pengasingan","Keharusan pembelian produk yang mengandungi unsur haram"],"r":["Borang Kebenaran Menggunakan Unsur Khinzir (PHAR 55)"],"j":["Rujuk Fiqh Medik"],"dasar":["(SCCP/AM/02 [1.10])"],"t":["Halal & Haram"]},{"no":"7.2","proses":"Peminjaman / Pertukaran Ubat Dengan Institusi Luar (Barter / Park)","amalan":"Polisi Perolehan Ubat (PPJ/KEW/17)","k":["Persetujuan antara dua pihak"],"r":["Borang Urusan Ubat Dengan Institusi Luar (PHAR 14)"],"j":["Rujuk Dalil 1.1 Polisi Operasi Jabatan Kewangan (PPJ/KEW/01)"],"dasar":[],"t":["Muamalat & Kewangan"]},{"no":"7.3","proses":"Pembelian Ubat dengan syarikat yang berdaftar dengan NPRA(National Pharmaceutical Regulatory Agency)","amalan":"Akta Racun 1952 dan Peraturanperaturannya Polisi Perolehan (PPJ/KEW/06)","k":["Mengelakkan pembelian ubat dari Syarikat yang tidak berlesen"],"r":["Borang Permohonan Pendaftaran Syarikat Farmaseutikal (PHAR 71)","Borang Penggunaan Ubat Tiada Dalam Formulari (PHAR 13)"],"j":["Rujuk Nilai Murni – Professionalism, Accountability"],"dasar":[],"t":[]},{"no":"7.4","proses":"Ubat Tamat Tempoh","amalan":"Polisi Pendispensan Ubat (PPJ/PHAR/02)","k":["Mengelakkan Mudarat","Menghindari Pembaziran"],"r":["Borang Pemonitoran Ubatan Akan Tamat Tarikh Luput Dlm Masa 6 Bln Mengikut Lokasi (PHAR 46)"],"j":["Rujuk Nilai Murni Professionalism, Accountability"],"dasar":[],"t":["Keselamatan & Mudarat"]},{"no":"7.5","proses":"Ubat Yang Diperlukan Segera Untuk Menyelamatkan Nyawa","amalan":"Polisi Perolehan Ubat (PPJ/KEW/17)","k":["Menyelamatkan Nyawa","PO Ubat Life Saving"],"r":["Borang Urusan Ubat Dengan Institusi Luar (PHAR 14)","BAYAN LINNAS SIRI KE-189: MAQASID SYARIAH DALAM PERUBATAN"],"j":[],"dasar":[],"t":[]}]}],"SCCP/PP/04":[{"no":"1","nama":"Polisi Kawalan Kredit","kod":"POJ/CR/01","rows":[{"no":"1.1","proses":"Pelupusan Hutang Lapuk Diusulkan Setiap Tahun","amalan":"Polisi Perkhidmatan Unit Kawalan Kredit (PPJ/UKK/01) Polisi Pengurusan Hutang (PPJ/KEW/09)","k":["Adil bagi pengurusan dan doktor","Mengikut terma syarat yang dipersetujui","Memo"],"r":[],"j":["Surah al-Baqarah: 280"],"dasar":[],"t":["Muamalat & Kewangan"]},{"no":"1.2","proses":"Terma Kredit Bagi Panel Syarikat 30 Hari,Bagi Tunai Adalah 24jam Atau Tertakluk Kepada Perjanjian Bersama Unit Kawalan Kredit","amalan":"Polisi Perkhidmatan Unit Kawalan Kredit (PPJ/UKK/01)","k":["Menepati masa kutipan hutang","Mengelakkan tunggakan hutang lapuk","Emel"],"r":[],"j":["Surah al-Maidah:1","Rujuk Nilai-Nilai Murni"],"dasar":[],"t":["Muamalat & Kewangan"]},{"no":"1.3","proses":"Peringatan Hutang Yang Perlu Dijelaskan","amalan":"Polisi Perkhidmatan Unit Kawalan Kredit (PPJ/UKK/01)","k":["Memastikan surat peringatan dihantar pada masa ditetapkan"],"r":["Surat dan emel kepada penghutang"],"j":["Surah al-Baqarah: 282"],"dasar":[],"t":["Muamalat & Kewangan"]}]}],"SCCP/PP/05":[{"no":"1","nama":"Pembelian Bekalan Stok (Disposable Dan Barangan Am) & Konsainan","kod":"PPJ/PUR/01","rows":[{"no":"1.1","proses":"Pembelian Produk yang mengandungi sumber tidak halal","amalan":"Polisi Polisi Pembelian Bekalan Stok (Disposable Dan Barangan Am) & Konsainan (PPJ/PUR/01)","k":["Menggunakan produk yang halal dan harus pada syarak"],"r":["Bukti Permohonan dari Doktor Pakar melalui Borang Permohonan Pembelian (PUR04)","Sebut Harga","Borang Pesanan (PUR01)"],"j":["Rujuk Fiqh Medik – Penggunaan Ubat Yang Mengandungi Unsur Yang Meragukan"],"dasar":["(SCCP/AM/02[1.10])"],"t":["Halal & Haram"]},{"no":"2.1","proses":"Pengurusan Pembekal","amalan":"","k":["Memastikan proses Lantikan, Penilaian, Peringatan dan Penamatan Adil dan Telus","Integriti"],"r":["Borang Penilaian Pembekal","(KEW 17)","Borang Penilaian Produk","Surat Peringatan Pembekal","Surat Penamatan Pembekal","Laporan analisa data setiap 6 bulan Rujuk Nilai-nilai Murni - Profesionalism"],"j":[],"dasar":["(SCCP/AM/01[1.1])"],"t":["Amanah & Kerahsiaan"]}]}],"SCCP/PP/06":[{"no":"1","nama":"Pengeluaran Bil Pesakit Dalam","kod":"PPJ/BILL/01","rows":[{"no":"1.1","proses":"Jaminan pembayaran yang lengkap daripada pesakit","amalan":"Polisi Pengeluaran Bil Pesakit Dalam (PPJ/BILL/01)","k":[],"r":["Borang Akujanji Bayaran di isi oleh pesakit","Borang Akujanji Bayaran (PDF 11)","Borang Akujanji Bayaran Secara Kredit (Pesakit Dalam / Pesakit Luar) (KEW 16)","Berurusan dengan Unit Kawalan Kredit"],"j":["Surah al-Baqarah: 282"],"dasar":[],"t":["Muamalat & Kewangan"]},{"no":"1.2","proses":"Pemulangan wang deposit pesakit","amalan":"Polisi Pengeluaran Bil Pesakit Dalam (PPJ/BILL/01) Garis Panduan Bayaran Deposit Pesakit (GP/KEW/02)","k":["Melunaskan hutang hospital"],"r":["Bil Akhir Pesakit","Borang Electronic Fund Transfer (EFT)","Baucer pembayaran iv.(Jabatan Kewangan)"],"j":["Surah al-Baqarah: 282"],"dasar":[],"t":["Muamalat & Kewangan"]},{"no":"1.3","proses":"Semakan bil pesakit","amalan":"Polisi Pengeluaran Bil Pesakit Dalam (PPJ/BILL/01)","k":["Memastikan bil disemak dengan dokumen yang lengkap, betul dan teliti","ACP BIL 01","Dan Sistem Trackcare"],"r":["Rekod Pesakit","Penilaian Prestasi (JSM 08)","Maklum Balas Pesakit (UPP 08)"],"j":["Rujuk Nilai-nilai Murni - Integriti"],"dasar":["(SCCP/AM/01 [1.7])"],"t":["Amanah & Kerahsiaan","Muamalat & Kewangan"]},{"no":"1.4","proses":"Pemberian bil terperinci pesakit atas permintaan","amalan":"Polisi Pengeluaran Bil Pesakit Dalam (PPJ/BILL/01)","k":["Akauntabiliti","Integriti"],"r":["Bil Terperinci"],"j":["Rujuk Nilai-Nilai Murni - Akauntabiliti"],"dasar":["(SCCP/AM/02 [1.5])"],"t":["Amanah & Kerahsiaan","Muamalat & Kewangan"]}]},{"no":"2","nama":"Pengeluaran Bil Pesakit Luar","kod":"PPJ/BILL/02","rows":[{"no":"2.1","proses":"Semakan bil pesakit","amalan":"Polisi Pengeluaran Bil Pesakit Luar (PPJ/BILL/02)","k":["Setiap wargakerja mestilah memastikan bil disemak dengan dokumen yang lengkap dan betul","ACP BIL 01","Dan Sistem Trackcare","Penilaian Prestasi (JSM 08)"],"r":["Rekod Pesakit","Maklum Balas Pesakit (UPP 08)"],"j":["Rujuk Nilai-nilai Murni - Integrity"],"dasar":["(SCCP/AM/01 [1.7])"],"t":["Muamalat & Kewangan"]}]},{"no":"3","nama":"Pengeluaran Bil Pesakit Luar Tunai","kod":"PPJ/JW/01","rows":[{"no":"3.1","proses":"Jaminan pembayaran yang lengkap daripada pesakit","amalan":"Polisi Pengeluaran Bil Pesakit Luar Tunai (PPJ/JW/01)","k":[],"r":["Borang Akujanji Bayaran di isi oleh pesakit","Borang Akujanji Bayaran (PDF 11)","Borang Akujanji Bayaran Secara Kredit (Pesakit Dalam / Pesakit Luar) (KEW 16)","Berurusan dengan Unit Kawalan Kredit"],"j":["Surah al-Baqarah: 282"],"dasar":[],"t":["Muamalat & Kewangan"]},{"no":"3.2","proses":"Pemberian bil terperinci pesakit atas permintaan","amalan":"Polisi Pengeluaran Bil Pesakit Luar Tunai (PPJ/JW/01)","k":["Akauntabiliti","Integriti"],"r":["Bil Terperinci"],"j":["Rujuk Nilai-Nilai Murni – Accountability"],"dasar":["(SCCP/AM/01 [1.5])"],"t":["Amanah & Kerahsiaan","Muamalat & Kewangan"]}]}],"SCCP/PP/07":[{"no":"1","nama":"Pengurusan Borang Disposable Serta Barangan Am","kod":"POJ/UPM/01","rows":[{"no":"1.1","proses":"Penerimaan, pembekalan dan penyimpanan barang","amalan":"Polisi Pengurusan Borang Disposable Serta Barangan Am (POJ/UPM/01)","k":["Elakkan penipuan","Invoice","Delivery Order","HIS system","Bin Card"],"r":[],"j":["Rujuk Nilai-nilai Murni - Integrity"],"dasar":["(SCCP/AM/01 [1.7])"],"t":[]},{"no":"1.2","proses":"Pengurusan Stok","amalan":"Polisi Pengurusan Borang Disposable Serta Barangan Am (POJ/UPM/01)","k":["Tidak berlaku sebarang ketirisan sepanjang pengurusan stok"],"r":["Senarai Invois","Borang Serahan Invois (UPM 01)","Stock Transfer Note"],"j":["Rujuk Nilai-nilai Murni - Accountability"],"dasar":["(SCCP/AM/01 [1.5])"],"t":[]},{"no":"1.3","proses":"Penyimpanan produk yang mengandungi sumber tidak halal","amalan":"Polisi Pengurusan Borang Disposable Serta Barangan Am (POJ/UPM/01)","k":["Mengasingkan dan membuat label barang","Tempat simpanan barang"],"r":[],"j":["Rujuk Fiqh Medik: Ubat yang Mengandungi Unsur Haram"],"dasar":["(SCCP/AM/02 [1.10])"],"t":["Halal & Haram"]}]},{"no":"2","nama":"Pengurusan Dokumen Terkawal Di Unit Pengurusan Material","kod":"POJ/UPM/02","rows":[{"no":"2.1","proses":"Pengurusan dokumen terkawal","amalan":"Polisi Pengurusan Dokumen Terkawal di Unit Pengurusan Material (POJ/UPM/02)","k":["Setiap pembelian dan penggunaan boleh dibuktikan"],"r":["Dokumen Terkawal di simpan di tempat bertutup","Invois","Nota hantaran","Bin Kad","Borang Penyerahan Dokumen Terkawal (UPM 02)","Sistem Trackcare"],"j":["Rujuk Nilai-nilai Murni - Unity"],"dasar":["(SCCP/AM/01 [1.2])"],"t":[]}]}],"SCCP/PP/08":[{"no":"1","nama":"Kontraktor Luar","kod":"PPH/ADM/05","rows":[{"no":"1.1","proses":"Pemilihan Kontraktor Luar","amalan":"Polisi Kontraktor Luar (PPH/ADM/05)","k":["Mematuhi Prosedur Perolehan","Telus"],"r":["Minit Mesyuarat dan dokumen berkaitan"],"j":["Rujuk Nilai-Nilai Murni Integrity"],"dasar":["(SCCP/AM/01 [1.7])"],"t":["Muamalat & Kewangan"]},{"no":"1.2","proses":"Pemantauan Kerja Secara Telus Dan Profesional","amalan":"Polisi Kontraktor Luar (PPH/ADM/05)","k":["Memantau dan merekodkan kerja-kerja yang dilaksanakan mengikut skop yang telah dipersetujui"],"r":["Laporan KPI Bulanan"],"j":["Rujuk Nilai-Nilai Murni - Professionalism"],"dasar":["(SCCP/AM/01 [1.1])"],"t":[]},{"no":"1.3","proses":"Pemilihan Outsource (Khidmat Luar)","amalan":"Polisi Operasi Jabatan Dietatik Dan Dietari (PPJ/DIET/01)","k":["Memastikan outsource melibatkan pemakanan mempunyai pensijilan halal"],"r":["Minit Mesyuarat"],"j":["Surah al-Baqarah: 168","HR Bukhari 52","HR Muslim 1599","Surah al-Baqarah: 173"],"dasar":[],"t":["Halal & Haram"]}]}],"SCCP/PP/09":[{"no":"1","nama":"Kawalan Dokumen","kod":"PPJ/QLT/01","rows":[{"no":"1.1","proses":"Pengurusan dokumen fizikal yang mengandungi ayat al Quran","amalan":"Polisi Kawalan Dokumen (PPJ/QLT/01)","k":["Penjagaan kesucian ayat al Quran","Respect"],"r":["Buku Rekod Pelupusan Dokumen Yang Mengandungi Ayat Al-Quran","Borang Tindakan Pelupusan Dokumen mengandungi ayat Al-Quran (QLT 24)","Artikel Dakwah Portal Rasmi Majlis Agama Islam Selangor – Memelihara Kesucian al Quran"],"j":[],"dasar":[],"t":["Ibadah Pesakit"]},{"no":"1.2","proses":"Kawalan Dokumen","amalan":"Polisi Kawalan Dokumen (PPJ/QLT/01) Sistem Pengurusan Kualiti ISO 9001:2008","k":["Memastikan dokumen terkawal dan sentiasa dikemaskini"],"r":["Borang Pendaftaran / Pindaan Dokumen Kualiti (QLT 04)"],"j":["Rujuk Nilai Murni - Professionalism"],"dasar":["(SCCP/AM/01 [1.1])"],"t":[]}]},{"no":"2","nama":"Kawalan Rekod Sistem Pengurusan Kualiti","kod":"PPJ/QLT/02","rows":[{"no":"2.1","proses":"Penyelengaran dan pelupusan rekod","amalan":"Polisi Kawalan Rekod Sistem Pengurusan Kualiti (PPJ/QLT/02) Garis Panduan Penyimpanan Rekod Perubatan Pesakit","k":["Memastikan rekod yang dijana dari proses yang dilakukan disenggara dan dilupuskan mengikut tempoh yang ditetapkan"],"r":["Fail rekod sistem pengurusan kualiti"],"j":["HR Bukhari 2500"],"dasar":[],"t":[]}]},{"no":"3","nama":"Mesyuarat Kajian Semula Pengurusan","kod":"PPJ/QLT/03","rows":[{"no":"3.1","proses":"Pemantauan sistem pengurusan kualiti","amalan":"Polisi Mesyuarat Kajian Semula Pengurusan (PPJ/QLT/03)","k":["Memastikan pemantauan keberkesanan sistem pengurusan kualiti dapat dinilai"],"r":["Minit Mesyuarat Kajian Semula Pengurusan"],"j":["HR Tirmizi"],"dasar":[],"t":[]}]},{"no":"4","nama":"Audit Dalaman","kod":"PPJ/QLT/04","rows":[{"no":"4.1","proses":"Keakuran terhadap proses","amalan":"Polisi Audit Dalaman (PPJ/QLT/04)","k":["Memastikan keakuran terhadap proses yang ditetapkan"],"r":["Jadual Kekerapan Audit","Penemuan Audit","Nota Audit","General Reporting Form (QLT 03)"],"j":["HR Bukhari 3039"],"dasar":[],"t":[]}]},{"no":"5","nama":"Aktiviti Penambahbaikan Berterusan","kod":"PPJ/QLT/05","rows":[{"no":"5.1","proses":"Penambahbaikan sistem pengurusan kualiti","amalan":"Polisi Aktiviti Penambahbai kan Berterusan (PPJ/QLT/05)","k":["Memastikan penambahbaikan dapat dilaksanakan secara berterusan dan sistem pengurusan kualiti sentiasa relevan"],"r":["Borang Cadangan Projek Penambahbaikan Berterusan (QLT 19-1)","Laporan Perkembangan Aktiviti Penambahbaikan Berterusan (QLT 19-2)","Laporan Akhir Aktiviti Penambahbaikan Berterusan (QLT 19-3)"],"j":["Surah Yusuf: 55","Surah al-Baqarah: 195","HR Thabrani: 891"],"dasar":[],"t":[]}]},{"no":"6","nama":"Ketakakuran Dan Tindakan Pembetulan","kod":"PPJ/QLT/06","rows":[{"no":"6.1","proses":"Tindakan pembetulan kepada ketakakuran","amalan":"Polisi Ketakakuran Dan Tindakan Pembetulan (PPJ/QLT/06)","k":["Memastikan ketakakuran yang berlaku dapat dikenal pasti dan tindakan pembetulan dapat dilakukan","General Reporting Form (QLT 03)"],"r":[],"j":["HR Bukhari 793"],"dasar":[],"t":[]}]},{"no":"7","nama":"Petunjuk Prestasi Utama","kod":"PPJ/QLT/08","rows":[{"no":"7.1","proses":"Prestasi jabatan/unit","amalan":"Polisi Petunjuk Prestasi Utama (PPJ/QLT/08)","k":["Memastikan prestasi jabatan/unit dapat dipantau dan dipertingkatkan"],"r":["Senarai KPI","Rekod Penghantaran","Laporan KPI"],"j":["Nilai-nilai Murni - Professionalism"],"dasar":["(SCCP/AM/01 [1.1])"],"t":[]}]},{"no":"8","nama":"Laporan Insiden","kod":"PPH/ADM/10","rows":[{"no":"8.1","proses":"Keselamatan pesakit","amalan":"Polisi Laporan Insiden (PPH/ADM/10)","k":["Memastikan setiap insiden yang melibatkan keselamatan pesakit dapat dikenal pasti dan dilakukan tindakan pembetulan untuk mengelakkan insiden sama berulang"],"r":["Log Laporan Insiden, General Reporting Form (QLT 03)"],"j":["Nilai-nilai Murni Professionalism"],"dasar":["(SCCP/AM/01 [1.1])"],"t":["Keselamatan & Mudarat"]}]}],"SCCP/PP/10":[{"no":"1","nama":"Pengurusan Pelanggan Korporat Baru Dan Sedia Ada","kod":"PPJ/MAR/01","rows":[{"no":"1.1","proses":"Lantikan Panel","amalan":"","k":["Menjaga Kepentingan Syarikat (Pusrawi)"],"r":["Fail Panel","MAR01","MAR03","Surat Tawaran & Penerimaan"],"j":["Surah AlQasas: 26","Rujuk Nilai Murni"],"dasar":[],"t":[]},{"no":"1.2","proses":"Penghargaan Dan Sponsorship Kepada Panel Yang Setia","amalan":"Polisi Pengurusan Pelanggan Korporat Baru Dan Sedia Ada (PPJ/MAR/01)","k":["Penghargaan Kerana Menyokong PUSRAWI","Email","Permohonan Bajet","Bajet Tahunan CAPEX"],"r":[],"j":["HR al-Bukhari Adab al-Mufrad 594"],"dasar":[],"t":["Muamalat & Kewangan","Adab & Komunikasi"]}]},{"no":"2","nama":"Hak Pesakit Dan Keluarga","kod":"PPH/ADM/09","rows":[{"no":"2.1","proses":"Pesakit Mendapat Makluman Berkenaan Semua Perkhidmatan Yang Ditawarkan Oleh PUSRAWI","amalan":"Polisi Hak Pesakit Dan Keluarga (PPH/ADM/09)","k":["Menjaga Hak Pesakit Semasa Mendapatkan Rawatan","Informasi melalui Pamplet","Facebook","Website","Hebahan di dalam TV dilobi / aras 2"],"r":[],"j":["Surah AlMaidah:1","Surah al-Isra’: 34","Rujuk Etika Wargakerja & Pesakit"],"dasar":[],"t":[]},{"no":"2.2","proses":"Pesakit Berhak Untuk Menolak Rawatan Yang Dicadangkan Oleh Pengamal Perubatan","amalan":"Polisi Hak Pesakit Dan Keluarga (PPH/ADM/09)","k":["Menghormati hak pesakit di dalam membuat keputusan untuk menolak rawatan","ADM 144 - Borang Menolak Rawatan"],"r":[],"j":["HR Ibn Majah (2185)","HR al-Tirmizi (1248)"],"dasar":[],"t":["Adab & Komunikasi"]},{"no":"2.3","proses":"Pesakit Berhak Untuk Mendapatkan Salinan Resit Bayaran Secara Terperinci","amalan":"Polisi Hak Pesakit Dan Keluarga (PPH/ADM/09) Polisi Terimaan Bayaran (Resit) (PPJ/KEW/04)","k":["Memastikan kos rawatan adalah telus dan benar melalui catatan / rekod resit bayaran pesakit"],"r":["Resit bayaran pesakit"],"j":["Rujuk Nilai-Nilai Murni"],"dasar":[],"t":["Muamalat & Kewangan"]}]},{"no":"3","nama":"Aduan Ketidakpuasan Pelanggan","kod":"PPH/ADM/03","rows":[{"no":"3.1","proses":"Menerima Aduan Ketidakpuasan Daripada Pelanggan","amalan":"Akta 586 Polisi Aduan Ketidakpuasan Pelanggan (PPH/ADM/03)","k":["Menguruska n Aduan Pesakit Sebaik Mungkin"],"r":["Rekod Aduan Pelanggan","Borang QLT 03","Borang Laporan Insiden / Aduan","Sesi Latihan Patient & Family Right (Takwim, Jadual, Kehadiran)"],"j":["Rujuk Etika Wargakerja dan Pesakit","Rujuk Nilai Murni"],"dasar":[],"t":["Ibadah Pesakit","Adab & Komunikasi"]}]},{"no":"4","nama":"Pemantauan Serta Mengemaskini Laman Sesawang Engin Carian Dan Media Sosial","kod":"PPJ/UPD/01","rows":[{"no":"4.1","proses":"Melakukan Pemantauan Di Laman Sesawang, Enjin Carian Dan Media Sosial Untuk Mengenalpasti Sebarang Perubahan Dan Pembaharuan Informasi, Trend Dan Pengekodan","amalan":"Polisi Pemantauan Serta Mengemaskini Laman Sesawang Engin Carian Dan Media Sosial (PPJ/UPD/01)","k":["Akauntabiliti","Professional"],"r":["Borang maklumbalas dikeluarkan bagi tidakan penyelesaian"],"j":["Mesyuarat diadakan bersama pentadbiran PUSRAWI berserta pelanggan (sekiranya perlu)","Rekod Pengiklanan Facebook","Rujuk Nilai-Nilai Murni Akauntabiliti Professional"],"dasar":[],"t":[]},{"no":"4.2","proses":"Paparan Siaran Kandungan Sosial Media","amalan":"Polisi Pemantauan Serta Mengemaskini Laman Sesawang Engin Carian Dan Media Sosial (PPJ/UPD/01)","k":["Kandungan dan pengiklanan yang sopan dan patuh syariah","Siaran Sosial Media (Facebook, Tiktok, Instagram)"],"r":[],"j":["Rujuk Nilai-Nilai Murni Akauntabiliti Professional"],"dasar":[],"t":[]},{"no":"4.3","proses":"Pakej Yang Diklankan Di Sosial Media","amalan":"Polisi Pemantauan Serta Mengemaskini Laman Sesawang Engin Carian Dan Media Sosial (PPJ/UPD/01)","k":["Harga pakej yang dipaparkan adalah sama dengan harga yang ditawarkan","Siaran Sosial Media (Facebook, Tiktok, Instagram)"],"r":[],"j":["Rujuk Nilai-Nilai Murni Akauntabiliti Professional"],"dasar":[],"t":["Muamalat & Kewangan"]}]}],"SCCP/PP/11":[{"no":"1","nama":"Pendaftaran Pesakit","kod":"PPH/ADM/17","rows":[{"no":"1.1","proses":"Menjaga kerahsiaan data pesakit","amalan":"Polisi Pendaftaran Pesakit (PPH/ADM/17)","k":["Memastikan data pesakit berada dalam keadaan selamat dan tidak berlaku sebarang kebocoran maklumat"],"r":["Borang PDPA","Kaunter pendaftaran pesakit"],"j":["Rujuk Nilai-nilai Murni - Accountability"],"dasar":["(SCCP/AM/01 [1.5])"],"t":["Amanah & Kerahsiaan"]}]}],"SCCP/PP/12":[{"no":"1","nama":"Pengurusan Temujanji","kod":"PPJ/TJ/01","rows":[{"no":"1.1","proses":"Temujanji","amalan":"","k":["Penerangan yang jelas","Menepati janji","TrackCare","Email","Apps PUSRAWI Care","Web PUSRAWI","SMS"],"r":[],"j":["Rujuk Nilai-nilai Murni - Professionalism","Rujuk Etika Wargakerja dan Pesakit - Komunikasi berkesan"],"dasar":["(SCCP/AM/01 [1.1])","(SCCP/AM/05 [1.4])"],"t":["Adab & Komunikasi"]},{"no":"1.2","proses":"Komunikasi Dengan Pelanggan","amalan":"Polisi Pengurusan Temujanji (PPJ/TJ/01)","k":["Mengikut nilainilai murni Syarikat","Memberikan penerangan yang jelas"],"r":["Borang Penilaian Prestasi Pekerja"],"j":["Rujuk Nilai-nilai Murni - Professionalism","Rujuk Etika Wargakerja dan Pesakit - Komunikasi Berkesan"],"dasar":["(SCCP/AM/01 [1.1])","(SCCP/AM/05 [1.4])"],"t":["Adab & Komunikasi"]},{"no":"1.3","proses":"Layanan kepada Pelanggan VVIP","amalan":"Polisi Pengurusan Temujanji (PPJ/TJ/01)","k":["Memberi layanan istimewa kepada tetamu vvip mengikut keperluan","SMS","Whatsapp"],"r":[],"j":["HR al-Bukhari: 6136","HR Abu Daud 5216","Tidak menzalimi orang lain","HR Abu Daud 5215","Jabatan Mufti Wilayah Persekutuan: AL-KAFI #1063: Hukum Berdiri Menyambut Ketibaan Seseorang"],"dasar":[],"t":["Adab & Komunikasi"]}]}],"SCCP/PP/13":[{"no":"1","nama":"Unit Audit Dalam","kod":"PPJ/UAD/01","rows":[{"no":"1.1","proses":"Audit dilaksanakan untuk memastikan pematuhan kepada SOP PUSRAWI dan penambahbaikan kepada kawalan dalaman","amalan":"Polisi Unit Audit Dalam (PPJ/UAD/01) International Professional Practices Framework","k":["Memastikan pematuhan kepada SOP"],"r":["Laporan Audit","Memo Audit","Borang Pengesahan maklumbalas Auditi (UAD 11)"],"j":["HR Bukhari"],"dasar":[],"t":[]},{"no":"1.2","proses":"Pemilihan Ahli Jawatankuasa Audit Dalam","amalan":"Polisi Unit Audit Dalam (PPJ/UAD/01)","k":["Memastikan ahli jawatankuasa mempunyai latar belakang yang diperlukan"],"r":["Surat lantikan ahli jawatankuasa","Terma Rujukan Jawatankuasa"],"j":["Surah an-Nisa’: 58"],"dasar":[],"t":[]},{"no":"1.3","proses":"Kerjasama dari pihak di audit dengan Juruaudit","amalan":"Polisi Unit Audit Dalam (PPJ/UAD/01)","k":["Memberi kerjasama kepada Juruaudit seperti memberi dokumen berdasarkan","Memo"],"r":["Laporan Audit"],"j":["Rujuk Nilai-nilai Murni - Profesionalism kepada tugastugas berkaitan"],"dasar":["(SCCP/AM/01 [1.1])"],"t":[]},{"no":"1.4","proses":"Pemilihan Jabatan/unit yang akan di audit","amalan":"Polisi Unit Audit Dalam (PPJ/UAD/01)","k":["Menjalankan tugas dengan adil tanpa dipengaruhi oleh sesiapa yang berkepentingan","Plan Audit Tahunan"],"r":[],"j":["Rujuk Nilai-nilai Murni - Integrity"],"dasar":["(SCCP/AM/01 [1.7])"],"t":[]}]},{"no":"2","nama":"Pemberitahuan Maklumat (Whistleblowing)","kod":"PPJ/UAD/02","rows":[{"no":"2.1","proses":"Penyampaian Maklumat untuk Siasatan","amalan":"Polisi Pemberitahuan Maklumat (PPJ/UAD/02)","k":["Memastikan maklumat benar dan sahih","Elakkan pertuduhan yang tidak berasas"],"r":["Borang Pemberitahuan Maklumat (UAD 10)","Laporan Siasatan"],"j":["Surah al-Hujurat: 6"],"dasar":[],"t":[]},{"no":"2.2","proses":"Menjaga kerahsiaan pemberi maklumat","amalan":"Polisi Pemberitahuan Maklumat (PPJ/UAD/02)","k":["Maklumat pengadu disimpan secara rapi","Kejujuran"],"r":["Borang Pemberitahuan Maklumat (UAD 10)","Tempat berkunci","Laporan siasatan"],"j":["Rujuk Nilainilai Murni - Accountability"],"dasar":["(SCCP/AM/01 [1.5])"],"t":["Amanah & Kerahsiaan"]}]}],"SCCP/PP/14":[{"no":"1","nama":"Pengendalian Kerosakan Teknologi Maklumat","kod":"PPJ/IT/01","rows":[{"no":"1.1","proses":"Menerima aduan dari pengguna","amalan":"Polisi Pengendalian Kerosakan Teknologi Maklumat (PPJ/IT/01)","k":["Membantu dalam perkara kebaikan"],"r":["Borang Aduan Kerosakan Teknologi Maklumat (IT 02)","Support Order Form (IT 03)","Laporan daripada helpdesk sistem"],"j":["Rujuk Nilai-nilai Murni - Accountability"],"dasar":["(SCCP/AM/01[1.5])"],"t":["Adab & Komunikasi"]}]},{"no":"2","nama":"Pengurusan Back-Up Data","kod":"PPJ/IT/02","rows":[{"no":"2.1","proses":"Perlaksanaan proses backup","amalan":"Polisi Pengurusan Back-up Data (PPJ/IT/02)","k":["Professionalism","Wisdom"],"r":["Log Backup","Laporan perlaksanaan backup","Report Backup"],"j":["Rujuk Nilai-nilai Murni - Professionalism"],"dasar":["(SCCP/AM/01[1.1])"],"t":[]}]},{"no":"3","nama":"Pengurusan E-Mel Dan Internet","kod":"PPJ/IT/03","rows":[{"no":"3.1","proses":"Kawalan akses Internet","amalan":"Polisi Pengurusan E-mel Dan Internet (PPJ/IT/03)","k":["Mengelakkan daripada melakukan perkara diluar pekerjaan","Permohonan bertulis melalui email oleh HOD","Internet and Email Application Form (IT 11)"],"r":[],"j":["Rujuk Nilai-nilai Murni – Integrity"],"dasar":["(SCCP/AM/01[1.7])"],"t":[]}]},{"no":"4","nama":"Pengurusan Perkakasan Dan Perisian Komputer","kod":"PPJ/IT/04","rows":[{"no":"4.1","proses":"Mengajukan kerosakan kepada pihak pembekal yang dilantik","amalan":"Polisi Pengurusan Perkakasan Dan Perisian Komputer (PPJ/IT/04)","k":["Memenuhi hak pengguna","Support Order Form (IT 03)"],"r":["Laporan daripada helpdesk sistem","Laporan daripada pembekal"],"j":["Rujuk Nilai-nilai Murni - Professionalism"],"dasar":["(SCCP/AM/01[1.1])"],"t":[]}]},{"no":"5","nama":"Pengurusan Web","kod":"PPJ/IT/05","rows":[{"no":"5.1","proses":"Kemaskini laman web","amalan":"","k":["Polisi Pengurusan Web (PPJ/IT/05)","Medicine Advertisement Board (MAB)","KKLIU 2025/2020","Profesionalisme","Kandungan yang bertepatan dengan Syariah dan KKLIU","Permohonan bertulis melalui email oleh Unit Marketing dan Unit Perolehan"],"r":[],"j":["Rujuk Nilai Murni – Profesionalism, Success"],"dasar":["(SCCP/AM/01[1.1])","(SCCP/AM/01[1.3])"],"t":["Muamalat & Kewangan"]}]},{"no":"6","nama":"Pengurusan Keselamatan Firewall","kod":"PPJ/IT/06","rows":[{"no":"6.1","proses":"Menjaga Keselamatan Data Teknologi Maklumat Hospital","amalan":"Polisi Pengurusan Keselamatan Firewall (PPJ/IT/06)","k":["Menjaga dan mengawal daripada pencerobohan dalam sistem"],"r":["Laporan mingguan melalui email daripada Fortigate Cloud System"],"j":["Surah al-Baqarah: 195"],"dasar":[],"t":["Amanah & Kerahsiaan","Keselamatan & Mudarat"]}]},{"no":"7","nama":"Operasi Jabatan","kod":"PPJ/IT/07","rows":[{"no":"7.1","proses":"Perisian lesen","amalan":"Polisi Pengurusan Perkakasan Dan Perisian Komputer (PPJ/IT/04)","k":["Memastikan perisian lesen yang sah","Certificate digital"],"r":[],"j":["Rujuk Nilai-nilai Murni- Integrity"],"dasar":["(SCCP/AM/01[1.7])"],"t":[]}]}],"SCCP/PP/15":[{"no":"1","nama":"Pengurusan Kerosakan Alat Sokongan","kod":"PPJ/BM/01","rows":[{"no":"1.1","proses":"Perlupusan barang yang hendak dilupuskan","amalan":"Polisi Pengurusan Kerosakan Alat Sokongan (PPJ/BM/01)","k":["Memastikan barang tersebut benar rosak dan sesuai untuk dilupuskan"],"r":["Borang Service (B&M 03)","Borang Kewangan Pelupusan (KEW 23)"],"j":["Rujuk Nilai-nilai Murni - Profesionalism"],"dasar":["(SCCP/AM/01[1.1])"],"t":[]},{"no":"1.2","proses":"Mengurus dan menggendalikan projek dengan pembekal","amalan":"Polisi Pengurusan Kerosakan Alat Sokongan (PPJ/BM/01)","k":["Memastikan segala pengurusan bersama pembekal dijalankan dengan tulus dan adil"],"r":["Buku Log Invoice","Borang Permohonan Kelulusan Pembelian (PUR 11-1)","Borang Permohonan Kelulusan Pembelian (PUR 11-2)"],"j":["Mesyuarat spefikasi","Surat Setuju Terima","Rujuk Nilai-nilai Murni - Profesionalism"],"dasar":["(SCCP/AM/01[1.1])"],"t":[]}]},{"no":"2","nama":"Penyelenggaraan Pencegahan Berjadual","kod":"PPJ/BM/02","rows":[{"no":"2.1","proses":"Menjalankan penyelengaraan di bilik pesakit berlainan jantina","amalan":"Polisi Penyelenggaraan Pencegahan Berjadual (PPJ/BM/02) Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Menjaga aurat pesakit yang berlainan jantina","Mengelakkan fitnah","CMMS system","Email kerosakan kepada aduan","Melalui Group Whatapps"],"r":[],"j":["Rujuk Etika Wargakerja Dan Pesakit – Batasan Aurat"],"dasar":["(SCCP/AM/05[1.1])"],"t":["Aurat","Ikhtilat / Pergaulan","Adab & Komunikasi"]}]}],"SCCP/PP/16":[{"no":"1","nama":"Penyelenggaraan Berkala Dan Terancang Peralatan","kod":"PPJ/BE/02","rows":[{"no":"1.1","proses":"Penyelenggaraan Jadual Perancangan Servis (PPM)","amalan":"Polisi Penyelenggaraan Berkala dan Terancang Peralatan (PPJ/BE/02)","k":["Menjaga harta benda hospital","Mengelakkan mudarat kepada pesakit","PPM Schedule","PPM Report","Sticker PPM"],"r":[],"j":["HR Bukhari","Rujuk Nilai-nilai Murni – Professionalism, Accountability, Integrity"],"dasar":[],"t":["Keselamatan & Mudarat"]}]},{"no":"2","nama":"Pemantauan Kalibrasi Peralatan Penentu Ukuran","kod":"PPJ/BE/03","rows":[{"no":"2.1","proses":"Ujian ketepatan peralatan penentu ukuran","amalan":"Polisi Pemantauan Kalibrasi Peralatan Penentu Ukuran (PPJ/BE/03)","k":["Memastikan peralatan penentu ukuran mestilah tepat","Mengelakkan mudarat kepada pesakit","PPM Report"],"r":["Senarai Sijil Kalibrasi"],"j":["Surah al-Baqarah: 195","Rujuk Nilai-nilai Murni – Professionalism, Integrity"],"dasar":[],"t":["Keselamatan & Mudarat"]}]},{"no":"3","nama":"Penerimaan Dan Pentauliahan Peralatan Baru Biomedikal","kod":"PPJ/BE/04","rows":[{"no":"3.1","proses":"Penerimaan peralatan baru","amalan":"Polisi Penerimaan dan Pentauliahan Peralatan Baru Biomedikal (PPJ/BE/04)","k":["Memastikan peralatan yang diterima berkeadaan baik dan menepati ketetapan keselamatan"],"r":["Borang Testing And Commissioning Form"],"j":["Rujuk Nilai-nilai Murni – Professionalism, Integrity"],"dasar":[],"t":["Keselamatan & Mudarat"]}]}],"SCCP/PP/17":[{"no":"1","nama":"Pengurusan Bahan Kimia Dan Bahan Berbahaya","kod":"PPJ/KKAS/01","rows":[{"no":"1.1","proses":"Pemerolehan bahan kimia yang berdaftar i","amalan":"","k":["Memastikan keselamatan pengguna, wargakerja dan pesakit","Safety Data Sheet (SDS)"],"r":[],"j":["Rujuk Fiqh Medik – Menghilangkan kemudharatan"],"dasar":["(SCCP/AM/02 [1.14])"],"t":["Amanah & Kerahsiaan","Keselamatan & Mudarat"]}]},{"no":"2","nama":"Pengurusan Makhluk Perosak","kod":"PPJ/KKAS/02","rows":[{"no":"2.1","proses":"Penggunaan bahan beracun yang tidak berbahaya kepada pesakit dan wargakerja","amalan":"Polisi Pengurusan Makhluk Perosak (PPJ/KKAS/02) Akta racun makhluk perosak 1974","k":["Memastikan keselamatan pengguna, wargakerja dan pesakit"],"r":["Laporan bulanan kerjakerja kawalan makhluk perosak","Safety Data Sheet (SDS)"],"j":["Rujuk Fiqh Medik – Menghilangkan Kemudharatan"],"dasar":["(SCCP/AM/02 [1.14])"],"t":["Keselamatan & Mudarat"]}]},{"no":"3","nama":"Pengurusan Risiko","kod":"PPH/ADM/04","rows":[{"no":"3.1","proses":"Pemilihan kontraktor / pembelian bagi tujuan pembaikan fasilti yang berisiko","amalan":"Polisi Pengurusan Risiko (PPH/ADM/04)","k":["Menjalankan proses pemilihan atau perolehan dengan telus"],"r":["Borang Permohonan Pembelian (PUR04)","Borang Kelulusan Pembelian (PUR 11)"],"j":["Rujuk Nilai-nilai Murni - Integrity"],"dasar":["(SCCP/AM/01 [1.7])"],"t":["Muamalat & Kewangan","Keselamatan & Mudarat"]}]},{"no":"4","nama":"Notifikasi Dan Siasatan Kemalangan","kod":"PPJ/KKAS/04","rows":[{"no":"4.1","proses":"Pelaporan kes keselamatan pekerjaan","amalan":"Polisi Notifikasi Dan Siasatan Kemalangan (PPJ/KKAS/04)","k":["Memastikan tiada tuntutan palsu dikemukakan","JKKP 6 - Notifikasi Kemalangan dan Kejadian Berbahaya","JKKP 7 - Notifikasi Kesihatan dan Keracunan Pekerjaan","JKKP 8 - Daftar Kemalangan, Kejadian Berbahaya, Penyakit Pekerjaan dan Keracunan Pekerjaan","JKKP 9 - Maklumat Berkaitan Kemalangan, Laporan Kemalangan"],"r":[],"j":["Rujuk Nilai Murni - Integrity"],"dasar":["(SCCP/AM/01 [1.7])"],"t":["Muamalat & Kewangan","Keselamatan & Mudarat"]}]},{"no":"5","nama":"Pelan Tindakan Kecemasan","kod":"PPH/ADM/13","rows":[{"no":"5.1","proses":"Pasukan ERT perlu bertindak segera apabila berlaku kecemasan","amalan":"Polisi Pelan Tindakan Kecemasan (PPH/ADM/13)","k":["Respon segera perlu dilakukan oleh pasukan ERT apabila berlaku kecemasan"],"r":["Laporan Latihan Fire Drill Bersama Bomba"],"j":["Rujuk Nilai-nilai Murni - Professionalism"],"dasar":["(SCCP/AM/01 [1.1])"],"t":[]}]}],"SCCP/PP/18":[{"no":"1","nama":"Pengurusan Sekuriti Hospital","kod":"PPJ/SS/01","rows":[{"no":"1.1","proses":"Keselamatan Pesakit, Pelawat dan Wargakerja","amalan":"Polisi Pengurusan Sekuriti Hospital (PPJ/SS/01)","k":["Memastikan keselamatan terjamin","Pemasangan access door","CCTV","Safety Log Book"],"r":[],"j":["Rujuk Nilai-nilai Murni - Accountability"],"dasar":["(SCCP/AM/01 [1.5])"],"t":["Keselamatan & Mudarat"]},{"no":"1.2","proses":"Pemulangan barangan yang hilang kepada pemilik yang betul","amalan":"Polisi Pengurusan Sekuriti Hospital (PPJ/SS/01) Pengurusan harta luqatah MAIWP","k":["Mengiklankan dan disimpan selama 1 bulan"],"r":["Buku Rekod Barangan Tidak Dituntut","mempamerkan barangan yang hilang di kotak pameran 'lost & found'","Borang Tuntutan Barang Hilang (SS 16)"],"j":["HR Muslim: 1722","Rujuk Nilai-nilai Murni - Accountability"],"dasar":[],"t":[]},{"no":"1.3","proses":"Larangan Merokok di Premis PUSRAWI Peraturan KKM PBT Fatwa Wilayah Persekutuan Semua wargakerja dan pelawat dilarang sama sekali merokok di kawasan hospital","amalan":"","k":["Memo & papan tanda larangan merokok (Merokok adalah haram dari pandangan Islam kerana terdapat kemudaratan)"],"r":[],"j":["Surah al-Baqarah: 195","HR Ahmad (2865) dan Ibnu Majah (2340)"],"dasar":[],"t":["Halal & Haram","Keselamatan & Mudarat"]},{"no":"2.1","proses":"Pemantauan Proses Keluar Masuk Pelangan dan Pesakit","amalan":"Polisi Melawat Hospital Pusrawi (PPJ/SS/02)","k":["Memastikan pelangan dan pesakit keluar masuk mematuhi syarat yang ditetapkan"],"r":["Papan tanda (Waktu melawat, Tolong senyap)"],"j":["Rujuk Nilai Nilai Murni – Accountability, Professionalism, Respect"],"dasar":["(SCCP/AM/01 [1.5])"],"t":[]},{"no":"2.2","proses":"Peneman Pesakit di Wad","amalan":"Polisi Melawat Hospital Pusrawi (PPJ/SS/02)","k":["Peneman Mahram sekiranya berlainan jantina"],"r":["Borang Peneman Pesakit Dalam (ADM 115)","Kad Peneman"],"j":["Etika Wargakerja Dan Pesakit – Peneman Ketika Mendapatkan Rawatan"],"dasar":[],"t":["Ikhtilat / Pergaulan","Peneman / Mahram"]}]},{"no":"3","nama":"Pengurusan Pengawal Keselamatan","kod":"PPJ/SS/03","rows":[{"no":"3.1","proses":"Menerima Hadiah Atau Ganjaran","amalan":"Polisi Hadiah Ganjaran Atau Tajaan (PPJ/JSM/32) Seksyen 3(a), (b) dan 4(a)(b), Akta Pencegahan Rasuah 1961 (Pindaan 1971)","k":["Mematuhi Garis Panduan Menerima Hadiah","Memo pematuhan hadiah/ganjar an"],"r":[],"j":["Surah al-Maidah: 42","Surah al-Baqarah: 188","HR Ibnu Majah: 2432","HR Ahmad (6984) dan HR Ibnu Majah (2313)","HR Abu Daud (3582) dan al-Tirmizi (1337"],"dasar":[],"t":[]},{"no":"3.2","proses":"Keutamaan Solat Jumaat kepada Pengawal Keselamatan Penyusun Jadual bertugas supaya tidak meninggalkan Jumaat 2 kali berturut-turut","amalan":"","k":["Tidak meninggalkan solat Jumaat sebanyak tiga kali berturutturut"],"r":["Jadual Bertugas"],"j":["Rujuk Fiqh Medik - Solat Jumaat"],"dasar":["(SCCP/AM/02 [1.1])"],"t":["Ibadah Pesakit","Keselamatan & Mudarat"]}]},{"no":"4","nama":"Pengurusan Insiden","kod":"PPJ/SS/04","rows":[{"no":"4.1","proses":"Ketepatan Masa Membuat Laporan","amalan":"Polisi Pengurusan Insiden (PPJ/SS/04)","k":["Memastikan setiap insiden dilaporkan","Memo melapor insiden"],"r":["Log Book","General Reporting Form (QLT03)"],"j":["Rujuk Nilai-Nilai Murni – Accountability, Professionalism"],"dasar":["(SCCP/AM/01 [1.5])"],"t":[]},{"no":"4.2","proses":"Melakukan Siasatan","amalan":"Polisi Pengurusan Insiden (PPJ/SS/04)","k":["Memastikan siasatan dilakukan hingga selesai"],"r":["Log Book","General Reporting Form (QLT03)"],"j":["Rujuk Nilai-Nilai Murni - Professionalism"],"dasar":["(SCCP/AM/01 [1.1])"],"t":[]},{"no":"4.3","proses":"Merekodkan Insiden","amalan":"Polisi Pengurusan Insiden (PPJ/SS/04)","k":["Memastikan setiap insiden direkodkan"],"r":["Log Book","General Reporting Form (QLT03)","Rekod Aduan Keselamatan(SS17)"],"j":["Rujuk nilai Murni Professionalism"],"dasar":["(SCCP/AM/01 [1.1])"],"t":[]}]},{"no":"5","nama":"Keselamatan Kerja-Kerja Kontraktor","kod":"PPJ/SS/05","rows":[{"no":"5.2","proses":"Pemeriksaan dan Pemantauan Dilakukan Kepada Kontraktor Yang Dilantik","amalan":"Polisi Keselamatan Kerja-Kerja Kontraktor (PPJ/SS/05)","k":["Memastikan pemeriksaan dan pemantauan dijalankan"],"r":["Borang Penilaian Keselamatan kerja kontraktor luar (SS08)"],"j":["Rujuk Nilai Nilai Murni - Accountability"],"dasar":["(SCCP/AM/01 [1.5])"],"t":["Muamalat & Kewangan"]},{"no":"5.3","proses":"Mengutamakan Keselamatan Warga Kerja,Pelawat dan Bangunan","amalan":"Polisi Keselamatan Kerja-Kerja Kontraktor (PPJ/SS/05)","k":["Mengutamakan keselamatan bangunan, harta, pelawat dan warga kerja"],"r":["Surat Akujanji Kontraktor(SS07)","Borang Penilaian Keselamatan (SS08)"],"j":["Rujuk Nilai-Nilai Murni - Professionalism","Bayan Linnas Siri Ke-189: Maqasid Syariah Dalam Perubatan"],"dasar":[],"t":["Keselamatan & Mudarat"]}]},{"no":"6","nama":"Pengurusan Kebakaran","kod":"PPH/ADM/19","rows":[{"no":"6.1","proses":"Peralatan Melawan Kebakaran","amalan":"Polisi Pengurusan Kebakaran (PPH/ADM/19)","k":["Memastikan peralatan melawan kebakaran sentiasa berfungsi dengan baik"],"r":["Jadual 'Status Alat Pemadam Api'"],"j":["Surah al-Baqarah: 195","HR Ibn Majah: (2341)"],"dasar":[],"t":[]},{"no":"6.2","proses":"Kursus dan Taklimat Kepada Kakitangan","amalan":"Polisi Pengurusan Kebakaran (PPH/ADM/19)","k":["Mendapat pengetahuan tentang tindakan awal menghadapi kebakaran"],"r":["Rekod Latihan Kursus"],"j":["Rujuk Nilai-Nilai Murni - Acountability"],"dasar":["(SCCP/AM/01 [1.5])"],"t":[]}]}],"SCCP/PP/19":[{"no":"1","nama":"Pengurusan Kebersihan","kod":"PPH/ADM/11","rows":[{"no":"1.1","proses":"Pakaian petugas wanita yang menguruskan kebersihan fasiliti","amalan":"Polisi Pengurusan Kebersihan (PPH/ADM/11)","k":["Menutup aurat"],"r":["Borang Penilaian Kesihatan Hospital PUSRAWI Sdn Bhd (ADM 138)"],"j":["Rujuk Etika Wargakerja dan Pesakit – Batasan Aurat"],"dasar":["(SCCP/AM/05 [1.1])"],"t":["Aurat","Keselamatan & Mudarat"]},{"no":"1.2","proses":"Petugas wanita memasuki bilik pesakit lelaki dan bilik rehat wargakerja lelaki di wad","amalan":"Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Menjaga pergaulan (ikhtilat) berlainan jantina","Memastikan hanya petugas wanita dibenarkan bertugas di wad"],"r":["Jadual Roster","Taklimat Patuh Syariah kepada vendor"],"j":["Rujuk Etika Wargakerja dan Pesakit - Adab Pergaulan Berlainan Jantina","Rujuk Etika Wargakerja dan Pesakit – Meminta Izin"],"dasar":[],"t":["Ikhtilat / Pergaulan","Adab & Komunikasi"]},{"no":"1.3","proses":"Pembersihan Najis atau darah, mengikut spesifikasi syariah dan kawalan infeksi","amalan":"Polisi Pengurusan Kebersihan (PPJ/JPP/04)","k":["Melakukan proses penyucian mengikut syariah"],"r":["Borang Checklist Pembersihan Bilik (Wad Bersalin)"],"j":["Rujuk Hospital Mesra Ibadah – Garis Panduan Penyucian Pakaian Bernajis"],"dasar":["(SCCP/AM/03 [1.2])"],"t":["Ibadah Pesakit","Keselamatan & Mudarat"]},{"no":"1.4","proses":"Peraturan kerja yang mengutamakan aspek keselamatan, contoh papan tanda kerja sedang dilakukan","amalan":"Polisi Pengurusan Kebersihan (PPJ/JPP/04)","k":["Memastikan aspek keselamatan petugas kebersihan,wargakerja dan pesakit"],"r":["Senarai nama petugas kebersihan yang hadir latihan keselamatan dan kesihatan pekerja","Borang checklist pada vendor"],"j":["Surah al-Baqarah: 195"],"dasar":[],"t":["Keselamatan & Mudarat"]}]}],"SCCP/PP/20":[{"no":"1","nama":"Pengurusan Linen","kod":"PPJ/JPP/03","rows":[{"no":"1.1","proses":"Pakaian pesakit perempuan untuk ke dewan bedah","amalan":"Polisi Pengurusan Linen (PPJ/JPP/03)","k":["Memastikan pakaian pesakit yang dibekalkan adalah menutup aurat dan sesuai untuk tujuan pembedahan","Spesifikasi dan piawaian linen"],"r":[],"j":["Rujuk Etika Wargakerja dan Pesakit – Batasan Aurat"],"dasar":["(SCCP/AM/05 [1.1])"],"t":["Aurat"]},{"no":"1.2","proses":"Pakaian pesakit yang disediakan mestilah menutup aurat","amalan":"Polisi Pengurusan Linen (PPJ/JPP/03)","k":["Memastikan pakaian pesakit menutup aurat"],"r":["Senarai pakaian disediakan untuk pesakit"],"j":["Rujuk Etika Wargakerja dan Pesakit – Batasan Aurat"],"dasar":["(SCCP/AM/05 [1.1])"],"t":["Aurat"]},{"no":"1.3","proses":"Pengendalian linen tercemar","amalan":"Polisi Pengurusan Linen (PPJ/JPP/03)","k":["Memastikan linen tercemar dicuci mengikut garis panduan yang ditetapkan","Pengasingan melalui penggunaan bag mengikut warna","Spesifikasi dan piawaian linen"],"r":[],"j":["HR Muslim 223"],"dasar":[],"t":[]}]}],"SCCP/PK/01":[{"no":"1","nama":"Kemasukan Pesakit","kod":"PPH/MED/01","rows":[{"no":"1.1","proses":"Kemasukan pesakit ke hospital a) Penempatan pesakit (perkongsian bilik) b) Peneman Pesakit","amalan":"Polisi Kemasukan Pesakit (PPH/MED/01)","k":["Mengelakkan percampuran antara lelaki dan perempuan","Menjaga aurat dan batas pergaulan"],"r":["Sistem maklumat hospital (HIS) (Menerusi rondaan yang dilakukan daripada Nursing Supervisor)","Borang Peneman","Borang Kemasukan Pesakit (ADM12)"],"j":["Rujuk Etika Wargakerja Dan Pesakit – Batasan Aurat, Adab Pergaulan Berlainan Jantina"],"dasar":[],"t":["Aurat","Ikhtilat / Pergaulan","Peneman / Mahram","Adab & Komunikasi"]},{"no":"1.2","proses":"Kemasukan pesakit kecemasan Daftar Kemasukan Pesakit HIS","amalan":"Polisi Kemasukan","k":["Memastikan kes-kes kecemasan dimasukkan ke wad dengan kadar segera untuk rawatan segera"],"r":["Sistem maklumat hospital HIS (Waktu menunggu)"],"j":["Surah al-Baqarah 2:195","Bayan Linnas Siri Ke-189: Maqasid Syariah Dalam Perubatan Pesakit (PPH/MED/01)"],"dasar":[],"t":[]},{"no":"1.3","proses":"Penyimpanan dokumen pesakit","amalan":"Polisi Pengurusan Rekod Perubatan Pesakit Akta Komunikasi dan Multimedia 1998 (Akta 588)","k":["Memastikan kerahsiaan pesakit terpelihara","Pengurusan Rekod Perubatan Pesakit"],"r":[],"j":["Rujuk Nilai-nilai Murni - Accountability"],"dasar":["(SCCP/AM/01 [1.5])"],"t":["Amanah & Kerahsiaan"]}]},{"no":"2","nama":"Pemindahan Pesakit","kod":"PPH/MED/02","rows":[{"no":"2.1","proses":"Pemindahan pesakit Dalaman dan Luaran","amalan":"Polisi Pemindahan Pesakit (PPH/MED/02)","k":["Memastikan Pemindahan Pesakit Mengikut Keperluan Perawatan Pesakit","Memastikan pesakit dipindahkan ke unit / Hospital lain yang mempunyai fasiliti yang lengkap dan mempunyai kepakaran berkaitan"],"r":["Fail pesakit","Surat Rujukan","Borang Senarai Semak Pemindahan Pesakit (NUR 10)"],"j":["Surah al-Anbiya’:7","Al-Zuhaili. Muhammad. (2006) al-Qawa’id al-Fiqhiyyah wa Tatbiqatuha fi al-Mazahib al-Arba’ah, 1/55, Dimashq, Dar Fikr"],"dasar":[],"t":[]}]},{"no":"3","nama":"Discaj","kod":"PPH/MED/04","rows":[{"no":"3.1","proses":"Memberi penerangan dan penyerahan dokumentasi kepada pesakit discaj","amalan":"Polisi Discaj (PPH/MED/04)","k":["Memberi penerangan dengan jelas kepada pesakit/waris"],"r":["Dokumentasi yang betul dan lengkap","Discharge Note (NUR 01-6)"],"j":["Rujuk Etika Wargakerja dan Pesakit – Komunikasi Berkesan","Rujuk Nilai-Nilai Murni Professionalism"],"dasar":["(SCCP/AM/05 [1.4])","(SCCP/AM/01 [1.5])"],"t":["Amanah & Kerahsiaan","Muamalat & Kewangan","Adab & Komunikasi"]},{"no":"3.2","proses":"Discaj pesakit AOR (At own Risk)","amalan":"Polisi Discaj (PPH/MED/04) Polisi Hak Pesakit Dan Keluarga (PPH/ADM/09)","k":["Memberi nasihat kepada pesakit/waris mengenai risiko serta kemungkinan komplikasi penyakit"],"r":["Borang NUR 152 - Rekod Pesakit Discaj At Own Risk (AOR)","Discharge Note (NUR 01-6)"],"j":["Rujuk SCCP Jabatan Pemasaran:"],"dasar":[],"t":["Muamalat & Kewangan","Keselamatan & Mudarat"]},{"no":"4.1","proses":"Mendapatkan persetujuan pesakit sebelum menjalankan prosedur","amalan":"Polisi Persetujuan Termaklum (PPH/MED/04)","k":["Memastikan pesakit dan waris mendapat penerangan yang jelas","Memperolehi kebenaran bertulis daripada pesakit sebelum sesuatu prosedur dijalankan"],"r":["Consent For Surgery – Procedure (ADM25)"],"j":["Surah al-Nur: 62","Rujuk Etika Wargakerja dan Pesakit – Meminta Izin"],"dasar":[],"t":["Adab & Komunikasi"]},{"no":"5.1","proses":"Code Blue (CPR) Diaktifkan kecuali kepada pesakit yang mensyaratkan DNR","amalan":"Polisi Code Blue (PPH/MED/07)","k":["Menyelamatkan Nyawa","Resuscitation Event Record (Baby Child) (NUR40)","Resuscitation Event Record (Adult) (NUR41)"],"r":[],"j":["Rujuk Fiqh Medik"],"dasar":["(SCCP/AM/02 [1.14])"],"t":[]},{"no":"5.2","proses":"Persediaan staf yang kompeten","amalan":"Polisi Induksi Wargakerja (PPJ/JSM/05)","k":["Ketua Jabatan/Unit hendaklah memastikan staf dibawah seliaannya berkompeten untuk melakukan BLS","Membacakan talqin kepada pesakit yang sedang nazak","Kursus dan pentauliahan BLS"],"r":[],"j":["Rujuk Nilai-Nilai Murni Professionalism Accountability Integrity","HR Muslim (2/ 631)","HR Abu daud (5/ 34) (3116)"],"dasar":[],"t":[]},{"no":"6.1","proses":"Kekangan","amalan":"","k":["Mendapat arahan bertulis daripada pakar","Memastikan keselamatan pesakit","Memberi penerangan yang jelas kepada penjaga/waris"],"r":["Fail Pesakit","Restraint Consent Form (NUR 162)"],"j":["Surah An-Nahl: 43","Rujuk Etika Wargakerja & Pesakit - Penerangan yang Jelas","Rujuk Nilai-Nilai Murni Profesionalisma Akauntabiliti Integriti"],"dasar":[],"t":["Amanah & Kerahsiaan","Keselamatan & Mudarat","Adab & Komunikasi"]},{"no":"7.1","proses":"Pengenalan Diri Pesakit","amalan":"Polisi Pengenalan Diri Pesakit (PPH/MED/10)","k":["Memastikan pesakit yang betul mendapat rawatan yang betul dengan mengamalkan etika kerja Teliti","Malaysian Patient Safety Goals MPSG no 5","Tag Nama Pesakit"],"r":[],"j":["Rujuk Nilai-Nilai Murni Professionalism Accountability Integrity"],"dasar":[],"t":[]},{"no":"8.1","proses":"Pesanan Ubat Melalui Telefon/ Lisan","amalan":"Polisi Pesanan Ubat Melalui Telefon / Lisan (PPH/MED/11)","k":["Mendapat arahan yang jelas daripada pakar","Inpatient Prescription (PHAR 01)","Whatsapp Pesanan"],"r":[],"j":["Rujuk Nilai-Nilai Murni Professionalism Accountability Integrity"],"dasar":[],"t":[]},{"no":"9.1","proses":"Penggantian Sementara","amalan":"Polisi Penggantian Sementara (PPJ/NUR/01)","k":["Memastikan tenaga kerja kerjururawatan mencukupi dan berkompeten menggantikan tugas"],"r":["Buku Rekod Deployment"],"j":["Rujuk Nilai Murni - Accountability","Al Burnuwi. Al Muhammad Sidqi. (1996). Al-Wajiz Fi Idhoh Qawaid Fikhiyyah, Beirut Muassah ArRisalah, MS: 393"],"dasar":[],"t":[]},{"no":"10.1","proses":"Orientasi Kejururawatan","amalan":"Polisi Orientasi Kejururawatan (PPJ/NUR/02)","k":["Wargakerja faham dengan tugasan dan tangungjawab masing-masing"],"r":["Senarai Semak Orientasi Wargakerja Kejururawatan","Email Panggilan Unit Latihan","Senarai Kehadiran","Tentatif Orientasi","Slide Orentasi"],"j":["Rujuk Nilai-Nilai Murni - Professionalism Accountability Integrity"],"dasar":[],"t":[]},{"no":"11.1","proses":"Pengurusan Harta benda","amalan":"Polisi Pengurusan Harta Benda Pesakit (PPJ/NUR/05)","k":["Amanah Menjaga Harta Pesakit","Barangan yang tidak dituntut (Luqatah)"],"r":["Rekod Penyimpanan Harta Benda Pesakit (NUR110)","Almari sisi berkunci"],"j":["Rujuk Nilai-Nilai Murni Professionalism Accountability Integrity","Rujuk SCCP Sekuriti Barang tidak dituntut / Luqatah"],"dasar":[],"t":["Amanah & Kerahsiaan"]},{"no":"12.1","proses":"Khatan kanakkanak","amalan":"Polisi Pengurusan Pesakit KanakKanak Untuk Berkhatan PPJ-NUR-07 Polisi Pengurusan Pesakit Pembedahan PPJ-NUR-19","k":["Pesakit dan Waris/penjaga telah diterangkan berkaitan prosedur/komplikasi dan kos dengan jelas oleh pakar","Menawarkan prosedur khatan kepada waris/penjaga pesakit yang baru lahir"],"r":["Consent form penjaga","Pakar yang menawarkan perkhidmata n secara verbal"],"j":["Rujuk Nilai Murni","Penerangan yang Jelas","Buku Zuriatku (Terbitan PUSRAWI) M.S.:30","Surah al-Nahl: 123","HR al-Tirmizi No. 2799","HR Muslim (349)","HR Abu Daud (5271)"],"dasar":[],"t":["Ibadah Pesakit","Adab & Komunikasi"]},{"no":"13.1","proses":"Transfusi darah/kompenen darah","amalan":"Polisi Pemberian Transfusi DarahKomponen Darah (PPJ/NUR/09)","k":["Mengelakkan mudarat","Penerangan yang jelas telah diterangkan kepada pesakit dan waris","Melaporkan sebarang alahan kepada unit makmal dengan segera untuk tindakan seterusnya"],"r":["Borang Pemohonan Transfusi (LAB 01)","Laboratary Request Form – (LAB 02)","Senarai Semak Transfusi Darah- (NUR 73)","Borang Persetujuan Pemindahan Darah (LAB 06)","Blood transfusion guideline"],"j":["Surah al-Isra': 70"],"dasar":[],"t":["Keselamatan & Mudarat","Adab & Komunikasi"]},{"no":"14.1","proses":"Latihan Wargakerja Kejururawatan","amalan":"Polisi Latihan Jangka Pendek Kejururawatan (PPJ/NUR/14)","k":["Memastikan Jururawat kompeten dalam melaksanakan perawatan"],"r":["Laporan Penilaian","Senarai semak spesifik"],"j":["Rujuk SCCP Kejururawatan 5.2 Menyediakan staf yang kompeten"],"dasar":[],"t":[]},{"no":"14.2","proses":"Pemilihan Jururawat Terlatih","amalan":"Polisi Latihan Jangka Pendek Kejururawatan (PPJ/NUR/14)","k":["Memilih jururawat yang layak"],"r":["Laporan Penilaian","Senarai semak spesifik"],"j":["Rujuk Nilai-Nilai Murni Professionalism Accountability Integrity"],"dasar":[],"t":[]},{"no":"14.3","proses":"Penilaian Semula","amalan":"Polisi Latihan Jangka Pendek Kejururawatan (PPJ/NUR/14)","k":["Memastikan Jururawat kompeten melaksanakan prosedur"],"r":["Laporan Penilaian","Senarai semak spesifik"],"j":["Rujuk Nilai-Nilai Murni Professionalism Accountability Integrity"],"dasar":[],"t":[]}]}],"SCCP/PK/02":[{"no":"1","nama":"Hand Hygiene","kod":"PPJ/KWI/01","rows":[{"no":"1.1","proses":"Penggunaan Alcohol Based Hand Rub","amalan":"","k":["Polisi Hand Hygiene (PPJ/KWI/01)","The World Health Organization (WHO)","Memastikan mendapat bekalan Alcohol Based Hand Rub yang tidak mengandungi bahan yang meragukan untuk kegunaan hospital secara keseluruhan"],"r":["Senarai MSDS"],"j":["Muzakarah Jawatankuas a Fatwa Majlis Kebangsaan Bagi Hal Ehwal Ugama Islam Malaysia Kali Ke-7"],"dasar":[],"t":["Halal & Haram"]},{"no":"1.2","proses":"Kebersihan tangan dalam kepatuhan 5 momen","amalan":"","k":["Polisi Hand Hygiene (PPJ/KWI/01)","The World Health","Warga kerja perlu mematuhi dan melakukan kebersihan tangan mengikut 5 momen"],"r":["Senarai Semak Kompetensi","Hand Hygiene Audit Form (NUR/KWI/04)"],"j":["HR Tirmidzi. Organization (WHO)","Centers for Disease Control and Prevention (CDC)","Hand Hygiene Audit Report","Continuous Nursing Education (CNE) Hand Hygiene"],"dasar":[],"t":["Keselamatan & Mudarat"]},{"no":"2.1","proses":"Pengasingan penyakit berjangkit","amalan":"","k":[],"r":[],"j":["Akta Pencegahan dan Kawalan Penyakit Berjangkit 1988 (Akta 342)","Policies & Prosedures on Infection Prevention and Infection Control, KKM","Setiap wargakerja memastikan pesakit penyakit berjangkit ditempatkan di bilik isolasi yang ditetapkan","Prosedur tempahan bilik pesakit melalui kaunter pendaftaran","Pelaporan Notifikasi Penyakit Berjangkit","HR Bukhari 5771","HR Bukhari 5728","HR Ibn Majah 2340"],"dasar":[],"t":[]},{"no":"2.2","proses":"Kepatuhan dalam pemakaian PPE","amalan":"","k":["Policies & Prosedures on Infection Prevention","Mematuhi salah satu maqasid syariah iaitu penjagaan nyawa"],"r":["Poster PPE","PPE dipohon melalui trackcare"],"j":["Rujuk Fiqh Medik – Menghilangka and Infection Control, KKM","Polisi Penggunaan Personal Protective Equipment (PPE) (PPJ/KWI/04) system (Stock Request) n kemudharatan"],"dasar":["(SCCP/AM/02 [1.14])"],"t":[]},{"no":"3.1","proses":"Tumpahan cecair badan dan darah Policies & Prosedures on Infection Prevention and Infection Control, KKM","amalan":"","k":["Memastikan tumpahan cecair dibersihkan dengan cara yang betul mengikut Policies & Prosedures on Infection Prevention and Infection Control, KKM. dan cara pembersihan najis mengikut panduan syarak","Latihan Pencucian oleh Kawalan Infeksi","Al-Taqrirat al-Sadidah, m/s. 135"],"r":[],"j":[],"dasar":[],"t":["Halal & Haram","Keselamatan & Mudarat"]},{"no":"3.2","proses":"Pembersihan kainan yang masih terdapat kesan darah","amalan":"Polisi Langkah Pencegahan (PPJ/KWI/03)","k":["Memastikan kebersihan dan kesucian kainan yang mungkin akan digunakan pesakit dalam solat seperti","Linen Rewash Reject Form (ADM 154)","Al-Taqrirat al-Sadidah, m/s 135-136 baju pesakit, cadar dan selimut"],"r":[],"j":[],"dasar":[],"t":["Ibadah Pesakit","Keselamatan & Mudarat"]},{"no":"4.1","proses":"Solat dalam pemakaian PPE Berdasarkan Irsyad Al-Fatwa Wilayah Persekutuan siri 481","amalan":"","k":["Warga kerja yang terlibat pemakaian PPE sepanjang hari perlu menunaikan solat jamak jika ada keperluan mendesak"],"r":[],"j":["Surah an-Nisa’: 103","Irsyad Al-Fatwa Siri Ke-481: Kaedah Bersuci dan Solat Bagi Petugas Covid-19 Yang Terpaksa Memapaki PPE Selama 12 Jam"],"dasar":[],"t":["Ibadah Pesakit"]},{"no":"5.1","proses":"Jenazah penyakit berjangkit","amalan":"","k":[],"r":[],"j":["Garis Panduan Pengendalian Jenazah Islam Penyakit Berjangkit KKM","Akta Pencegahan & Pengawalan Penyakit Berjangkit 1988 (Akta 342)","Mematuhi salah satu maqasid syariah iaitu penjagaan nyawa","Sama jantina","Mengelakkan kemudharatan","Penjagaan aib pesakit","Borang Persetujuan Pengurusan Jenazah (ADM 01)","Garis Panduan Pengurusan Jenazah Islam Penyakit Berjangkit, Kementerian Kesihatan Malaysia","Garis Panduan Tatacara Pengurusan Jenazah Islam (Covid-19), JAKIM"],"dasar":[],"t":["Ikhtilat / Pergaulan","Jenazah & Janin"]},{"no":"5.2","proses":"Pemakluman penyakit berjangkit kepada waris (Adakah boleh dihebahkan) Personal Data Protection Act","amalan":"","k":["Warga kerja yang terlibat perlu menjaga aib pesakit","Al-Asybah Wa Al-Nazoir, Imam Suyuti"],"r":[],"j":[],"dasar":[],"t":["Amanah & Kerahsiaan"]},{"no":"5.3","proses":"Unwanted body part - yang boleh berjangkit (pembedahan)","amalan":"","k":["Memastikan pengurusan jenazah dilakukan mengikut maqasid syariah","Double bag clinical waste dan incinerate"],"r":[],"j":["Surah Al-Isra': 70","Garis Panduan Pengurusan Jenazah Islam Penyakit Berjangkit, Kementerian Kesihatan Malaysia"],"dasar":[],"t":["Jenazah & Janin"]},{"no":"6.1","proses":"Penggunaan semula single use item","amalan":"Polisi Kawalan Infeksi Untuk Teknik Aseptik Dan Amalan Berkaitan Pensterilan Dan Disinfeksi PPJ/KWI/11","k":["Menjaga keselamatan pada rawatan yang diberikan","Arahan Caj Pesakit Dalam (BIL 13)"],"r":[],"j":["Rujuk Nilai-nilai Murni – Profesionalism, Integrity"],"dasar":["(SCCP/AM/01 [1.1])","(SCCP/AM/01 [1.7])"],"t":["Muamalat & Kewangan","Keselamatan & Mudarat"]},{"no":"6.2","proses":"Penggunaan alatan yang telah tamat tempoh","amalan":"Polisi Kawalan Infeksi Untuk Teknik Aseptik Dan Amalan Berkaitan Pensterilan Dan Disinfeksi PPJ/KWI/11","k":["Mengelakkan kemudharatan kepada pesakit","Pemantauan Persekitaran (Environmental Round)"],"r":[],"j":["HR Bukhari dan Muslim"],"dasar":[],"t":[]}]}],"SCCP/PK/03":[{"no":"1","nama":"Pengurusan Pesakit Perubatan","kod":"PPJ/NUR/15","rows":[{"no":"1.1","proses":"Bantuan solat untuk pesakit yang kurang upaya","amalan":"Polisi Pengurusan Pesakit Perubatan (PPJ/NUR/15) Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Menilai keperluan ibadah pesakit dan memberikan bantuan ibadah yang bersesuaian dengan keadaan pesakit"],"r":["Senarai Semak Orientasi Pesakit (NUR 23)","Orientasi Nursing Pegawai Agama"],"j":["https://muftiwp.gov.my/ artikel/irsyadfatwa/irsyad-fatwaumum/4179-irsyad-alfatwa-siri-ke-418- hukum-menunaikansolat-bagi-orangkurang-upaya","Buku Panduan Bersuci & Bersolat bagi Pesakit (JAKIM)"],"dasar":[],"t":["Ibadah Pesakit"]},{"no":"1.2","proses":"Pengurusan pesakit bedridden atau geriatrik untuk solat","amalan":"Polisi Pengurusan Pesakit Perubatan (PPJ/NUR/15) Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Membersihkan katil pesakit bedridden atau pesakit geriatrik","Mengelakkan daripada bernajis"],"r":["Nota Kemajuan","Nursing Kardex (NUR07)","Buku Panduan Bersuci & Bersolat bagi Pesakit (JAKIM)"],"j":["Rujuk SCCP Hospital Mesra Ibadah"],"dasar":[],"t":["Ibadah Pesakit","Keselamatan & Mudarat"]}]}],"SCCP/PK/04":[{"no":"1","nama":"Pengurusan Pesakit Pembedahan","kod":"PPJ/NUR/07","rows":[{"no":"1.1","proses":"Peringatan Solat Untuk Pesakit Sebelum Dan Selepas Menjalani Pembedahan","amalan":"Polisi Pengurusan Ibadah Pesakit (PPJ/BK/04)","k":["Memberi peringatan dan penerangan solat untuk pesakit sebelum dan selepas pembedahan","Tatacara solat adalah mengikut kesesuaian keadaan pesakit"],"r":["Senarai Semak Ziarah Pesakit (BK01)","Slide Orientasi Nursing"],"j":["HR Muslim: 78","Surah Ali Imran: 104"],"dasar":[],"t":["Ibadah Pesakit","Adab & Komunikasi"]},{"no":"1.2","proses":"Penerangan atau Bantuan Solat dan Bersuci untuk Pesakit","amalan":"Polisi Pengurusan Ibadah Pesakit (PPJ/BK/04)","k":["Memberi tunjuk ajar kepada pesakit dengan betul"],"r":["Borang Orientasi Pesakit (NUR23)","Senarai Semak Ziarah Pesakit (BK01)"],"j":["Rujuk Fiqh Medik: 1.9 Panduan Ibadah Pesakit","Buku Panduan Bersuci & Bersolat bagi Pesakit (JAKIM)"],"dasar":["(SCCP/AM/02 [1.9])"],"t":["Ibadah Pesakit","Adab & Komunikasi"]},{"no":"1.3","proses":"Solat Pesakit Yang Menggunakan Gel Porcine (DUODERM)","amalan":"Polisi Pengurusan Ibadah Pesakit (PPJ/BK/04)","k":["Memberi penerangan berkenaan status solat"],"r":["Nota Kemajuan (ADM 95)","Borang Keizinan Menggunakan"],"j":["Rujuk Fiqh Medik: 1.9 Panduan Ibadah Pesakit Ubatan (PHAR 55)","Rujuk Fiqh Medik:1.14 Menghilangkan Kemudharatan"],"dasar":["(SCCP/AM/02 [1.9])","(SCCP/AM/02 [1.14])"],"t":["Ibadah Pesakit","Adab & Komunikasi"]},{"no":"1.4","proses":"Pemindahan Pesakit ke Dewan Bedah","amalan":"Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Memastikan aurat pesakit terpelihara sepanjang ke dewan bedah"],"r":["Pakaian pesakit ke Dewan Bedah"],"j":["Rujuk Etika Wargakerja dan Pesakit: 1.1 Batasan Aurat"],"dasar":["(SCCP/AM/05 [1.1])"],"t":["Aurat"]},{"no":"1.5","proses":"Pengurusan Anggota Badan Tidak Dituntut (Unwanted Body Part)","amalan":"Polisi Pengurusan Ibadah Pesakit (PPJ/BK/04)","k":["Menyerahkan anggota badan yang terpotong kepada tuannya atau waris","Perioperative Nursing Record(NUR 96)"],"r":["Borang Tuntutan Anggota Badan(OT11)"],"j":["Rujuk Fiqh Medik: 1.2 Pengurusan Anggota Badan yang Tidak Dituntut"],"dasar":["(SCCP/AM/02 [1.2])"],"t":[]}]}],"SCCP/PK/05":[{"no":"1","nama":"Operasi Jabatan Obstetrik Dan Ginekologi","kod":"PPJ/MAT/01","rows":[{"no":"1.1","proses":"Kebenaran untuk melakukan prosedur intervensif kepada pesakit","amalan":"Polisi Operasi Jabatan Obstetrik dan Ginekologi (PPJ/MAT/01)","k":["Mendapatkan kebenaran daripada pesakit untuk melakukan prosedur"],"r":["Borang Keizinan Pembedahan/Prosedur (ADM 25)","Borang Persetujuan Pemindahan Darah atau Komponen Darah (LAB 06)"],"j":["Etika Wargakerja Dan Pesakit – Komunikasi berkesan"],"dasar":["(SCCP/AM/05 [1.4])"],"t":["Adab & Komunikasi"]},{"no":"1.2","proses":"Proses Bilateral Tubal Ligation (BTL)","amalan":"Polisi Operasi Jabatan Obstetrik dan Ginekologi (PPJ/MAT/01)","k":["Memastikan ibu memahami proses BTL dari sudut medical dan syariat Islam dengan tepat"],"r":["Borang Keizinan Pemandulan (ADM 73)"],"j":["Muzakarah Jawatankuasa Fatwa Majlis Kebangsaan"],"dasar":[],"t":[]}]},{"no":"2","nama":"Sistem Kawalan Keselamatan Bayi","kod":"PPJ/MAT/07","rows":[{"no":"2.1","proses":"Keselamatan Bayi di wad Post Natal","amalan":"Polisi Sistem Kawalan Keselamatan Bayi (PPJ/MAT/07)","k":["Memastikan keselamatan bayi"],"r":["Senarai Semak Pemindahan Bayi Dari Bilik Bersalin (NUR 14)","Borang Rekod Bayi (ADM 04)","Rekod Pengambilan Bayi Untuk Prosedur (NUR 44)","Tag pengenalan ibu dan bayi","Kad kelahiran"],"j":["Surah al-Baqarah: 195"],"dasar":[],"t":["Keselamatan & Mudarat"]}]},{"no":"3","nama":"Pengurusan Bayi Di Bilik Rawatan Bayi","kod":"PPJ/MAT/12","rows":[{"no":"3.1","proses":"Keselamatan Bayi di Bilik Rawatan Bayi","amalan":"Polisi Pengurusan Bayi Di Bilik Rawatan Bayi (PPJ/MAT/12)","k":["Petugas mestilah memastikan bayi sentiasa berada dalam keadaan selamat sepanjang berada dalam fasiliti hospital","Tagging nama pada kaki bayi"],"r":[],"j":["Surah al-Baqarah: 195"],"dasar":[],"t":["Keselamatan & Mudarat"]}]}],"SCCP/PK/06":[{"no":"1","nama":"Pengurusan Pesakit Kanak-Kanak Untuk Berkhatan","kod":"PPJ/NUR/07","rows":[{"no":"1.1","proses":"Peneman pesakit kanakkanak","amalan":"Polisi Pengurusan Pesakit Kanak-Kanak Untuk Berkhatan (PPJ/NUR/07)","k":["Peneman hanya ibu jika bilik bercampur"],"r":["Borang Peneman"],"j":["Etika Wargakerja Dan Pesakit – Peneman Ketika Mendapatkan Rawatan"],"dasar":["(SCCP/AM/05 [1.3])"],"t":["Peneman / Mahram"]},{"no":"1.2","proses":"Khatan kanakkanak","amalan":"","k":["Penjaga diberi penerangan tentang prosedur/komplikasi dan kos dengan jelas oleh pakar"],"r":["Borang Kemasukan Wad (ADM 12)","Borang Keizinan Pembedahan/ Prosedur (ADM 25)"],"j":["Rujuk Etika Wargakerja dan Pesakit – Komunikasi Berkesan","HR Tirmizi","HR Muslim","HR Abu Daud"],"dasar":[],"t":["Ibadah Pesakit","Adab & Komunikasi"]}]}],"SCCP/PK/07":[{"no":"1","nama":"Pengurusan Kes Kecemasan","kod":"PPJ/AE/01","rows":[{"no":"1.1","proses":"Pesakit yang mendapatkan rawatan kecemasan","amalan":"Polisi Pengurusan Kes Kecemasan (PPJ/AE/01)","k":["Memastikan kes kecemasan zon merah dirawat dengan kadar segera"],"r":["Buku Pendaftaran Kemasukan Pesakit","Laporan pesakit di sistem trackcare"],"j":["Surah al-Baqarah:195"],"dasar":[],"t":[]},{"no":"1.2","proses":"Pesakit yang mendapatkan rawatan","amalan":"Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Menawarkan bantuan kepada pesakit yang hendak menunaikan solat","Signage bantuan","Penyediaan tempat solat"],"r":[],"j":["HR Muslim"],"dasar":[],"t":["Ibadah Pesakit"]},{"no":"1.3","proses":"Chaperon pesakit yang berlainan jantina","amalan":"Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Elakkan berlaku percampuran lelaki dan perempuan"],"r":["Jadual harian staf"],"j":["Rujuk Etika Wargakerja dan Pesakit – Peneman Ketika tanpa ada keperluan Mendapatkan Rawatan"],"dasar":["(SCCP/AM/05 [1.3])"],"t":["Ikhtilat / Pergaulan","Peneman / Mahram"]}]},{"no":"2","nama":"Panggilan Ambulan","kod":"PPJ/AE/02","rows":[{"no":"2.1","proses":"Panggilan ambulan atas sebab kecemasan","amalan":"Polisi Panggilan Ambulan (PPJ/AE/02) Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Memelihara aurat pesakit","Mengutamakan jantina pesakit dan petugas ambulan adalah sama"],"r":["Borang ambulan call (NUR 22)"],"j":["Rujuk Etika Wargakerja dan Pesakit – Batasan aurat"],"dasar":["(SCCP/AM/05 [1.1])"],"t":["Aurat"]}]}],"SCCP/PK/08":[{"no":"1","nama":"Operasi Wad Bersalin","kod":"PPJ/MAT/02","rows":[{"no":"1.1","proses":"Penggunaan tag pengenalan ibu dan bayi yang baru lahir","amalan":"Polisi Operasi Wad Bersalin (PPJ/MAT/02)","k":["Memastikan keselamatan ibu dan bayi","Tag pengenalan ibu dan bayi"],"r":["Kad kelahiran"],"j":["Surah al-Baqarah: 195"],"dasar":[],"t":["Keselamatan & Mudarat"]},{"no":"1.2","proses":"Kemasukan ibu ke Wad Bersalin","amalan":"Polisi Operasi Wad Bersalin (PPJ/MAT/02)","k":["Menentukan peneman adalah suami atau mahram (ibu atau saudara wanita)","Initial Nursing Assessment (NUR 01-1)"],"r":["Nota Kemajuan Pesakit (ADM 95)","Borang Peneman Pesakit Dalam (ADM 115)"],"j":["Rujuk Etika Wargakerja dan Pesakit – Peneman ketika mendapatkan rawatan"],"dasar":["(SCCP/AM/05 [1.3])"],"t":["Peneman / Mahram"]},{"no":"1.3","proses":"Kemasukan ibu ke Wad Bersalin","amalan":"Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Memastikan aurat pesakit di Labour Room terjaga dengan menyarungkan legging di","Pembekalan Legging (Bar code)","Arahan Caj Pesakit Dalam BIL 13"],"r":[],"j":["Rujuk Etika Wargakerja dan Pesakit - Batasan Aurat bahagian kaki pesakit","Notis pelawat terhad","Wargakerja semua Perempuan (Jadual kerja)"],"dasar":["(SCCP/AM/05 [1.1])"],"t":["Aurat","Muamalat & Kewangan"]},{"no":"1.4","proses":"Pengurusan Kes Kematian bayi Guidelines For Stillbirth And Under Five Mortality Reporting System July 2013 – Ministry of Health","amalan":"","k":["Memastikan pengurusan jenazah disegerakan oleh pihak tertentu"],"r":["Borang Persetujuan Pengurusan Jenazah (ADM 01)"],"j":["Rujuk Fiqh Medik – Pengurusan janin"],"dasar":["(SCCP/AM/01[1.12])"],"t":["Jenazah & Janin"]},{"no":"1.5","proses":"Proses Bilateral Tubal Ligation (BTL)","amalan":"Polisi Operasi Wad Bersalin (PPJ/MAT/02)","k":["Memastikan ibu memahami proses BTL dari sudut perubatan dan syariat Islam dengan tepat"],"r":["Borang Keizinan Pemandulan (ADM 73)"],"j":["Muzakarah Jawatankuasa Fatwa Majlis Kebangsaan Maksudnya: Dan janganlah kamu sengaja mencampakkan diri kamu ke dalam bahaya kebinasaan dan baikilah (dengan sebaik-baiknya segala usaha dan) perbuatan kamu; kerana sesungguhnya Allah mengasihi orang-orang yang berusaha memperbaiki amalannya. (Surah al-Baqarah: 195) Berdasarkan hadis yang diriwayatkan oleh Abu Sa’id Saad bin Sinan al-Khudri r.a. Nabi SAW bersabda: َ ار َ ِضر َلَ َ و َ ر َ َلَ َضر Maksudnya: “Tidak boleh melakukan perbuatan yang mencelakakan (mudarat) dan tidak boleh memudaratkan orang lain”. (HR Ibn Majah 2340: Status Hadis Hasan.) Islam sangat menganjurkan umatnya menjaga diri daripada pelbagai bentuk ancaman yang membahayakan jiwa manusia. Umat Islam diperintahkan untuk menghindar bahaya dan mengelakkan diri daripada melakukan tindakan berbahaya yang boleh mencelakai diri sendiri atau orang lain"],"dasar":[],"t":["Keselamatan & Mudarat"]}]},{"no":"2","nama":"Pengurusan Pesakit Bersalin","kod":"PPJ/MAT/03","rows":[{"no":"2.1","proses":"Peneman (Chepron) Pesakit","amalan":"Polisi Pengurusan Pesakit Bersalin (PPJ/MAT/03)","k":["Menentukan peneman adalah suami atau mahram (ibu atau saudara wanita)","Initial Nursing Assessment (NUR 01-1)"],"r":["Nota Kemajuan Pesakit (ADM 95)"],"j":["Rujuk Etika Wargakerja dan Pesakit – Peneman ketika mendapatkan rawatan"],"dasar":[],"t":["Peneman / Mahram"]}]},{"no":"3","nama":"Pengurusan Plasenta","kod":"PPJ/MAT/08","rows":[{"no":"2.3","proses":"Pengendalian selepas kelahiran","amalan":"Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Membuat penerangan tentang Mandi Wajib selepas tempoh nifas","Keadaan solat semasa proses kelahiran"],"r":["Borang Rujukan Kes Kepada Pegawai Agama (BK 02)","Senarai Semak Ziarah Pesakit (BK 01)","Senarai Semak Orientasi Pesakit (NUR 23)"],"j":["Rujuk Fiqh Medik - Darah Wanita"],"dasar":[],"t":["Ibadah Pesakit","Adab & Komunikasi"]}]}],"SCCP/PK/09":[{"no":"1","nama":"Prosedur Pengurusan Pesakit Di Dewan Bedah","kod":"POJ/OT/01","rows":[{"no":"1.1","proses":"Aurat pesakit","amalan":"Polisi Hospital Mesra Ibadah PPJ/BK/06","k":["Mengutamakan petugas di dalam dewan bedah mengikut jantina pesakit sekurangkurangnya ketika proses pembedahan dilakukan","Meminimakan bukaan aurat pesakit ketika prosedur dijalankan"],"r":["Buku Jadual Tugasan Dewan Bedah","Sterile Drape"],"j":["Rujuk Etika Wargakerja dan Pesakit – Batasan Aurat"],"dasar":["(SCCP/AM/05 [1.1])"],"t":["Aurat"]},{"no":"1.2","proses":"Solat jumaat Doktor dan petugas lelaki dewan bedah","amalan":"Polisi Hospital Mesra Ibadah PPJ/BK/06","k":["Doktor dan Petugas lelaki wajib menunaikan solat jumaat kecuali pada waktu kecemasan"],"r":["Buku Jadual Tugasan Dewan Bedah"],"j":["Rujuk Fiqh Medik – Solat Jumaat"],"dasar":["(SCCP/AM/02 [1.1])"],"t":["Ibadah Pesakit"]}]},{"no":"2","nama":"Operasi Jabatan Anestesiologi","kod":"PPJ/ANES/01","rows":[{"no":"2.1","proses":"Bacaan syahadah pesakit","amalan":"Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Menggalakkan pesakit melafazkan syahadah dan membaca doa sebelum pembedahan bermula","Amalan di dalam dewan bedah","Slide orientasi"],"r":[],"j":["HR Muslim","HR Abu Daud","Surah AlIsra’ (82)"],"dasar":[],"t":["Ibadah Pesakit"]}]}],"SCCP/PK/10":[{"no":"1","nama":"Pengurusan Pesakit Rawatan Harian","kod":"PPJ/DCS/01","rows":[{"no":"1.1","proses":"Pembedahan Pesakit Bawah Umur","amalan":"Polisi Pengurusan Pesakit Rawatan Harian (PPJ/DCS/01)","k":["Mendapatkan Kebenaran Ibu bapa/ Penjaga"],"r":["Borang Keizinan Pembedahan/ Prosedur (ADM 25)"],"j":["Surah al-Nisa: 25","Surah al-Nisa: 5-6"],"dasar":[],"t":[]},{"no":"1.2","proses":"Pemberian Rawatan Kepada Pesakit","amalan":"Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Menjaga aurat pesakit","Menjaga adab pergaulan berlainan jantina"],"r":["Jadual Tugasan(Buku Assignment)"],"j":["Rujuk Etika Wargakerja dan Pesakit:"],"dasar":["(SCCP/AM/05 [1.1])","(SCCP/AM/05 [1.2])"],"t":["Aurat","Ikhtilat / Pergaulan","Adab & Komunikasi"]}]},{"no":"2","nama":"Pengurusan Pesakit Menjalani Endoskopi","kod":"PPJ/DCS/02","rows":[{"no":"2.1","proses":"Pembedahan Pesakit Bawah Umur","amalan":"Polisi Pengurusan Pesakit Menjalani Endoskopi (PPJ/DCS/02)","k":["Mendapatkan Kebenaran Ibu bapa/ Penjaga"],"r":["Borang Keizinan Pembedahan/ Prosedur (ADM 25)"],"j":["Surah al-Nisa: 25","Surah al-Nisa: 5-6"],"dasar":[],"t":[]}]}],"SCCP/PK/11":[{"no":"1","nama":"Pengurusan Pesakit Di Unit Rawatan Rapi","kod":"PPJ/ICU/01","rows":[{"no":"1.1","proses":"Arahan daripada Doktor pakar","amalan":"Polisi Pengurusan Pesakit Di Unit Rawatan Rapi (PPJ/ICU/01)","k":["Memastikan arahan diberikan oleh Doktor Pakar"],"r":["Nota Kemajuan (ADM 95)","Pendaftaran Pesakit"],"j":["Surah an-Nahl: 43","Surah al-Furqan: 59"],"dasar":[],"t":[]},{"no":"1.2","proses":"Penerangan prosedur dan kos rawatan berkaitan","amalan":"Polisi Pengurusan Pesakit Di Unit Rawatan Rapi (PPJ/ICU/01)","k":["Profesionalisme","Mengenakan cas sesuai mengikut prosedur","Anggaran Kos Perundingan/Ra watan (ADM 96)"],"r":["Nota Kemajuan (ADM 95)"],"j":["Etika Wargakerja dan Pesakit – Komunikasi berkesan"],"dasar":[],"t":["Adab & Komunikasi"]}]},{"no":"2","nama":"Do Not Resuscitate (Dnr)","kod":"PPJ/ICU/02","rows":[{"no":"2.1","proses":"Do not resuscitate","amalan":"Polisi Do Not Resuscitate (PPJ/ICU/02)","k":["Doktor memberi penerangan berkaitan poor prognosis dan perbincangan tidak diresusitasi dengan waris","Meminta izin kepada waris","Respect","Keizinan Tidak Diresustasi (ADM141)","Notifikasi Pesakit Dangerous Ill List (DIL) (NUR 37) Rujuk Fiqh Medik – Do not resuscitate"],"r":[],"j":[],"dasar":["(SCCP/AM/02[1.8])"],"t":["Adab & Komunikasi"]}]},{"no":"3","nama":"End Of Life Care","kod":"PPJ/ICU/03","rows":[{"no":"3.1","proses":"Pengurusan kerohanian","amalan":"Polisi End Of Life Care (PPJ/ICU/03)","k":["Memberikan bantuan syahadah dan kerohanian kepada pesakit atau waris"],"r":["Borang Rujukan Kes Pegawai Agama (BK02)"],"j":["Rujuk Nilai-nilai Murni – Accountability, Wisdom"],"dasar":[],"t":[]},{"no":"3.2","proses":"Penamatan perawatan","amalan":"Polisi End Of Life Care (PPJ/ICU/03)","k":["Penamatan perawatan hendaklah mendapat arahan daripada doktor","Memberi penerangan yang jelas kepada waris"],"r":["Nota Kemajuan (ADM 95)","Hukum Eutanasia atau Mercy Killing, Muzakarah Jawatankuasa Fatwa Majlis Kebangsaan Bagi Hal Ehwal Ugama Islam Malaysia Kali Ke-97 yang bersidang pada 15 - 17 Disember 2011","Mendapatkan persetujuan waris"],"j":[],"dasar":[],"t":["Adab & Komunikasi"]},{"no":"4.1","proses":"Penjagaan Catheter daripada jangkitan kuman Catheter Related Blood Stream Infection (CRBSI) Policy (PPJ/ICU/05)","amalan":"","k":["Menjaga kemudaratan","Mengawal mafsadah","Catheter related blood stream infection (CRBSI) – CVC prevention bundle (ICU 05-2)"],"r":[],"j":["Rujuk Nilai-nilai Murni - Accountability"],"dasar":["(SCCP/AM/01 [1.5])"],"t":["Keselamatan & Mudarat"]}]}],"SCCP/PK/12":[{"no":"1","nama":"Pengurusan Pesakit Koronari Angiogram","kod":"PPJ/KAR/02","rows":[{"no":"1.1","proses":"Menjaga aurat pesakit","amalan":"Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Mengutamaka n petugas sama jantina dengan pesakit","Meminimakan bukaan aurat pesakit Ketika prosedur dijalankan"],"r":["Buku rekod CVL 08","Disposable panties","Penggunaan drape"],"j":["HR Muslim"],"dasar":["(SCCP/AM/05 [1.1])"],"t":["Aurat","Ikhtilat / Pergaulan"]},{"no":"1.2","proses":"Memasukk an catheter dan contrast Ketika bulan Ramadan Fiqh Medik 1.6","amalan":"","k":["Hukum berpuasa ketika porsedur pada bulan Ramadan"],"r":["Borang Consent (ADM 25)"],"j":["Rujuk Fiqh Medik: 1.6. melakukan prosedur pada bulan puasa"],"dasar":["(SCCP/AM/02 [1.6])"],"t":["Ibadah Pesakit"]}]}],"SCCP/PK/13":[{"no":"1","nama":"Operasi Hemodialisis","kod":"PPJ/HD/01","rows":[{"no":"1.1","proses":"Ruang Rawatan Dialisis PPJ/HD/01 i. Menyediakan ruang rawatan tertutup bagi pesakit wanita","amalan":"","k":["Susun atur ruang rawatan","Lawatan ke ruang rawatan"],"r":[],"j":["Rujuk Etika Warga Kerja dan Pesakit – Batasan Aurat"],"dasar":["(SCCP/AM/05 [1.1])"],"t":["Aurat"]}]},{"no":"2","nama":"Pengurusan Pesakit Di Unit Hemodialisis","kod":"PPJ/HD/02","rows":[{"no":"2.1","proses":"Jadual menjalani rawatan hemodialisis PPJ/HD/02 i. Perjanjian bersama pesakit sebelum menerima rawatan hemodialisis","amalan":"","k":[],"r":["Borang HD 18"],"j":["Surah al-Israk: 34"],"dasar":[],"t":["Muamalat & Kewangan"]}]}],"SCCP/PK/14":[{"no":"1","nama":"Operasi Central Sterile Services Unit","kod":"PPJ/CSSU/01","rows":[{"no":"1.1","proses":"Oncall berlainan jantina","amalan":"Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Memastikan jadual oncall sama jantina","Menjaga adab pergaulan berlainan jantina"],"r":["Jadual oncall","Diawasi CCTV"],"j":["Rujuk Etika Wargakerja dan Pesakit: 1.2 Adab Pergaulan Berlainan Jantina"],"dasar":["(SCCP/AM/05 [1.2])"],"t":["Ikhtilat / Pergaulan","Adab & Komunikasi"]},{"no":"1.2","proses":"Peralatan yang rosakAutoklaf","amalan":"Polisi Operasi Central Sterile Services Unit (PPJ/CSSU/01)","k":["Memastikan PPM dan pemantauan secara berkala"],"r":["Buku Laporan Kerosakan Peralatan/ Autoklaf","Jadual Pemeriksaan Harian"],"j":["Rujuk Nilai Nilai Murni - Accountability"],"dasar":["(SCCP/AM/01 [1.5])"],"t":[]},{"no":"1.3","proses":"Pakaian khas CSSD","amalan":"Polisi Operasi Central Sterile Services Unit (PPJ/CSSU/01) Polisi Kawalan Infeksi Untuk Teknik Aseptik","k":["Memakai pakaian khas CSSD semasa bertugas"],"r":["Pakaian khas CSSD"],"j":["Rujuk Fiqh Medik: 1.15 Hand Hygiene Dan Amalan Berkaitan Pensterilan Dan Disinfeksi (PPJ/KWI/11)"],"dasar":["(SCCP/AM/02 [1.15])"],"t":["Keselamatan & Mudarat"]}]},{"no":"2","nama":"Perancangan Kontingensi Kerosakan Autoclave","kod":"PPJ/CSSU/02","rows":[{"no":"2.1","proses":"Pensterilan Ke Hospital Luar Apabila Mesin Autoclave Tidak Boleh Beroperasi","amalan":"Polisi Perancangan Kontingensi Kerosakan Autoclave (PPJ/CSSU/02)","k":["Tanggungjawab menyediakan alatan yang telah di strill"],"r":["Surat"],"j":["Rujuk Nilai-Nilai Murni"],"dasar":["(SCCP/AM/02 [1.10])"],"t":[]}]}],"SCCP/PK/15":[{"no":"1","nama":"Kemasukan Pesakit Luar Klinik Pakar","kod":"PPJ/NUR/18","rows":[{"no":"1.2","proses":"Pakaian yang sesuai semasa prosedur tertentu dilakukan","amalan":"Polisi Hospital Mesra Ibadah (PPJ/BK/06). Menyediakan pakaian hospital yang sesuai dan menutup aurat untuk pesakit Rekod Linen (Baju Wad)","k":[],"r":[],"j":["Rujuk Etika Wargakerja dan Pesakit:"],"dasar":["(SCCP/AM/05 [1.1])"],"t":[]}]}],"SCCP/PK/16":[{"no":"1","nama":"Pengambilan Sampel Urin","kod":"PPJ/PPE/01","rows":[{"no":"1.1","proses":"Kaedah pengendalian dan penyucian najis","amalan":"Prosedur pengendalian dan pelupusan urin i.Petugas menerangkan kepada pelanggan atau pesakit menukar pakaian bersih di tempat yang disediakan","k":["PPE 16 - Drugs Of Abuse And Alcohol Testing"],"r":[],"j":["Rujuk Etika Wargakerja dan Pesakit"],"dasar":["(SCCP/AM/05[1.4])"],"t":["Keselamatan & Mudarat"]}]},{"no":"2","nama":"Pengendalian Pemeriksaan Kesihatan","kod":"PPJ/PPE/03","rows":[{"no":"2.1","proses":"Pemberian rawatan kepada pesakit","amalan":"Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Menjaga batasan aurat"],"r":["Jadual tugas wargakerja"],"j":["Rujuk Etika Wargakerja Dan Pesakit – Batasan Aurat"],"dasar":["(SCCP/AM/05[1.1])"],"t":["Aurat"]}]}],"SCCP/PK/17":[{"no":"1","nama":"Pengurusan Kematian Dan Jenazah","kod":"PPH/MED/03","rows":[{"no":"1.1","proses":"Pemberitahuan kematian","amalan":"Polisi Pengurusan Kematian dan Jenazah (PPH/MED/03)","k":["Pemakluman kematian kepada waris dengan berhemah"],"r":["Nota Kemajuan Pesakit"],"j":["Rujuk Etika Wargakerja dan Pesakit – Komunikasi Berkesan"],"dasar":["(SCCP/AM/05 [1.4])"],"t":["Jenazah & Janin","Adab & Komunikasi"]},{"no":"1.2","proses":"Penjagaan Aurat Jenazah","amalan":"Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Memastikan aurat jenazah terjaga ketika proses pengurusan jenazah"],"r":["Borang Persetujuan Pengurusan Jenazah (ADM 01)"],"j":["HR Abu Daud","HR Ibnu Majah"],"dasar":[],"t":["Aurat","Jenazah & Janin"]},{"no":"1.3","proses":"Kematian yang berlaku luar waktu pejabat","amalan":"Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Memastikan pengurusan jenazah dilaksanakan oleh petugas yang berkaitan"],"r":["Borang Penerimaan Jenazah (ADM 02)"],"j":["Rujuk Nilai-nilai Murni - Professionalism"],"dasar":["(SCCP/AM/01 [1.1])"],"t":["Jenazah & Janin"]},{"no":"1.4","proses":"Pengurusan jenazah penyakit berjangkit","amalan":"","k":["Mengelakkan jangkitan silang"],"r":["Borang Penyerahan Jenazah (ADM 02-1)","Borang Penerimaan Jenazah (ADM 02)"],"j":["Garis Panduan Pengurusan Jenazah Islam Penyakit Berjangkit, Kementerian Kesihatan Malaysia","Garis Panduan Tatacara Pengurusan Jenazah Islam (Covid-19) JAKIM"],"dasar":[],"t":["Jenazah & Janin"]}]}],"SCCP/SK/01":[{"no":"1","nama":"Pengurusan Rekod Perubatan Pesakit","kod":"PPJ/MR/01","rows":[{"no":"1.1","proses":"Dokumentasi laporan yang lengkap dan tepat","amalan":"Polisi Pengurusan Rekod Perubatan Pesakit (PPJ/MR/01) Akta 586 - Buku Rujukan Rekod Perubatan KKM","k":["Memastikan maklumat yang lengkap dan tepat"],"r":["Jadual Audit","Laporan Audit","Sirah Tarikh al-Tobari 2/634"],"j":["Rujuk Nilai-nilai Murni - Professionalism, Accountability, Integrity"],"dasar":[],"t":["Amanah & Kerahsiaan"]},{"no":"1.2","proses":"Keselamatan tempat penyimpanan rekod pesakit","amalan":"Polisi Pengurusan Rekod Perubatan Pesakit (PPJ/MR/01)","k":["Memelihara harta","Access card","CCTV","Gas FM200 (Bahan pemadam api)"],"r":[],"j":["HR Bukhari"],"dasar":[],"t":["Keselamatan & Mudarat"]}]},{"no":"2","nama":"Dokumentasi Rekod Perubatan Pesakit","kod":"PPJ/MR/02","rows":[{"no":"2.1","proses":"Dokumentasi rekod perubatan pesakit","amalan":"Polisi Dokumentasi Rekod Perubatan Pesakit (PPJ/MR/02)","k":["Memastikan semua borang dan nota klinikal ditulis dengan lengkap dan tepat"],"r":["Laporan Audit Rekod Perubatan"],"j":["Rujuk Nilai-nilai Murni - Professionalism"],"dasar":["(SCCP/AM/01 [1.1])"],"t":["Amanah & Kerahsiaan"]}]},{"no":"3","nama":"Pengurusan Rekod Perubatan Pesakit Dalam","kod":"PPJ/MR/03","rows":[{"no":"3.1","proses":"Dokumentasi nota klinikal/nota dewan bedah yang lengkap","amalan":"Polisi Pengurusan Rekod Perubatan Pesakit Dalam (PPJ/MR/03)","k":["Memastikan nota klinikal yang dimasukkan jelas dan tepat"],"r":["Laporan Audit Rekod Perubatan"],"j":["Rujuk Nilai-nilai Murni - Professionalism"],"dasar":["(SCCP/AM/01 [1.1])"],"t":["Amanah & Kerahsiaan"]}]},{"no":"4","nama":"Laporan Perubatan","kod":"PPJ/MR/06","rows":[{"no":"4.1","proses":"Menjaga kerahsiaan data pesakit","amalan":"Polisi Laporan Perubatan (PPJ/MR/06) Akta Perlindungan Data Peribadi 2010","k":["Memastikan data pesakit berada dalam keadaan selamat dan tidak berlaku sebarang kebocoran maklumat"],"r":["Consent Form (pt) PDPA","Borang Penilaian Prestasi (JSM 08-01/ JSM 08-02/ JSM 08-03)"],"j":["Rujuk Nilai-nilai Murni - Accountability"],"dasar":["(SCCP/AM/01 [1.5])"],"t":["Amanah & Kerahsiaan"]}]}],"SCCP/SK/02":[{"no":"1","nama":"Am Jabatan Farmasi","kod":"PPJ/PHAR/01","rows":[{"no":"1.1","proses":"Penetapan harga jualan ubat PPJ/PHAR/01","amalan":"Polisi Penetapan Harga (dalam semakan)","k":["Memastikan mengikut polisi dan garis panduan yang ditetapkan"],"r":["Minit Mesyuarat Jawatankuasa Penetapan Harga"],"j":["Rujuk Nilai-nilai Murni - Professional"],"dasar":["(SCCP/AM/01 [1.1])"],"t":["Muamalat & Kewangan"]}]},{"no":"2","nama":"Pendispensan Ubat","kod":"PPJ/PHAR/02","rows":[{"no":"2.1","proses":"Dispen ubat kepada pesakit","amalan":"Polisi Pendispensan Ubat (PPJ/PHAR/02)","k":["Memberi penerangan yang jelas kepada pesakit"],"r":["Borang Keizinan Menggunakan Ubatan (PHAR 55)","Senarai ubatan mengandungi unsur haiwan"],"j":["Rujuk Fiqh Medik – Ubatan yang mengandungi Unsur Haram"],"dasar":["(SCCP/AM/02 [1.10])"],"t":["Halal & Haram","Adab & Komunikasi"]},{"no":"2.2","proses":"Penyediaan dan pemberian ubat yang selamat dan betul kepada pesakit","amalan":"Polisi Pendispensan Ubat (PPJ/PHAR/02)","k":["Memberi penerangan yang betul kepada pesakit","Memastikan ubat yang diberikan betul, tepat dan selamat"],"r":["Borang Preskripsi Pesakit Luar dan Dalam","Record Checklist CPE","Borang Laporan Insiden (QLT 03)"],"j":["Rujuk Etika Wargakerja dan Pesakit – Komunikasi Berkesan"],"dasar":["(SCCP/AM/05 [1.4])"],"t":["Adab & Komunikasi"]},{"no":"2.3","proses":"Pemberian ubat yang hampir tamat tarikh luput","amalan":"Polisi Pendispensan Ubat (PPJ/PHAR/02)","k":["Memaklumkan kepada pesakit bahawa ubat hampir luput dan mendapatkan persetujuan pesakit terlebih dahulu","Preskripsi yang telah ditandatangani oleh pesakit tanda persetujuan"],"r":[],"j":["Rujuk Etika Wargakerja dan Pesakit – Komunikasi Berkesan"],"dasar":["(SCCP/AM/05 [1.4])"],"t":["Adab & Komunikasi"]},{"no":"3.1","proses":"Ubat yang tidak dituntut","amalan":"","k":["Penerangan yang jelas kepada pesakit"],"r":["Slip Ubat Tertangguh","Buku Log"],"j":["Rujuk Nilainilai Murni – Accountability","Etika Wargakerja dan Pesakit"],"dasar":["(SCCP/AM/01 [1.5])","(SCCP/AM/05 [1.4])"],"t":["Adab & Komunikasi"]},{"no":"4.1","proses":"Ubat Infaq","amalan":"","k":["Menguruskan harta infaq"],"r":["Borang Persetujuan Menginfaq Ubat (PHAR 74)"],"j":["Surah al-Baqarah: 2"],"dasar":[],"t":[]}]}],"SCCP/SK/03":[{"no":"1","nama":"Operasi Perkhidmatan Patologi","kod":"PPJ/LAB/01","rows":[{"no":"1.1","proses":"Pemakaian PPE (Personal Protective Equipment) Semasa Bertugas","amalan":"Polisi Operasi Perkhidmatan Patologi (PPJ/LAB/01)","k":["Melindungi keselamatan dan kesihatan wargakerja makmal daripada dijangkiti penyakit"],"r":["Papan tanda penggunaan PPE","Rekod Permohonan PPE melalui Sistem Trackcare"],"j":["Rujuk Fiqh Medik:1.14 Menghilangkan Kemudaratan","Rujuk SCCP Kawalan Infeksi"],"dasar":["(SCCP/AM/02 [1.14])"],"t":["Keselamatan & Mudarat"]},{"no":"1.2","proses":"Program kawalan kualiti peralatan dijalankan mengikut prosedur kualiti yang ditetapkan","amalan":"Polisi Operasi Perkhidmatan Patologi (PPJ/LAB/01)","k":["Memastikan ketepatan dan kejituan keputusan ujian","Mengelakkan mudarat kepada pesakit"],"r":["Fail Rekod Kaliberasi","Fail Rekod Kawalan kualiti (QC)"],"j":["Rujuk Fiqh Medik:1.14 Menghilangkan Kemudaratan","Rujuk Nilai-nilai Murni – Professionalism, Integrity"],"dasar":["(SCCP/AM/02 [1.14])"],"t":["Keselamatan & Mudarat"]},{"no":"1.3","proses":"Latihan/ kursus Wargakerja Makmal","amalan":"Polisi Operasi Perkhidmatan Patologi (PPJ/LAB/01)","k":["Meningkatkan pengetahuan dan kompentensi wargakerja"],"r":["Fail Latihan","Penilaian Kompentasi Kakitangan","Sijil Credentials & Privileging"],"j":["HR at-Thabrani: 929"],"dasar":[],"t":[]}]},{"no":"2","nama":"Pemprosesan Spesimen","kod":"PPJ/LAB/02","rows":[{"no":"2.1","proses":"Penerimaan dan penyemakan borang permohonan dan sampel pesakit","amalan":"Polisi Pemprosesan Spesimen (PPJ/LAB/02)","k":["Memastikan permohonan ujian yang dimohon oleh doktor yang merawat diterima dan diproses mengikut prosedur yang sepatutnya"],"r":["Sistem Trakcare","Sistem TrakcareLab","Borang Permohonan Tranfusi Darah (LAB 01)","Laboratory Request Form (LAB 02)"],"j":["Rujuk Nilai-nilai Murni - Professionalism, Accountability, Integrity"],"dasar":[],"t":[]},{"no":"2.2","proses":"Memasukkan data pesakit dan caj ujian ke dalam Sistem Trackcare","amalan":"Polisi Pemprosesan Spesimen (PPJ/LAB/02)","k":["Memastikan data dan caj ujian pesakit mengikut caj ujian makmal seperti yang dimohon"],"r":["Sistem Trakcare","Sistem TrakareLab"],"j":["Rujuk Nilai-nilai Murni - Professionalism"],"dasar":["(SCCP/AM/01 [1.1])"],"t":["Amanah & Kerahsiaan","Muamalat & Kewangan"]},{"no":"2.3","proses":"Pengambilan spesimen darah pesakit","amalan":"Polisi Pemprosesan Spesimen (PPJ/LAB/02)","k":["Aurat pesakit dipelihara mengikut kadar darurat ketika melaksanakan proses pengambilan spesimen darah"],"r":["Jadual kerja pengambilan darah"],"j":["Rujuk Etika Wargakerja dan Pesakit – Batasan Aurat"],"dasar":["(SCCP/AM/05 [1.1])"],"t":["Aurat"]},{"no":"2.4","proses":"Melaporkan keputusan ujian ‘urgent’ dan keputusan ujian nilai kritikal kepada doktor atau jururawat","amalan":"Polisi Pemprosesan Spesimen (PPJ/LAB/02) Garis Panduan Pemberitahuan Keputusan Nilai Kritikal Kepada Wad Doktor (GP/LAB/03)","k":["Menyelamatkan nyawa pesakit"],"r":["Rekod KPI ujian Urgent","Fail Rekod Notifikasi Ujian Urgent","Fail Rekod Critical Value","Borang LAB 07 – CRITICAL VAL ACT"],"j":["Rujuk Fiqh Medik:1.14 Mengelakkan Mudarat"],"dasar":["(SCCP/AM/05 [1.14])"],"t":["Keselamatan & Mudarat"]}]},{"no":"3","nama":"Pengurusan Stok Makmal","kod":"PPJ/LAB/03","rows":[{"no":"3.1","proses":"Penerimaan Bekalan ‘Disposible’, ‘Reagent’ dan komponen darah di Makmal Daripada Pembekal","amalan":"Polisi Pengurusan Stok Makmal (PPJ/LAB/03)","k":["Memastikan barangan yang diterima adalah sama seperti yang dimohon dan mengelakkan sebarang kesilapan penerimaan barangan"],"r":["Borang Permohonan Pembelian (PUR04)","Borang ‘Purchase Order’ (PUR01)","Buku rekod penerimaan invois","Fail Rekod Pengambilan Darah Daripada PDN (DO)"],"j":["Rujuk Nilai-nilai Murni - Accountability"],"dasar":["(SCCP/AM/01 [1.5])"],"t":[]},{"no":"3.2","proses":"Penyimpanan Stok Makmal","amalan":"Polisi Pengurusan Stok Makmal (PPJ/LAB/03)","k":["Memastikan penyimpanan stok dilakukan mengikut kaedah penyimpanan yang telah ditetapkan"],"r":["Sistem Stock Request","Bin Card","Fail Pemantauan Suhu"],"j":["Rujuk Nilai-nilai Murni - Professionalism"],"dasar":["(SCCP/AM/01 [1.1])"],"t":[]},{"no":"3.3","proses":"Kawalan Stok Makmal","amalan":"Polisi Pengurusan Stok Makmal (PPJ/LAB/03)","k":["Tidak dilakukan pengeluaran tanpa kebenaran"],"r":["Rekod senarai keluar masuk reagent (Bin kad)","Borang Permohonan Barang Makmal (LAB11)"],"j":["Rujuk Nilai-nilai Murni - Accountability"],"dasar":["(SCCP/AM/01 [1.5])"],"t":[]},{"no":"3.4","proses":"Pembelian Barangan Makmal","amalan":"Polisi Pengurusan Stok Makmal (PPJ/LAB/03)","k":["Memastikan Pembelian mengikut keperluan dan tidak berlaku pembaziran"],"r":["Borang Permohonan Pembelian (PUR04)","Borang pembelian (PUR11)"],"j":["Surah al-Isra’: Ayat 26 - 27","Surah al-A’raf Ayat 31"],"dasar":[],"t":[]}]},{"no":"4","nama":"Pengurusan Pinjaman Peralatan Makmal","kod":"PPJ/LAB/04","rows":[{"no":"4.1","proses":"Peminjaman Peralatan Atau Reagent Dari Makmal Luar/Hospital/ Vendor","amalan":"Polisi Pengurusan Pinjaman Peralatan Makmal (PPJ/LAB/04)","k":["Urusan peminjaman dan pemulangan barang makmal dilaksanakan mengikut kaedah yang ditetapkan"],"r":["Borang peminjaman /pemulangan barang makmal (LAB 22)","Agreement / Kontrak Perjanjian"],"j":["Rujuk Nilai-Nilai Murni – Professionalism"],"dasar":["(SCCP/AM/01 [1.1])"],"t":[]},{"no":"4.2","proses":"Penyelengaraan Peralatan Makmal","amalan":"Polisi Pengurusan Pinjaman Peralatan Makmal (PPJ/LAB/04)","k":["Mengelakkan mudarat kepada pesakit"],"r":["Jadual PPM","Fail Service Report","Stiker PPM"],"j":["Rujuk Fiqh Medik:"],"dasar":["(SCCP/AM/02 [1.14])"],"t":["Keselamatan & Mudarat"]}]},{"no":"5","nama":"Pengurusan Spesimen Ke Makmal Luar","kod":"PPJ/LAB/05","rows":[{"no":"5.1","proses":"Pengurusan Spesimen Ke Makmal Luar","amalan":"Polisi Pengurusan Spesimen Ke Makmal Luar (PPJ/LAB/05)","k":["Permohonan ujian diterima dan diproses mengikut prosedur yang sepatutnya"],"r":["Sistem Trakcare","Sistem TrakcareLab","Buku rekod penghataran ujian ke makmal luar","Agreement / Kontrak Perjanjian","Laboratory Request Form (LAB 02)"],"j":["Rujuk Nilai Nilai Murni - Accountability"],"dasar":["(SCCP/AM/01 [1.5])"],"t":[]}]},{"no":"6","nama":"Pengurusan Sisa Klinikal, Sisa Awam, Sisa Bahan Kmia Dan Sisa Makmal","kod":"PPJ/LAB/06","rows":[{"no":"6.1","proses":"Pengasingan Dan Pengendalian Sisa Makmal","amalan":"Polisi Pengurusan Sisa Klinikal, Sisa Awam, Sisa Bahan Kimia Dan Sisa Makmal (PPJ/LAB/06) Akta Kemudahan & Perkhidmatan Jagaan Kesihatan Swata 1998 (Akta 586) Akta Keselamatan & Kesihtan Pekerjaan 1994, Akta Kualiti Alam Sekeliling 1974","k":["Memastikan semua sisa makmal dikendalikan dengan betul","Pemerhatian dari ketua jabatan dan rakan sekerja"],"r":["Rekod pembersihan makmal - Housekeping","Rekod pembuangan sisa klinikal unit keselamatan dan Kesihatan pekerja (SHE)"],"j":["Rujuk Nilai Nilai Murni - Accountability","Rujuk SCCP SHE","Rujuk SCCP Kawalan Infeksi Peraturan Buangan Terjadual 2005 Manual Keselamatan & Kesihatan Pekerjaan Hospital PUSRAWI Manual Kawalan Infeksi Hospital PUSRAWI"],"dasar":["(SCCP/AM/01 [1.5])"],"t":["Keselamatan & Mudarat"]}]}],"SCCP/SK/04":[{"no":"1","nama":"Pengurusan Pengimejan","kod":"PPJ/DID/01","rows":[{"no":"1.1","proses":"Penjagaan aurat antara petugas dan pesakit yang berlainan jantina","amalan":"Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Menyediakan ruang persalinan dan pakaian yang menutup aurat untuk melakukan xray","Berusaha menyediakan petugas yang sama jantina"],"r":["Ruang persalinan xray","Pakaian pesakit di ruang xray","Jadual bertugas juru xray"],"j":["Rujuk Etika Wargakerja dan Pesakit - Batasan Aurat"],"dasar":["(SCCP/AM/05 [1.1])"],"t":["Aurat","Ikhtilat / Pergaulan"]},{"no":"1.2","proses":"Keselamatan pesakit semasa menjalani proses pengimejan","amalan":"Polisi Pengurusan Pengimejan (PPJ/DID/01)","k":["Memastikan keselamatan pesakit semasa menjalani proses pengimejan"],"r":["Lead shield Pakaian alat perlindungan radiasi","Borang Keizinan – Prosedur radiologi bagi wanita mengandung atau kemungkinan hamil"],"j":["Surah al-Baqarah: 195 (RAD 19)"],"dasar":[],"t":["Keselamatan & Mudarat"]}]},{"no":"2","nama":"Pemberian Kontras Dan Pengurusan Reaksi Kepada Kontras Media","kod":"PPJ/DID/02","rows":[{"no":"2.1","proses":"Penggunaan kontras jenis suntikan/oral /dubur ketika bulan ramadan","amalan":"Polisi Pemberian Kontras dan Pengurusan Reaksi Kepada Kontras Media (PPJ/DID/02)","k":["Memberi penerangan kepada pesakit berkaitan hukum melakukan prosedur di bulan ramadhan"],"r":["Borang Keizinan – Prosedur Radiologi yang Memerlukan Suntikan Media Kontras (RAD 06)"],"j":["Rujuk Fiqh Medik – Garis Panduan Prosedur Bulan Puasa"],"dasar":["(SCCP/AM/02 [1.6])"],"t":["Ibadah Pesakit","Adab & Komunikasi"]},{"no":"2.2","proses":"Keselamatan prosedur menggunakan media kontras","amalan":"Polisi Pemberian Kontras dan Pengurusan Reaksi Kepada Kontras Media (PPJ/DID/02)","k":["Pemberian media kontras oleh pakar/pegawai perubatan dan jururawat terlatih (di bawah pengawasan pakar/pegawai perubatan)"],"r":["Jadual Tugasan Pakar"],"j":["Surah an-Nahl:43","Rujuk Nilai-nilai Murni - Professionalism"],"dasar":[],"t":["Keselamatan & Mudarat"]},{"no":"2.3","proses":"Pra-medikasi untuk pesakit yang tidak sesuai dengan","amalan":"Polisi Pemberian Kontras dan Pengurusan Reaksi","k":["Mengelakkan mudarat"],"r":["Borang Keizinan – Prosedur Radiologi yang Memerlukan"],"j":["Surah al-Furqan Ayat 59 suntikan media kontras. Kepada Kontras Media (PPJ/DID/02) Suntikan Media Kontras (RAD 06)"],"dasar":[],"t":["Keselamatan & Mudarat"]}]}],"SCCP/SK/05":[{"no":"1","nama":"Pengurusan Pesakit Luar Untuk Fisioterapi","kod":"PPJ/PSIO/01","rows":[{"no":"1.1","proses":"Aurat pesakit ketika menjalani rawatan","amalan":"Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Pesakit diberikan pakaian bersesuaian jika prosedur fisioterapi memerlukan pendedahan aurat pesakit","Memberi penerangan tentang prosedur jika melibatkan bahagian sulit pesakit","Meminta izin kepada pesakit","Memelihara aurat pesakit"],"r":["Rekod Linen","Selimut pesakit","Sarung pesakit"],"j":["Etika Wargakerja dan Pesakit - Batasan Aurat","Etika Wargakerja dan Pesakit – Meminta Izin"],"dasar":["(SCCP/AM/05[1.1])","(SCCP/AM/05[1.5])"],"t":["Aurat","Adab & Komunikasi"]}]},{"no":"2","nama":"Pengurusan Pesakit Dalam Untuk Fisioterapi","kod":"PPJ/PSIO/02","rows":[{"no":"2.1","proses":"Perawatan pesakit oleh jurupulih berlainan jantina berserta chepron","amalan":"Polisi Hospital Mesra Ibadah (PPJ/BK/06)","k":["Mematuhi Garis Panduan Rawatan Berlainan Jantina: Keberadaan Chaperon","Mengelakkan fitnah","Menjaga keselamatan moral pesakit atau jurupulih","Folder pesakit"],"r":[],"j":["Rujuk Etika Wargakerja dan Pesakit – Peneman Ketika Mendapatkan Rawatan"],"dasar":["(SCCP/AM/05[1.3])"],"t":["Ikhtilat / Pergaulan","Peneman / Mahram","Keselamatan & Mudarat"]},{"no":"2.2","proses":"Keselamatan jurupulih (kes penyakit berjangkit)","amalan":"","k":[],"r":[],"j":["Akta Pencegaha n dan Kawalan Penyakit Berjangkit 1988 (Akta 342)","Policies & Prosedures on Infection","Mengelakkan kemudharatan kepada jurupulih dan pembantu jurupulih","Rekod penggunaan barang pakai buang","Physiotheraphy Charging Form (PSIO 06)","Rujuk Fiqh Medik – Menghilangkan Kemudaratan Prevention and Infection Control, KKM"],"dasar":["(SCCP/AM/02[1.14])"],"t":["Keselamatan & Mudarat"]}]},{"no":"3","nama":"Pengurusan Sisa Klinikal Jabatan Fisioterapi","kod":"PPJ/PSIO/03","rows":[{"no":"3.1","proses":"Pengurusan sisa klinikal mengikut SOP (kawalan infeksi/alam sekitar)","amalan":"","k":[],"r":[],"j":["Akta Pencegahan dan Kawalan Penyakit Berjangkit 1988 (Akta 342)","Policies & Prosedures on Infection Prevention and Infection Control, KKM","Mematuhi prosedur pengurusan sisa klinikal mengikut garis panduan kawalan infeksi","Mengelakkan penularan jangkitan penyakit dan mengawal mafsadah","Jadual roster pembuangan - housekeeping","Rujuk Fiqh Medik – Menghilangkan Kemudaratan"],"dasar":["(SCCP/AM/02[1.14])"],"t":["Keselamatan & Mudarat"]}]}],"SCCP/SK/06":[{"no":"1","nama":"Operasi Jabatan Dietatik Dan Dietari","kod":"PPJ/DIET/01","rows":[{"no":"1.1","proses":"Keperluan pensijilan halal JAKIM oleh kontraktor","amalan":"Polisi Operasi Jabatan Dietatik Dan Dietari (PPJ/DIET/01)","k":["Memastikan kontraktor luar mempunyai sijil halal yang disahkan oleh JAKIM"],"r":["Sijil Halal yang diiktiraf oleh JAKIM daripada pembekal"],"j":["HR Bukhari","Surah al-Baqarah: 168"],"dasar":[],"t":["Halal & Haram","Muamalat & Kewangan"]}]},{"no":"2","nama":"Perkhidmatan Nasihat Pemakanan","kod":"PPJ/DIET/02","rows":[{"no":"2.1","proses":"Memastikan perkhidmatan nasihat pemakanan mematuhi syarak","amalan":"Polisi Perkhidmatan Nasihat Pemakanan (PPJ/DIET/02)","k":["Penggunaan education material yang mengikuti syariat (contoh: gambar makanan dan minuman non halal)"],"r":["Nota Dietetik Pesakit","Pamphlet","Flip chart"],"j":["Surah al-Baqarah: 168"],"dasar":[],"t":["Halal & Haram"]}]},{"no":"3","nama":"Pakaian Dan Kebersihan Diri Pengendalian Makanan","kod":"PPJ/DIET/04","rows":[{"no":"3.1","proses":"Pemakaian Uniform oleh pengendali makanan","amalan":"Polisi Pakaian Dan Kebersihan Diri Pengendalian Makanan (PPJ/DIET/04)","k":["Memastikan pengendali makanan memakai uniform dan PPE yang mengikuti syariat"],"r":["Borang Pemeriksaan Harian Kesihatan Dan Kebersihan Diri (DIET 11)"],"j":["Rujuk Nilai-nilai Murni – Professionalism (Menjaga Penampilan Diri)"],"dasar":["(SCCP/AM/01[1.1])"],"t":[]}]},{"no":"4","nama":"Kawalan Makhluk Perosak","kod":"PPJ/DIET/05","rows":[{"no":"4.1","proses":"Kawalan makhluk perosak","amalan":"","k":["Polisi Kawalan Makhluk Perosak (PPJ/DIET/05)","Food Hygiene Regulation 2009","Memastikan pengurusan makanan yang disediakan dalam keadaan bersih dan selamat","Gant chart pest control vendor"],"r":["Borang Pemantauan Pembersihan Dan Sanitasi Premis Makanan Hospital (DIET 14)"],"j":["Rujuk Nilai-nilai Murni - Profesionalism"],"dasar":["(SCCP/AM/01[1.1])"],"t":[]}]},{"no":"5","nama":"Pengurusan Sisa Buangan Dan Sisa Makanan","kod":"PPJ/DIET/06","rows":[{"no":"5.1","proses":"Proses pengurusan sisa buangan","amalan":"Polisi Pengurusan Sisa Buangan Dan Sisa Makanan (PPJ/DIET/06)","k":["Memastikan sisa buangan dilakukan mengikut jadual yang telah ditetapkan"],"r":["Jadual pembuangan sampah vendor"],"j":["Rujuk Nilai-nilai Murni – Integrity (Menepati Masa)"],"dasar":["(SCCP/AM/01[1.7])"],"t":["Keselamatan & Mudarat"]}]},{"no":"6","nama":"Penerimaan Penyimpanan Dan Pengendalian Makanan","kod":"PPJ/DIET/07","rows":[{"no":"6.1","proses":"Proses penerimaan makanan","amalan":"Polisi Penerimaan Dan Pengendalian Makanan (PPJ/DIET/07)","k":["Memastikan barang yang diterima mengikut spesifikasi dan suhu yang telah ditetapkan","Spesifikasi bekalan bahan masak"],"r":["Perjanjian Pembekalan Makanan Bermasak di antara hospital dan vendor"],"j":["Rujuk Nilai-nilai Murni - Integrity"],"dasar":["(SCCP/AM/01[1.7])"],"t":[]},{"no":"6.2","proses":"Proses penyimpanan makanan","amalan":"Polisi Penerimaan Dan Pengendalian Makanan (PPJ/DIET/07)","k":["Memastikan barang di simpan mengikut suhu dan kelembapan yang telah ditetapkan"],"r":["Borang pemantauan suhu chiller, freezer & dry storage room (vendor)"],"j":["Rujuk Nilai-nilai Murni - Accountability"],"dasar":["(SCCP/AM/01[1.5])"],"t":[]}]},{"no":"7","nama":"Pembersihan Dan Pencucian","kod":"PPJ/DIET/08","rows":[{"no":"7.1","proses":"Proses pembersihan dan sanitasi peralatan dan perkakas dapur","amalan":"Polisi Pembersihan Dan Pencucian (PPJ/DIET/08)","k":["Memastikan proses pembersihan dijalan mengikut jadual"],"r":["Borang pembersihan - vendor"],"j":["Rujuk Nilai-nilai Murni – Integrity (Menepati Masa)"],"dasar":["(SCCP/AM/01[1.7])"],"t":["Keselamatan & Mudarat"]}]},{"no":"8","nama":"Kawalan Stok","kod":"PPJ/DIET/10","rows":[{"no":"8.1","proses":"Proses kawalan stok","amalan":"Polisi Kawalan Stok (PPJ/DIET/10)","k":["Memastikan makanan yang disimpan tidak tamat tempoh","Stock take form (vendor)"],"r":["Borang Pemantauan Pembersihan Dan Sanitasi Premis Makanan Hospital(DIET 14)"],"j":["HR Ibn Hibban","HR Muslim"],"dasar":[],"t":[]}]},{"no":"9","nama":"Pesanan Penerimaan & Penghidangan Bekalan Makanan","kod":"PPJ/DIET/12","rows":[{"no":"9.1","proses":"Proses menghidangkan makanan pesakit","amalan":"Polisi Pesanan Penerimaan & Penghidangan Bekalan Makanan (PPJ/DIET/12)","k":["Memastikan pramusaji menghidangkan makanan yang betul mengikut bilik dan diet pesakit","Memperkenalkan diri, meminta izin dan memberi masa kepada pesakit untuk bersiap sebelum memasuki ruangan pesakit"],"r":["Senarai nama pesakit di wad/ Patient checklist (vendor)"],"j":["Etika Wargakerja dan Pesakit – Batasan Aurat","Etika Wargakerja dan Pesakit – Meminta Izin"],"dasar":["(SCCP/AM/05[1.1])","(SCCP/AM/05[1.5])"],"t":["Aurat","Adab & Komunikasi"]}]},{"no":"10","nama":"Penyediaan Makanan","kod":"PPJ/DIET/15","rows":[{"no":"10.2","proses":"Proses penyediaan makanan pesakit","amalan":"Polisi Penyediaan Makanan (PPJ/DIET/15)","k":["Memastikan makanan mengandungi kandungan atau bahan dari sumber yang halal"],"r":["Senarai barang atau bahan yang digunakan oleh pembekal"],"j":["HR Bukhari","Surah al-Baqarah: 168"],"dasar":[],"t":["Halal & Haram"]}]}]};
+const TAGS = ["Aurat", "Ikhtilat / Pergaulan", "Peneman / Mahram", "Halal & Haram", "Jenazah & Janin", "Ibadah Pesakit", "Amanah & Kerahsiaan", "Muamalat & Kewangan", "Keselamatan & Mudarat", "Adab & Komunikasi"];
+
+
+/* ================= RENDER ================= */
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+function dalilHTML(list){
+  if(!list || !list.length) return '';
+  return '<div class="lbl">Dalil &amp; Rujukan</div>' + list.map(d =>
+    '<div class="dalil"><div class="dref">' + esc(d.ref) + '</div>' +
+    (d.ar ? '<div class="ar">' + d.ar + '</div>' : '') +
+    (d.tr ? '<div class="tr">' + esc(d.tr) + '</div>' : '') +
+    '</div>').join('');
+}
+function senaraiHTML(label, arr){
+  if(!arr || !arr.length) return '';
+  return '<div class="lbl">' + label + '</div><ul class="k">' +
+    arr.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>';
+}
+function rekodHTML(arr){
+  if(!arr || !arr.length) return '';
+  return '<div class="lbl">Rekod Penilaian</div><div class="rekod">' +
+    arr.map(x => '<span>' + esc(x) + '</span>').join('') + '</div>';
+}
+function kad(pil, tajuk, sub, badan){
+  return '<div class="card"><div class="chead" onclick="this.parentNode.classList.toggle(\'open\')">' +
+    '<div class="pil">' + esc(pil) + '</div><div class="ctitle"><strong>' + esc(tajuk) + '</strong>' +
+    (sub ? '<span>' + esc(sub) + '</span>' : '') + '</div><div class="chev">&#9656;</div></div>' +
+    '<div class="cbody">' + badan + '</div></div>';
+}
+function tajukSek(d){
+  return '<h2 class="sec"><span class="kod">' + esc(d.kod) + '</span>' + esc(d.tajuk) + '</h2>' +
+    '<p class="secnote">' + esc(d.nota) + ' · Tarikh kuatkuasa: ' + esc(d.tarikh) + '</p>';
+}
+
+const PAPAR = {
+  utama(){
+    const nPol = UNIT.reduce((a,u)=>a+u.p.length,0);
+    const nIsu = Object.values(DETAIL).reduce((a,v)=>a+v.reduce((b,p)=>b+p.rows.length,0),0);
+    return '<div class="stats">' +
+      '<div class="stat"><b>48</b><span>Dokumen SCCP</span></div>' +
+      '<div class="stat"><b>5</b><span>Dokumen Asas (AM)</span></div>' +
+      '<div class="stat"><b>20</b><span>Perkhidmatan Pengurusan</span></div>' +
+      '<div class="stat"><b>17</b><span>Perkhidmatan Klinikal</span></div>' +
+      '<div class="stat"><b>6</b><span>Sokongan Klinikal</span></div>' +
+      '<div class="stat"><b>' + nPol + '</b><span>Polisi Dirujuk</span></div>' +
+      '<div class="stat"><b>' + nIsu + '</b><span>Isu Syariah</span></div></div>' +
+      '<div class="notis"><b>Status kandungan:</b> Bahagian AM01–AM05 disemak secara manual. Bahagian PP / PK / SK diekstrak secara automatik daripada dokumen SCCP asal — sesuai untuk rujukan pantas dan taklimat, tetapi <b>perlu disemak silang dengan dokumen asal sebelum digunakan untuk audit rasmi</b>.</div>' +
+      '<div class="notis"><b>Peringatan penting:</b> Teks Arab (ayat al-Quran &amp; matan hadis) dalam portal ini adalah hasil susunan semula kerana teks asal dalam fail PDF tidak dapat diekstrak dengan sempurna. <b>Semua teks Arab WAJIB disemak dan disahkan oleh Pegawai Agama sebelum digunakan secara rasmi.</b> Rujukan (nombor surah / nombor hadis) adalah mengikut dokumen SCCP asal.</div>' +
+      '<h2 class="sec">Cara Menggunakan Portal Ini</h2>' +
+      '<div class="grid g2">' +
+      kad('1','Mula dengan Dokumen Asas (AM)','5 dokumen induk',
+        '<ul class="k"><li><b>AM01 Nilai-Nilai Murni</b> — 7 nilai teras PUSRAWI yang menjadi asas kepada hampir semua kriteria penilaian di setiap unit.</li>' +
+        '<li><b>AM02 Fiqh Medik</b> — hukum-hakam perubatan (puasa, jenazah, ubatan tidak halal, DNR dan lain-lain).</li>' +
+        '<li><b>AM03 Hospital Mesra Ibadah</b> — azan, ibadah pesakit, peringatan solat.</li>' +
+        '<li><b>AM04 Pakar Perunding</b> — etika dan tanggungjawab pakar perubatan.</li>' +
+        '<li><b>AM05 Etika Wargakerja &amp; Pesakit</b> — aurat, ikhtilat, peneman, adab meminta izin.</li></ul>') +
+      kad('2','Rujuk Unit Anda','PP · PK · SK — 269 isu syariah',
+        '<p style="font-size:13.8px;margin:10px 0">Tab <b>PP</b>, <b>PK</b> dan <b>SK</b> memaparkan setiap unit &rarr; setiap polisi &rarr; setiap <b>isu syariah</b> berserta kriteria penilaian, rekod penilaian dan rujukan syariahnya.</p>' +
+        '<p style="font-size:13.8px;margin:10px 0">Gunakan butang penapis tema di atas senarai unit untuk menyaring mengikut isu seperti <i>Aurat</i>, <i>Ikhtilat</i>, <i>Halal &amp; Haram</i> atau <i>Ibadah Pesakit</i>.</p>' +
+        '<p style="font-size:13.8px;margin:10px 0">Contoh: "Menjaga kerahsiaan data pesakit" di Jabatan Rekod Perubatan merujuk kepada <b>Nilai-Nilai Murni — Accountability (SCCP/AM/01 [1.5])</b>.</p>') +
+      kad('3','Gunakan Carian','Carian menyeluruh',
+        '<p style="font-size:13.8px;margin:10px 0">Taip apa sahaja dalam kotak carian di atas — nama unit, kod polisi, nama surah, atau kata kunci seperti <i>aurat</i>, <i>puasa</i>, <i>jenazah</i>, <i>amanah</i>. Portal akan menapis kesemua bahagian secara serentak.</p>' +
+        '<p style="font-size:13.8px;margin:10px 0">Butang <b>Cetak</b> akan membuka semua kandungan dan menyediakan format cetakan yang kemas.</p>') +
+      '</div>';
+  },
+
+  am01(){
+    let h = tajukSek(AM01) +
+      '<div class="notis" style="background:var(--hijau-lembut);border-color:#c8e0d7;border-left-color:var(--hijau2);color:#0b4b3c">' +
+      '<b>P·U·S·R·A·W·I</b> — tujuh nilai murni ini membentuk nama hospital. Setiap unit merujuk nilai-nilai ini sebagai kriteria penilaian syariah.</div>' +
+      '<div class="grid">';
+    AM01.nilai.forEach(n=>{
+      h += kad(n.huruf, n.no + ' ' + n.en + ' — ' + n.bm, n.dalil.length + ' dalil rujukan',
+        senaraiHTML('Kriteria Penilaian', n.kriteria) +
+        rekodHTML(['Borang Penilaian Prestasi (JSM 8-01 / 8-02 / 8-03)']) +
+        dalilHTML(n.dalil));
+    });
+    return h + '</div>';
+  },
+
+  am02(){
+    let h = tajukSek(AM02) + '<div class="grid">';
+    AM02.item.forEach(i=>{
+      h += kad(i.no.replace('1.',''), i.no + ' ' + i.tajuk, i.unit,
+        senaraiHTML('Kriteria Penilaian', i.kriteria) + dalilHTML(i.dalil));
+    });
+    return h + '</div>';
+  },
+
+  am03(){
+    let h = tajukSek(AM03) + '<div class="grid">';
+    AM03.item.forEach(i=>{
+      h += kad(i.no.replace('1.',''), i.no + ' ' + i.tajuk, i.unit,
+        senaraiHTML('Kriteria Penilaian', i.kriteria) + rekodHTML(i.rekod) + dalilHTML(i.dalil));
+    });
+    return h + '</div>';
+  },
+
+  am04(){
+    let h = tajukSek(AM04) + '<div class="grid">';
+    AM04.item.forEach(i=>{
+      h += kad(i.no.replace('1.',''), i.no + ' ' + i.tajuk, i.unit,
+        senaraiHTML('Kriteria Penilaian', i.kriteria) + rekodHTML(i.rekod) + dalilHTML(i.dalil));
+    });
+    return h + '</div>';
+  },
+
+  am05(){
+    let h = tajukSek(AM05) + '<div class="grid">';
+    AM05.item.forEach(i=>{
+      let b = senaraiHTML('Kriteria Penilaian', i.kriteria) + rekodHTML(i.rekod);
+      if(i.tambahan){
+        b += senaraiHTML(i.tambahan.tajuk, i.tambahan.senarai);
+        if(i.tambahan.keutamaan) b += senaraiHTML(i.tambahan.keutamaan.tajuk, i.tambahan.keutamaan.senarai);
+        if(i.tambahan.garisPanduan) b += senaraiHTML(i.tambahan.garisPanduan.tajuk, i.tambahan.garisPanduan.senarai);
+      }
+      b += dalilHTML(i.dalil);
+      h += kad(i.no.replace('1.',''), i.no + ' ' + i.tajuk, i.unit, b);
+    });
+    return h + '</div>';
+  },
+
+
+  /* ---------- Paparan kategori terperinci ---------- */
+  kategori(cat){
+    const w = KATEGORI[cat].warna;
+    const unitCat = UNIT.filter(u => u.c === cat);
+    const nIsu = unitCat.reduce((a,u)=> a + ((DETAIL[u.k]||[]).reduce((b,p)=>b+p.rows.length,0)), 0);
+    const nPol = unitCat.reduce((a,u)=> a + (DETAIL[u.k]||[]).length, 0);
+
+    let h = '<h2 class="sec" style="color:' + w + '"><span class="kod" style="background:' + w + '">' +
+      cat + '</span>' + KATEGORI[cat].nama + '</h2>' +
+      '<p class="secnote">' + KATEGORI[cat].desc + ' · ' + unitCat.length + ' unit · ' +
+      nPol + ' polisi · <b>' + nIsu + ' isu syariah</b></p>' +
+      '<div class="filt" id="filt-' + cat + '">' +
+      '<button class="on" data-t="">Semua Isu</button>' +
+      TAGS.map(t => '<button data-t="' + t + '">' + t + '</button>').join('') + '</div>';
+
+    unitCat.forEach(u => {
+      const pols = DETAIL[u.k] || [];
+      const jum = pols.reduce((a,p)=>a+p.rows.length,0);
+      h += '<div class="unit"><div class="uhead" onclick="this.parentNode.classList.toggle(\'open\')">' +
+        '<span class="kod2" style="background:' + w + '">' + esc(u.k) + '</span>' +
+        '<b>' + esc(u.n) + '</b>' +
+        '<span class="cnt">' + pols.length + ' polisi · ' + jum + ' isu</span>' +
+        '<span class="chev">&#9656;</span></div><div class="ubody">';
+
+      if(!pols.length){
+        h += '<p class="secnote" style="margin-top:12px">Butiran belum tersedia — sila rujuk dokumen SCCP asal.</p>';
+      }
+      pols.forEach(p => {
+        h += '<div class="pol"><h4>' + esc(p.no) + '. ' + esc(p.nama) + '</h4>' +
+             '<div class="pkod">' + esc(p.kod) + '</div>';
+        p.rows.forEach(r => {
+          h += '<div class="isu" data-tags="' + esc((r.t||[]).join('|')) + '">' +
+            '<div><span class="ino">' + esc(r.no) + '</span><span class="ipro">' + esc(r.proses) + '</span></div>' +
+            (r.amalan ? '<div class="iam">Amalan: ' + esc(r.amalan) + '</div>' : '') + '<dl>';
+          if(r.k.length) h += '<dt>Kriteria Penilaian</dt><dd><ul>' + r.k.map(x=>'<li>'+esc(x)+'</li>').join('') + '</ul></dd>';
+          if(r.r.length) h += '<dt>Rekod Penilaian</dt><dd>' + r.r.map(x=>'<span class="ref">'+esc(x)+'</span>').join('') + '</dd>';
+          if(r.j.length) h += '<dt>Rujukan Syariah</dt><dd><ul>' + r.j.map(x=>'<li>'+esc(x)+'</li>').join('') + '</ul></dd>';
+          if(r.dasar && r.dasar.length) h += '<dt>Dasar Induk</dt><dd>' + r.dasar.map(x=>'<span class="ref">'+esc(x)+'</span>').join('') + '</dd>';
+          h += '</dl>';
+          if(r.t && r.t.length) h += '<div class="tagrow">' + r.t.map(t=>'<span class="tg">'+esc(t)+'</span>').join('') + '</div>';
+          h += '</div>';
+        });
+        h += '</div>';
+      });
+      h += '</div></div>';
+    });
+    return h;
+  },
+  pp(){ return PAPAR.kategori('PP'); },
+  pk(){ return PAPAR.kategori('PK'); },
+  sk(){ return PAPAR.kategori('SK'); },
+
+  isu(){
+    const senarai = [];
+    UNIT.forEach(u => (DETAIL[u.k]||[]).forEach(p => p.rows.forEach(r =>
+      senarai.push({u, p, r}))));
+    let h = '<h2 class="sec">Indeks Isu Syariah Mengikut Tema</h2>' +
+      '<p class="secnote">' + senarai.length + ' isu syariah daripada 43 unit, dikumpulkan mengikut tema. ' +
+      'Berguna untuk audit dalaman dan taklimat bertema.</p>';
+    TAGS.forEach(t => {
+      const grp = senarai.filter(x => (x.r.t||[]).includes(t));
+      if(!grp.length) return;
+      h += '<div class="unit"><div class="uhead" onclick="this.parentNode.classList.toggle(\'open\')">' +
+        '<span class="kod2" style="background:var(--emas)">TEMA</span><b>' + esc(t) + '</b>' +
+        '<span class="cnt">' + grp.length + ' isu</span><span class="chev">&#9656;</span></div>' +
+        '<div class="ubody">';
+      grp.forEach(x => {
+        h += '<div class="isu" data-tags="' + esc(t) + '">' +
+          '<div><span class="ino" style="background:' + KATEGORI[x.u.c].warna + '">' + esc(x.u.k) + '</span>' +
+          '<span class="ipro">' + esc(x.r.proses) + '</span></div>' +
+          '<div class="iam">' + esc(x.u.n) + ' · ' + esc(x.p.nama) + ' (' + esc(x.p.kod) + ')</div><dl>';
+        if(x.r.k.length) h += '<dt>Kriteria</dt><dd><ul>' + x.r.k.map(y=>'<li>'+esc(y)+'</li>').join('') + '</ul></dd>';
+        if(x.r.j.length) h += '<dt>Rujukan</dt><dd><ul>' + x.r.j.map(y=>'<li>'+esc(y)+'</li>').join('') + '</ul></dd>';
+        h += '</dl></div>';
+      });
+      h += '</div></div>';
+    });
+    return h;
+  },
+
+  direktori(){
+    let h = '<h2 class="sec">Ringkasan Polisi Mengikut Unit</h2>' +
+      '<p class="secnote">Senarai pantas 145 polisi merentasi 43 unit. Untuk butiran isu syariah setiap polisi, buka tab PP, PK atau SK.</p>' +
+      '<div class="notis">Kriteria penilaian syariah bagi unit-unit ini <b>merujuk kembali kepada dokumen AM</b> (Nilai-Nilai Murni, Fiqh Medik, Etika Wargakerja &amp; Pesakit). Dalil penuh terdapat dalam bahagian AM masing-masing.</div>';
+    ['PP','PK','SK'].forEach(cat=>{
+      const w = KATEGORI[cat].warna;
+      h += '<h2 class="sec" style="color:' + w + '"><span class="kod" style="background:' + w + '">' + cat + '</span>' +
+           KATEGORI[cat].nama + '</h2><p class="secnote">' + KATEGORI[cat].desc + '</p><div class="grid g2">';
+      UNIT.filter(u=>u.c===cat).forEach(u=>{
+        h += '<div class="ucard"><span class="kod2" style="background:' + w + '">' + esc(u.k) + '</span>' +
+          '<h3>' + esc(u.n) + '</h3><ol>' +
+          u.p.map(p => '<li><b>' + esc(p[0]) + '</b> <code>' + esc(p[1]) + '</code></li>').join('') +
+          '</ol></div>';
+      });
+      h += '</div>';
+    });
+    return h;
+  },
+
+  dalil(){
+    const sumber = [];
+    const tolak = (asal, d) => { if(d.ar || d.tr) sumber.push({asal, ...d}); };
+    AM01.nilai.forEach(n => n.dalil.forEach(d => tolak('AM01 · ' + n.en, d)));
+    AM02.item.forEach(i => i.dalil.forEach(d => tolak('AM02 · ' + i.tajuk, d)));
+    AM03.item.forEach(i => i.dalil.forEach(d => tolak('AM03 · ' + i.tajuk, d)));
+    AM04.item.forEach(i => i.dalil.forEach(d => tolak('AM04 · ' + i.tajuk, d)));
+    AM05.item.forEach(i => i.dalil.forEach(d => tolak('AM05 · ' + i.tajuk, d)));
+
+    const quran = sumber.filter(d => /^Surah/i.test(d.ref));
+    const hadis = sumber.filter(d => /^HR|^Riwayat/i.test(d.ref));
+    const lain  = sumber.filter(d => !/^Surah|^HR|^Riwayat/i.test(d.ref));
+
+    const blok = (tajuk, arr) => {
+      if(!arr.length) return '';
+      const seen = new Set(); const uniq = [];
+      arr.forEach(d => { const key = d.ref + '|' + (d.ar||''); if(!seen.has(key)){seen.add(key); uniq.push(d);} });
+      return '<h2 class="sec">' + tajuk + ' <span class="kod">' + uniq.length + '</span></h2><div class="grid">' +
+        uniq.map(d => kad('؞', d.ref, d.asal,
+          (d.ar ? '<div class="ar">' + d.ar + '</div>' : '') +
+          (d.tr ? '<div class="tr">' + esc(d.tr) + '</div>' : ''))).join('') + '</div>';
+    };
+
+    return '<h2 class="sec">Katalog Dalil SCCP</h2>' +
+      '<p class="secnote">Himpunan dalil yang dirujuk dalam kelima-lima dokumen asas (AM). Klik untuk membuka teks.</p>' +
+      '<div class="notis"><b>Semakan wajib:</b> Teks Arab di bawah perlu disahkan oleh Pegawai Agama sebelum digunakan dalam dokumen rasmi, poster, atau bahan taklimat.</div>' +
+      blok('Ayat Al-Quran', quran) + blok('Hadis', hadis) + blok('Fatwa, Garis Panduan &amp; Kitab', lain);
+  }
+};
+
+const TABS = [
+  ['utama','Utama'],
+  ['am01','AM01 Nilai Murni'], ['am02','AM02 Fiqh Medik'], ['am03','AM03 Mesra Ibadah'],
+  ['am04','AM04 Pakar Perunding'], ['am05','AM05 Etika Wargakerja'],
+  ['pp','PP · Perkhidmatan Pengurusan'], ['pk','PK · Perkhidmatan Klinikal'],
+  ['sk','SK · Sokongan Klinikal'],
+  ['isu','Indeks Isu Syariah'], ['dalil','Katalog Dalil'], ['direktori','Ringkasan Polisi']
+];
+
+let semasa = 'utama';
+const nav = document.getElementById('nav');
+const view = document.getElementById('view');
+
+TABS.forEach(([id,label])=>{
+  const b = document.createElement('button');
+  b.className = 'tab'; b.textContent = label; b.dataset.id = id;
+  b.onclick = ()=>papar(id);
+  nav.appendChild(b);
+});
+
+function papar(id){
+  semasa = id;
+  [...nav.children].forEach(b => b.classList.toggle('on', b.dataset.id === id));
+  view.innerHTML = PAPAR[id]();
+  pasangFilter();
+  aturArab();
+  tapis();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ---- Carian ---- */
+const q = document.getElementById('q');
+q.addEventListener('input', tapis);
+
+function tapis(){
+  const s = q.value.trim().toLowerCase();
+  const semua = view.querySelectorAll('.card, .ucard, .unit');
+  if(!s){ semua.forEach(e=>e.classList.remove('hide'));
+    view.querySelectorAll('h2.sec, p.secnote, .notis, .stats, .grid').forEach(e=>e.classList.remove('hide'));
+    const m = view.querySelector('.empty'); if(m) m.remove(); return; }
+  let jumpa = 0;
+  semua.forEach(e=>{
+    const ada = e.textContent.toLowerCase().includes(s);
+    e.classList.toggle('hide', !ada);
+    if(ada){ jumpa++; e.classList.add('open'); }
+  });
+  const m = view.querySelector('.empty'); if(m) m.remove();
+  if(!jumpa){
+    const d = document.createElement('div'); d.className = 'empty';
+    d.innerHTML = 'Tiada hasil untuk <b>"' + esc(q.value) + '"</b> dalam bahagian ini.<br>' +
+      '<small>Cuba bahagian lain, atau kata kunci yang lebih ringkas.</small>';
+    view.appendChild(d);
+  }
+}
+
+/* ---- Penapis tema ---- */
+function pasangFilter(){
+  const bar = view.querySelector('.filt'); if(!bar) return;
+  bar.onclick = e => {
+    const b = e.target.closest('button'); if(!b) return;
+    [...bar.children].forEach(x => x.classList.toggle('on', x === b));
+    const t = b.dataset.t;
+    view.querySelectorAll('.isu').forEach(i => {
+      i.classList.toggle('hide', !!t && !(i.dataset.tags||'').split('|').includes(t));
+    });
+    view.querySelectorAll('.unit').forEach(u => {
+      const ada = u.querySelectorAll('.isu:not(.hide)').length;
+      u.classList.toggle('hide', !!t && !ada);
+      if(t && ada) u.classList.add('open');
+      const c = u.querySelector('.cnt');
+      if(c && t) c.textContent = ada + ' isu · ' + t;
+    });
+    if(!t){ view.querySelectorAll('.unit').forEach(u=>u.classList.remove('open','hide')); papar(semasa); }
+  };
+}
+
+/* ---- Butang ---- */
+let arabOn = true;
+document.getElementById('bAr').onclick = function(){
+  arabOn = !arabOn; this.textContent = arabOn ? 'Sembunyi Arab' : 'Papar Arab';
+  this.classList.toggle('on', !arabOn); aturArab();
+};
+function aturArab(){ view.querySelectorAll('.ar').forEach(e => e.style.display = arabOn ? '' : 'none'); }
+
+let bukaSemua = false;
+document.getElementById('bAll').onclick = function(){
+  bukaSemua = !bukaSemua; this.textContent = bukaSemua ? 'Tutup Semua' : 'Buka Semua';
+  this.classList.toggle('on', bukaSemua);
+  view.querySelectorAll('.card, .unit').forEach(c => c.classList.toggle('open', bukaSemua));
+};
+
+papar('utama');
+</script>
+
+<a href="index.html" style="position:fixed;bottom:18px;left:18px;z-index:999;display:inline-flex;align-items:center;gap:8px;background:#081C33;color:#F0D878;border:1.5px solid #C9A227;border-radius:24px;padding:11px 20px;font:700 13.5px/1 'Segoe UI',system-ui,sans-serif;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.28)">&#8592; Portal Utama</a>
+<script>(function(){var h=location.hash.slice(1);if(h&&typeof PAPAR!=='undefined'&&PAPAR[h])papar(h);})();</script>
+</body>
+</html>
